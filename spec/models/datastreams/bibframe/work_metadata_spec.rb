@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Datastreams::Bibframe::Work do
+describe Datastreams::Bibframe::WorkMetadata do
   before :all do
     file = File.new('./spec/fixtures/test_book.xml')
-    @ds = Datastreams::Bibframe::Work.from_xml(file)
+    @ds = Datastreams::Bibframe::WorkMetadata.from_xml(file)
   end
   it 'parses a title' do
     expect(@ds.title).to eql ['The adventures of Oliver Twist']

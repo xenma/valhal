@@ -1,7 +1,7 @@
 module Datastreams
   module Bibframe
     # Datastream for modelling all Bibframe::Work metadata
-    class Work < ActiveFedora::OmDatastream
+    class WorkMetadata < ActiveFedora::OmDatastream
       set_terminology do |t|
         t.root(path:  'Work', xmlns: 'http://bibframe.org/vocab/')
         t.uniformTitle
