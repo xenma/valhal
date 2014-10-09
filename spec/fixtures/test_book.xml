@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bf:Work xmlns:bf="http://bibframe.org/vocab/">
+  <bf:uniformTitle>Oliver Twist.</bf:uniformTitle>
+  <bf:title>The adventures of Oliver Twist</bf:title>
+  <bf:creator>
+    <bf:Person>
+      <bf:label>Dickens, Charles, 1812-1870.</bf:label>
+    </bf:Person>
+  </bf:creator>
+  <bf:language>eng</bf:language>
+  <bf:subject>
+    <bf:Topic>
+      <bf:label>Orphans--Fiction</bf:label>
+    </bf:Topic>
+ </bf:subject>
+</bf:Work>
