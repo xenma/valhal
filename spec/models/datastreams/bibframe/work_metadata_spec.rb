@@ -8,6 +8,11 @@ describe Datastreams::Bibframe::WorkMetadata do
   it 'parses a title' do
     expect(@ds.title).to eql ['The adventures of Oliver Twist']
   end
+
+  it 'has a uniform_title method' do
+    expect(@ds.uniform_title).to eql ['Oliver Twist.']
+  end
+
   it 'parses a topic label' do
     expect(@ds.subject.Topic.label).to eql ['Orphans--Fiction']
   end

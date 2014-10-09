@@ -12,6 +12,8 @@ module Datastreams
             t.label
           end
         end
+
+        t.uniform_title(proxy: [:uniformTitle])
       end
 
       def self.xml_template
