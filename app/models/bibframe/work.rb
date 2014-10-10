@@ -6,9 +6,10 @@ module Bibframe
     included do
       has_metadata(name: 'bfMetadata',
                    type: Datastreams::Bibframe::WorkMetadata)
-      has_attributes(:title, :uniform_title,
+      has_attributes(:title, :subtitle,
                      datastream: 'bfMetadata', multiple: false)
-      has_attributes(:language, datastream: 'bfMetadata', multiple: true)
+      has_attributes(:language, :language_authority,
+                     datastream: 'bfMetadata', multiple: true)
     end
   end
 end

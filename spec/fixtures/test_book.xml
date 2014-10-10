@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bf:Work xmlns:bf="http://bibframe.org/vocab/">
   <bf:uniformTitle>Oliver Twist.</bf:uniformTitle>
-  <bf:title>The adventures of Oliver Twist</bf:title>
-  <bf:creator>
-    <bf:Person>
-      <bf:label>Dickens, Charles, 1812-1870.</bf:label>
-    </bf:Person>
-  </bf:creator>
-  <bf:language>eng</bf:language>
-  <bf:subject>
-    <bf:Topic>
-      <bf:label>Orphans--Fiction</bf:label>
-    </bf:Topic>
- </bf:subject>
+  <bf:workTitle>
+    <bf:Title>
+      <bf:titleValue>Historic American sheet music, 1850-1920</bf:titleValue>
+      <bf:subtitle>selected from the collections of Duke University.</bf:subtitle>
+    </bf:Title>
+  </bf:workTitle>
+  <bf:note>Mode of access: World Wide Web.</bf:note>
+  <bf:language authority="http://id.loc.gov/vocabulary/languages.html">eng</bf:language>
 </bf:Work>

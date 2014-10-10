@@ -6,14 +6,26 @@ describe Datastreams::Bibframe::WorkMetadata do
     @ds = Datastreams::Bibframe::WorkMetadata.from_xml(file)
   end
   it 'parses a title' do
-    expect(@ds.title).to eql ['The adventures of Oliver Twist']
+    expect(@ds.title)
+    .to eql ['Historic American sheet music, 1850-1920']
   end
 
-  it 'has a uniform_title method' do
-    expect(@ds.uniform_title).to eql ['Oliver Twist.']
+  it 'has a subtitle method' do
+    expect(@ds.subtitle)
+    .to eql ['selected from the collections of Duke University.']
   end
 
-  it 'parses a topic label' do
-    expect(@ds.subject.Topic.label).to eql ['Orphans--Fiction']
+  it 'parses a note' do
+    expect(@ds.note)
+    .to eql ['Mode of access: World Wide Web.']
+  end
+
+  it 'parses the language' do
+    expect(@ds.language).to eql ['eng']
+  end
+
+  it 'parses the language authority' do
+    expect(@ds.language_authority)
+    .to eql ['http://id.loc.gov/vocabulary/languages.html']
   end
 end
