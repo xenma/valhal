@@ -1,3 +1,7 @@
+Metrics/LineLength:
+  Max: 156
+Style/Blocks:
+  Enabled: false
 AllCops:
   Exclude:
     - 'hooks/rubocop.rb'
