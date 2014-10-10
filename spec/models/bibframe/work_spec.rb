@@ -25,5 +25,10 @@ describe Bibframe::Work do
     it 'should add a language method' do
       expect(@stub.respond_to?(:language)).to eql true
     end
+
+    it 'should be able to save a title' do
+      @stub.title = 'War and Peace'
+      expect(@stub.title).to eql 'War and Peace'
+    end
   end
 end
