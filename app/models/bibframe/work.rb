@@ -8,7 +8,7 @@ module Bibframe
                    type: Datastreams::Bibframe::WorkMetadata)
       has_attributes(:title, :subtitle,
                      datastream: 'bfMetadata', multiple: false)
-      has_attributes(:language, :language_authority,
+      has_attributes(:language, :language_authority, :note,
                      datastream: 'bfMetadata', multiple: true)
     end
   end
