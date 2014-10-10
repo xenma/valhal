@@ -1,0 +1,7 @@
+<h1><%= @work.title %></h1>
+<h2><%= @work.subtitle %></h2>
+<p><%= @work.language %></p>
+<p><%= @work.language_authority %></p>
+<p><%= @work.note %></p>
+<%= link_to 'Edit', edit_work_path(@work) %> |
+<%= link_to 'Back', works_path %>

@@ -1,0 +1,23 @@
+<%= simple_form_for(@work, html: { class: 'form-horizontal' }, defaults: {
+        wrapper_html: { class: 'form-group' }, input_html: { class: 'form-control' } }) do |f| %>
+  <% if @work.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@work.errors.count, "error") %> prohibited this work from being saved:</h2>
+
+      <ul>
+      <% @work.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <%= f.input :title %>
+    <%= f.input :subtitle %>
+    <%= f.input :language %>
+    <%= f.input :language_authority %>
+    <%= f.input :note %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
