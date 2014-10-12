@@ -4,7 +4,7 @@ module Datastreams
     # Bibframe::Instance metadata
     class InstanceMetadata < ActiveFedora::OmDatastream
       set_terminology do |t|
-        t.root(path:  'Instant', xmlns: 'http://bibframe.org/vocab/')
+        t.root(path:  'Instance', xmlns: 'http://bibframe.org/vocab/')
         t.language do
           t.authority(path: { attribute: 'authority', namespace_prefix: nil })
         end
