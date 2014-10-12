@@ -6,4 +6,5 @@
 # be mixed in.
 class Work < ActiveFedora::Base
   include Bibframe::Work
+  has_many :instances, property: :instance_of
 end
