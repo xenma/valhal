@@ -18,6 +18,7 @@
 :predicate_mapping:
   http://www.kb.dk#:
     :instance_of: instanceOf
+    :content_for: contentFor
   info:fedora/fedora-system:def/relations-external#:
     :conforms_to: conformsTo
     :has_annotation: hasAnnotation

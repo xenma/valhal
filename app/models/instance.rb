@@ -7,4 +7,5 @@
 class Instance < ActiveFedora::Base
   include Bibframe::Instance
   belongs_to :work, property: :instance_of
+  has_many :content_files, property: :content_for
 end
