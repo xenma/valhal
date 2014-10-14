@@ -48,4 +48,11 @@ describe Datastreams::Bibframe::InstanceMetadata do
   it 'should parse the identifier scheme' do
     expect(@ds.identifier_scheme).to eql ['aleph']
   end
+
+  it 'returns a hash of identifiers and their values' do
+    h = @ds.identifier_set
+    expect(h).to be_a Hash
+    expect(h.keys).to include(:aleph)
+    expect(h.values).to include('00078344056')
+  end
 end
