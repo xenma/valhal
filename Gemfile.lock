@@ -45,7 +45,6 @@ GEM
     amq-protocol (1.9.2)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
-    bcrypt (3.1.7-x86-mingw32)
     blacklight (5.5.4)
       bootstrap-sass (~> 3.0)
       deprecation
@@ -318,6 +317,9 @@ GEM
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
     systemu (2.6.4)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
