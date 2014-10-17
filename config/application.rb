@@ -8,7 +8,10 @@ Bundler.require(*Rails.groups)
 
 module Hel
   class Application < Rails::Application
-    
+
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', 'datastreams', '{**}')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'export', '{**}')]
+
     config.generators do |g|
       g.test_framework :rspec, :spec => true
     end
