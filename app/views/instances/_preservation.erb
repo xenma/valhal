@@ -88,7 +88,7 @@ The 'fields for' builder must be delivered as a the 'f' parameter.
         <% if @object.can_perform_cascading? %>
             <div class="set_cascading">
               <%= f.label :cascade_preservation, 'Cascade preservation' %>
-              <%= f.check_box :cascade_preservation%>
+              <%#= f.check_box :cascade_preservation%>
             </div>
         <% end %>
     <% end %>
@@ -97,5 +97,3 @@ The 'fields for' builder must be delivered as a the 'f' parameter.
         <%= f.submit Constants::PERFORM_PRESERVATION_BUTTON, :class => 'btn btn-primary' %>
     <% end %>
 <br/>
-
-<%= render 'footer' %>
