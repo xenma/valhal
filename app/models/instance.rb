@@ -8,5 +8,5 @@ class Instance < ActiveFedora::Base
   include Bibframe::Instance
   belongs_to :work, property: :instance_of
   has_many :content_files, property: :content_for
-  has_metadata :name => 'preservationMetadata', :type => PreservationDatastream
+  has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
 end
