@@ -25,6 +25,7 @@ module Datastreams
           t.productionNote
           t.productionDate
         end
+        t.isbn13
 
         t.systemNumber do
           t.Identifier do
