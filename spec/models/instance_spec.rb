@@ -63,5 +63,12 @@ describe Instance do
     @element.availability = 'TEST'
     @element.availability.should == 'TEST'
   end
+
+  it 'should have a uuid on creation' do
+    i = Instance.new
+    expect(i.uuid).to be_nil
+    i.save
+    expect(i.uuid.present?).to be true
+  end
 end
 

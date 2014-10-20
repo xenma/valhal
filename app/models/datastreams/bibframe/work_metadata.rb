@@ -1,7 +1,7 @@
 module Datastreams
   module Bibframe
     # Datastream for modelling all Bibframe::Work metadata
-    class WorkMetadata < ActiveFedora::OmDatastream
+    class WorkMetadata < Datastreams::Bibframe::Resource
       set_terminology do |t|
         t.root(path:  'Work', xmlns: 'http://bibframe.org/vocab/')
         t.workTitle do
@@ -18,6 +18,12 @@ module Datastreams
         t.subject do
           t.Topic do
             t.label
+          end
+        end
+
+        t.systemNumber do
+          t.Identifier do
+            t.identifierValue
           end
         end
 

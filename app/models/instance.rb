@@ -7,6 +7,7 @@
 class Instance < ActiveFedora::Base
   include Bibframe::Instance
   include Concerns::AdminMetadata
+  include Concerns::UUIDGenerator
   belongs_to :work, property: :instance_of
   has_many :content_files, property: :content_for
   has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
