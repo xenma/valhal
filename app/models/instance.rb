@@ -6,6 +6,7 @@
 # be mixed in.
 class Instance < ActiveFedora::Base
   include Bibframe::Instance
+  include Hydra::AccessControls::Permissions
   include Concerns::AdminMetadata
   include Concerns::UUIDGenerator
   belongs_to :work, property: :instance_of
