@@ -39,10 +39,14 @@ gem 'simple_form'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
+# Preservation
+gem 'bunny', '~> 1.1.0'
+gem 'amq-protocol', '>= 1.9.2'
 
 gem 'devise'
 gem 'devise-guests', "~> 0.3"
 group :development, :test do
   gem 'rspec-rails'
-  gem "jettywrapper"
+  gem 'jettywrapper'
+  gem 'thin'
 end

@@ -67,4 +67,9 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  resources :instances do
+    member do
+      patch 'update_preservation_profile'
+    end
+  end
 end
