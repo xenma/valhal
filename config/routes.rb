@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  resources :instances
-
+  resources :instances do
+    member do
+      get 'administration'
+      patch 'update_administration'
+    end
+  end
   resources :works
 
   root to: 'catalog#index'
+
   blacklight_for :catalog
   devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
   # See how all your routes lay out with "rake routes".

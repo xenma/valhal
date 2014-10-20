@@ -62,6 +62,23 @@ class InstancesController < ApplicationController
     end
   end
 
+  # Updates the administration metadata for the ordered instance.
+  def update_administration
+    @instance = Instance.find(params[:id])
+    begin
+      update_administrative_metadata_from_controller(params, @instance, false)
+      redirect_to @instance, notice: 'Updated the administrative metadata'
+    rescue => error
+      error_msg = "Could not update administrative metadata: #{error.inspect}"
+      error.backtrace.each do |l|
+        error_msg += "\n#{l}"
+      end
+      logger.error error_msg
+      @instance.errors[:administrative_metadata] << error.inspect.to_s
+      render action: 'administration'
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
