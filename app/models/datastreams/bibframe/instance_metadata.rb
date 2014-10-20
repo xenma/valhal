@@ -25,7 +25,11 @@ module Datastreams
           t.productionNote
           t.productionDate
         end
-        t.isbn13
+        t.isbn_13(path: 'isbn13') do
+          t.Identifier do
+            t.label
+          end
+        end
 
         t.systemNumber do
           t.Identifier do
@@ -42,6 +46,15 @@ module Datastreams
         t.publication_date(proxy: [:publication, :publicationDate])
         t.identifier_value(proxy: [:identifier, :identifierValue])
         t.identifier_scheme(proxy: [:identifier, :identifierScheme])
+        t.isbn13(proxy: [:isbn_13, :Identifier, :label])
+      end
+
+      define_template :isbn13 do |xml, value|
+        xml.isbn13 do
+          xml.Identifier do
+            xml.label { xml.text(value) }
+          end
+        end
       end
 
       def self.xml_template
