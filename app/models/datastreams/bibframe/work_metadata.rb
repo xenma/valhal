@@ -27,10 +27,34 @@ module Datastreams
         t.language_authority(proxy: [:language, :authority])
       end
 
+      define_template :title do |xml, type, subtitle, lang, value|
+        xml.title do
+          xml.Title do
+            xml.titleType { xml.text(type) }
+            xml.subtitle { xml.text(subtitle) }
+            lang_attr = { 'xml:lang' => lang }
+            xml.titleValue(lang_attr) { xml.text(value) }
+          end
+        end
+      end
+
       # Create an Array of Title objects
       # based on the title.Title nodeset
       def titles
         title.Title.nodeset.map { |n| Title.new(n) }
+      end
+
+      def add_title(title_hash)
+        sibling = find_by_terms(:title).last
+        if sibling
+          node = add_next_sibling_node(sibling, :title, title_hash[:type], title_hash[:subtitle],
+                                       title_hash[:lang], title_hash[:value])
+        else
+          node = add_child_node(ng_xml.root, :title, title_hash[:type], title_hash[:subtitle],
+                                title_hash[:lang], title_hash[:value])
+        end
+        content_will_change!
+        node
       end
 
       def self.xml_template

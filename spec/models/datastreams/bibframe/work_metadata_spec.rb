@@ -33,6 +33,14 @@ describe Datastreams::Bibframe::WorkMetadata do
       expect(@ds.titles.first.values.first.lang).to eql 'en'
     end
 
+    it 'allows us to write a title' do
+      ds = Datastreams::Bibframe::WorkMetadata.new
+      ds.add_title(type: 'uniform', subtitle: 'and so on...', lang: 'en', value: 'Great Expectations')
+      expect(ds.titles.first.subtitle).to eql 'and so on...'
+      expect(ds.titles.first.type).to eql 'uniform'
+      expect(ds.titles.first.values.first.value).to eql 'Great Expectations'
+      expect(ds.titles.first.values.first.lang).to eql 'en'
+    end
   end
 
   it 'parses a note' do
