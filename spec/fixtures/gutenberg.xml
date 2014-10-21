@@ -29,6 +29,12 @@
     </bf:Person>
   </relators:prt>
   <bf:hasInstance rdf:resource="http://examples.org/mogie/instance/"/>
-
+  <bf:identifier>
+    <bf:Identifier>
+      <bf:identifierValue>reallyrandomuuid</bf:identifierValue>
+      <bf:identifierScheme>uuid</bf:identifierScheme>
+    </bf:Identifier>
+  </bf:identifier>
+  <bf:note xml:lang="en">A printed bible!</bf:note>
 </bf:Work>
  </rdf:RDF>

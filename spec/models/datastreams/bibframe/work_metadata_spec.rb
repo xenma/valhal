@@ -49,8 +49,7 @@ describe Datastreams::Bibframe::WorkMetadata do
   end
 
   it 'parses a note' do
-    expect(@ds.note)
-    .to eql ['Mode of access: World Wide Web.']
+    expect(@ds.note).to eql ['A printed bible!']
   end
 
   it 'parses the language' do
