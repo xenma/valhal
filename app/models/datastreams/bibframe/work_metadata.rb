@@ -44,6 +44,13 @@ module Datastreams
         title.Title.nodeset.map { |n| Title.new(n) }
       end
 
+      # Return only the title values - useful for indexing
+      def title_values
+        vals = []
+        titles.each { |t| vals << t.values.map(&:value) }
+        vals.flatten
+      end
+
       def add_title(title_hash)
         sibling = find_by_terms(:title).last
         if sibling

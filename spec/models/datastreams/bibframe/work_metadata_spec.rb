@@ -33,6 +33,11 @@ describe Datastreams::Bibframe::WorkMetadata do
       expect(@ds.titles.first.values.first.lang).to eql 'en'
     end
 
+    it 'can return an array of title values only' do
+      expect(@ds.title_values).to be_an Array
+      expect(@ds.title_values).to include 'The Mazarin Bible'
+    end
+
     it 'allows us to write a title' do
       ds = Datastreams::Bibframe::WorkMetadata.new
       ds.add_title(type: 'uniform', subtitle: 'and so on...', lang: 'en', value: 'Great Expectations')
