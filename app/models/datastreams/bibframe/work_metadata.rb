@@ -7,32 +7,21 @@ module Datastreams
         t.title do
           t.Title
         end
-        t.language do
-          t.authority(path: { attribute: 'authority', namespace_prefix: nil })
-        end
-
         t.note
-        t.subject do
-          t.Topic do
-            t.label
-          end
-        end
-
         t.identifier do
           t.Identifier
         end
         t.language do
           t.Language
         end
-        t.language_authority(proxy: [:language, :authority])
       end
 
       define_template :title do |xml, type, subtitle, lang, value|
         xml.title do
           xml.Title do
             xml.titleType { xml.text(type) }
-            xml.subtitle { xml.text(subtitle) }
-            lang_attr = { 'xml:lang' => lang }
+            xml.subtitle { xml.text(subtitle) } unless subtitle.blank?
+            lang_attr = lang.present? ? { 'xml:lang' => lang } : {}
             xml.titleValue(lang_attr) { xml.text(value) }
           end
         end
@@ -51,6 +40,14 @@ module Datastreams
         vals.flatten
       end
 
+      # Add a title to the datastream, expects a Hash
+      # with the following keys:
+      # { value: 'The Importance of Being Earnest', type: 'Uniform',
+      #  subtitle: 'and other encounters', lang: 'en' }
+      # Note that value is the only necessary key
+      # but the others are important as well!
+      # Note also that lang refers to the language of the titleValue
+      # not the lang of the resource
       def add_title(title_hash)
         sibling = find_by_terms(:title).last
         if sibling
@@ -79,15 +76,16 @@ module Datastreams
         @subtitle = xml.css('bf|subtitle').text
         @values = []
         xml.css('bf|titleValue').each do |n|
-          @values << TitleValue.new(n.text, n.attribute('lang').text)
+          lang = n.attribute('lang').present? ? n.attribute('lang').text : nil
+          @values << TitleValue.new(n.text, lang)
         end
       end
 
       # holds title values
       class TitleValue
-        attr_reader :value, :lang
+        attr_accessor :value, :lang
 
-        def initialize(value, lang)
+        def initialize(value, lang = nil)
           @value = value
           @lang = lang
         end
