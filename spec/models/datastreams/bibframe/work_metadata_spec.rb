@@ -53,12 +53,7 @@ describe Datastreams::Bibframe::WorkMetadata do
   end
 
   it 'parses the language' do
-    expect(@ds.language).to eql ['eng']
-  end
-
-  it 'parses the language authority' do
-    expect(@ds.language_authority)
-    .to eql ['http://id.loc.gov/vocabulary/languages.html']
+    expect(@ds.languages.first.value).to eql 'Latin'
   end
 
   it 'parses the uuid' do

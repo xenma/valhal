@@ -21,7 +21,9 @@ module Datastreams
         t.identifier do
           t.Identifier
         end
-
+        t.language do
+          t.Language
+        end
         t.language_authority(proxy: [:language, :authority])
       end
 
