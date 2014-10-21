@@ -27,7 +27,7 @@ module Datastreams
       define_template :language do |xml, part, label|
         xml.language do
           xml.Language do
-            xml.resourcePart { xml.text(part) }
+            xml.resourcePart { xml.text(part) } if part.present?
             xml.label { xml.text(label) }
           end
         end
@@ -58,11 +58,15 @@ module Datastreams
       def languages
         languages = []
         language_nodeset.each do |n|
-          part = n.css('bf|resourcePart').text
+          part = n.css('bf|resourcePart').present? ? n.css('bf|resourcePart').text : nil
           value = n.css('bf|label').text
           languages << Language.new(part, value)
         end
         languages
+      end
+
+      def language_values
+        languages.map(&:value)
       end
 
       def add_language(lang)
