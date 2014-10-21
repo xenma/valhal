@@ -36,5 +36,11 @@
     </bf:Identifier>
   </bf:identifier>
   <bf:note xml:lang="en">A printed bible!</bf:note>
+  <bf:language>
+    <bf:Language>
+      <bf:resourcePart>text</bf:resourcePart>
+      <bf:label>Latin</bf:label>
+    </bf:Language>
+  </bf:language>
 </bf:Work>
  </rdf:RDF>

@@ -21,4 +21,11 @@ describe Datastreams::Bibframe::Resource do
     schemes = ds.identifier_nodeset.map { |n| n.css('bf|identifierScheme').text }
     expect(schemes.size).to eql 1
   end
+
+  it 'allows us to set and get the language' do
+    ds = Datastreams::Bibframe::Resource.new
+    ds.add_language(value: 'franglish', part: 'commentary')
+    expect(ds.languages.first.part).to eql 'commentary'
+    expect(ds.languages.first.value).to eql 'franglish'
+  end
 end

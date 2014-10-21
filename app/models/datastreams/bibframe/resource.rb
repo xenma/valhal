@@ -10,6 +10,9 @@ module Datastreams
         t.identifier do
           t.Identifier
         end
+        t.language do
+          t.Language
+        end
       end
 
       define_template :identifier do |xml, scheme, value|
@@ -17,6 +20,15 @@ module Datastreams
           xml.Identifier do
             xml.identifierScheme { xml.text(scheme) }
             xml.identifierValue  { xml.text(value) }
+          end
+        end
+      end
+
+      define_template :language do |xml, part, label|
+        xml.language do
+          xml.Language do
+            xml.resourcePart { xml.text(part) }
+            xml.label { xml.text(label) }
           end
         end
       end
@@ -43,6 +55,20 @@ module Datastreams
         add_identifier(scheme: 'uuid', value: val)
       end
 
+      def languages
+        languages = []
+        language_nodeset.each do |n|
+          part = n.css('bf|resourcePart').text
+          value = n.css('bf|label').text
+          languages << Language.new(part, value)
+        end
+        languages
+      end
+
+      def add_language(lang)
+        add_to_sibling(:language, :language, lang[:part], lang[:value])
+      end
+
       # Add element after sibling if present
       # otherwise, add to root node.
       def add_to_sibling(sibling, template, *vals)
@@ -60,8 +86,22 @@ module Datastreams
         identifier.Identifier.nodeset
       end
 
+      def language_nodeset
+        language.Language.nodeset
+      end
+
       def self.xml_template
         Nokogiri::XML.parse('<bf:Resource xmlns:bf="http://bibframe.org/vocab/">')
+      end
+
+      # represents Language elements
+      class Language
+        attr_accessor :part, :value
+
+        def initialize(part, value)
+          @part = part
+          @value = value
+        end
       end
 
       protected
