@@ -4,19 +4,14 @@ module Bibframe
   module Work
     extend ActiveSupport::Concern
     included do
-      has_metadata(name: 'bfMetadata',
-                   type: Datastreams::Bibframe::WorkMetadata)
-      has_attributes(:title, :subtitle,
-                     datastream: 'bfMetadata', multiple: false)
-      has_attributes(:language, :language_authority, :note,
-                     datastream: 'bfMetadata', multiple: true)
+      has_metadata name: 'bfMetadata', type: Datastreams::Bibframe::WorkMetadata
+      has_attributes :note, datastream: 'bfMetadata', multiple: true
 
-      def uuid
-        bfMetadata.uuid
-      end
-
-      def uuid=(val)
-        bfMetadata.uuid = val
+      # Try to delegate to datastream if possible
+      def method_missing(meth, *args)
+        super unless bfMetadata.respond_to?(meth)
+        args = args.first if args.size == 1
+        args.present? ? bfMetadata.send(meth, args) : bfMetadata.send(meth)
       end
     end
   end
