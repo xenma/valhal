@@ -2,17 +2,37 @@ require 'spec_helper'
 
 describe Datastreams::Bibframe::WorkMetadata do
   before :all do
-    file = File.new('./spec/fixtures/test_book.xml')
+    file = File.new('./spec/fixtures/gutenberg.xml')
     @ds = Datastreams::Bibframe::WorkMetadata.from_xml(file)
   end
-  it 'parses a title' do
-    expect(@ds.title)
-    .to eql ['Historic American sheet music, 1850-1920']
-  end
 
-  it 'has a subtitle method' do
-    expect(@ds.subtitle)
-    .to eql ['selected from the collections of Duke University.']
+  describe 'titles' do
+    it 'returns an array of title objects' do
+      expect(@ds.titles).to be_an Array
+      expect(@ds.titles.first).to be_a Datastreams::Bibframe::Title
+    end
+
+    it 'has a titleType for each title object' do
+      expect(@ds.titles.first.type).to eql 'uniform'
+    end
+
+    it 'has a subtitle for each title object' do
+      expect(@ds.titles.first.subtitle).to eql 'Heroes * Villains * Towers * Punishment!'
+    end
+
+    it 'has an array of values for each title object' do
+      expect(@ds.titles.first.values).to be_an Array
+      expect(@ds.titles.first.values.first).to be_a Datastreams::Bibframe::Title::TitleValue
+    end
+
+    it 'has a value for each title value' do
+      expect(@ds.titles.first.values.first.value).to eql 'Gutenberg Bible'
+    end
+
+    it 'has a lang for each title value' do
+      expect(@ds.titles.first.values.first.lang).to eql 'en'
+    end
+
   end
 
   it 'parses a note' do
