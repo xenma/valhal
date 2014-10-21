@@ -12,17 +12,21 @@ class Instance < ActiveFedora::Base
   has_many :content_files, property: :content_for
   belongs_to :work, property: :instance_of
   has_and_belongs_to_many :parts, class_name: 'Work', property: :has_part, inverse_of: :is_part_of
-  #   has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
-  #   has_attributes :preservation_profile, :preservation_state, :preservation_details, :preservation_modify_date,
-  #                  :preservation_comment, :warc_id, :preservation_bitsafety, :preservation_confidentiality,
-  #                  datastream: 'preservationMetadata', :multiple => false
-  #
-  #   before_validation(:on => :create) do
-  #     self.preservation_profile = 'Undefined' if preservation_profile.blank?
-  #     self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
-  #     self.preservation_details = 'N/A' if preservation_details.blank?
-  #     set_preservation_modified_time(self)
-  #   end
+
+
+  has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
+  has_attributes :preservation_profile, :preservation_state, :preservation_details, :preservation_modify_date,
+                    :preservation_comment, :warc_id, :preservation_bitsafety, :preservation_confidentiality,
+                    datastream: 'preservationMetadata', :multiple => false
+
+  before_validation(:on => :create) do
+    self.preservation_profile = 'Undefined' if preservation_profile.blank?
+    self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
+    self.preservation_details = 'N/A' if preservation_details.blank?
+    set_preservation_modified_time(self)
+  end
+  
+  
   # @return whether any operations can be cascading (e.g. updating administrative or preservation metadata)
   # For the instances, this is true (since it has the files).
   def can_perform_cascading?
