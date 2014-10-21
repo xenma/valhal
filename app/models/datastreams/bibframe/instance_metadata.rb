@@ -10,8 +10,7 @@ module Datastreams
         end
         t.note
         t.identifier do
-          t.identifierValue
-          t.identifierScheme
+          t.Identifier
         end
         t.publication do
           t.publicationNote

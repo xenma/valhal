@@ -18,10 +18,8 @@ module Datastreams
           end
         end
 
-        t.systemNumber do
-          t.Identifier do
-            t.identifierValue
-          end
+        t.identifier do
+          t.Identifier
         end
 
         t.language_authority(proxy: [:language, :authority])
