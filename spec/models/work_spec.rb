@@ -10,13 +10,44 @@ describe Work do
     end
   end
 
+  # Note - this test suite is slow because
+  # adding relationships automatically triggers
+  # Fedora saves (it needs a pid to create a relationship)
+  # Sorry - but I don't think this can be improved without
+  # a Fedora mock (which doesn't exist)
   describe 'Relations:' do
+    before :each do
+      @work = Work.new
+      @rel = Work.new
+    end
 
-    it 'has many Instances'
-    it 'can be part of an Instance'
-    it 'can be related to other works'
-    it 'can be preceded by other works'
-    it 'can be followed by other works'
+    it 'has many Instances' do
+      expect(@work.instances).to respond_to :each
+    end
+
+    it 'can be part of an Instance' do
+      i = Instance.new
+      i.parts << @work
+      expect(i.parts).to include @work
+    end
+
+    it 'can be related to other works' do
+      @work.add_related(@rel)
+      expect(@work.related_works).to include @rel
+      expect(@rel.related_works).to include @work
+    end
+
+    it 'can be preceded by other works' do
+      @work.add_preceding(@rel)
+      expect(@work.preceding_works).to include @rel
+      expect(@rel.succeeding_works).to include @work
+    end
+
+    it 'can be followed by other works' do
+      @work.add_succeeding(@rel)
+      expect(@work.succeeding_works).to include @rel
+      expect(@rel.preceding_works).to include @work
+    end
     it 'can have a printer'
   end
 end
