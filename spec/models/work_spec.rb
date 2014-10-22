@@ -48,6 +48,11 @@ describe Work do
       expect(@work.succeeding_works).to include @rel
       expect(@rel.preceding_works).to include @work
     end
-    it 'can have a printer'
+
+    it 'can have a creator' do
+      p = Authority::Person.new
+      @work.creators << p
+      expect(@work.creators).to include p
+    end
   end
 end

@@ -12,7 +12,7 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :related_works, class_name: 'Work', property: :related_work, inverse_of: :related_work
   has_and_belongs_to_many :preceding_works, class_name: 'Work', property: :preceded_by, inverse_of: :succeeded_by
   has_and_belongs_to_many :succeeding_works, class_name: 'Work', property: :succeeded_by, inverse_of: :preceded_by
-
+  has_and_belongs_to_many :creators, class_name: 'Authority::Base', property: :creator, inverse_of: :creator_of
   # use this as an accessor for related_works
   # to ensure the relationship is symmetrical
   def add_related(work)
