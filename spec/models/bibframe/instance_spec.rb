@@ -10,51 +10,60 @@ describe Bibframe::Instance do
     @stub = Stub.new
   end
 
+  describe 'on include' do
+    it 'fails when included from a non AF class' do
+      expect {
+        # doesn't extend AF::Base
+        class StubNoAF; include Bibframe::Instance; end
+      }.to raise_error(RuntimeError)
+    end
+
+    it 'does not fail when included from an AF descendant' do
+      expect { class Desc < Stub; end }.not_to raise_error
+    end
+  end
+
   describe 'literals' do
-    it 'should allow us to set a language value' do
-      @stub.language = 'eng'
-      expect(@stub.language).to eql ['eng']
+    it 'should allow us to set and get notes' do
+      @stub.note = ['a note']
+      expect(@stub.note).to eql ['a note']
     end
-    it 'should allow us to set a language authority' do
-      @stub.language_authority = 'I says'
-      expect(@stub.language_authority).to eql ['I says']
+
+    it 'should allow us to set and get a copyright date' do
+      @stub.copyright_date = '19-02-2012'
+      expect(@stub.copyright_date).to eql '19-02-2012'
     end
-    it 'should allow us to set an identifier value' do
-      @stub.identifier_value = '12345'
-      expect(@stub.identifier_value).to eql ['12345']
-    end
-    it 'should allow us to set an identifier scheme' do
-      @stub.identifier_scheme = 'aleph'
-      expect(@stub.identifier_scheme).to eql ['aleph']
-    end
-    it 'should allow us to set a production date' do
-      @stub.production_date = '1999'
-      expect(@stub.production_date).to eql '1999'
-    end
-    it 'should allow us to set a production note' do
-      @stub.production_note = 'by giant robots!'
-      expect(@stub.production_note).to eql 'by giant robots!'
-    end
-    it 'should allow us to set a distribution date' do
-      @stub.distribution_date = '2000'
-      expect(@stub.distribution_date).to eql '2000'
-    end
-    it 'should allow us to set a distribution note' do
-      @stub.distribution_note = 'On llamas!'
-      expect(@stub.distribution_note).to eql 'On llamas!'
-    end
-    it 'should allow us to set a publication date' do
-      @stub.publication_date = '2000'
-      expect(@stub.publication_date).to eql '2000'
-    end
-    it 'should allow us to set a publication note' do
-      @stub.publication_note = 'On the bottom of your fridge'
-      expect(@stub.publication_note).to eql 'On the bottom of your fridge'
-    end
+
     it 'should allow us to set and get isbn13' do
       @stub.isbn13 = '9780521169004'
       expect(@stub.isbn13).to eql '9780521169004'
     end
+
+    it 'should allow us to set and get a mode of issuance' do
+      @stub.mode_of_issuance = 'printed'
+      expect(@stub.mode_of_issuance).to eql 'printed'
+    end
+
+    it 'should allow us to set and get a title statement' do
+      @stub.title_statement = 'Published in Rome'
+      expect(@stub.title_statement).to eql 'Published in Rome'
+    end
+
+    it 'should allow us to set and get an extent' do
+      @stub.extent = 'incomplete'
+      expect(@stub.extent).to eql 'incomplete'
+    end
+
+    it 'should allow us to set and get dimensions' do
+      @stub.dimensions = '36cm'
+      expect(@stub.dimensions).to eql '36cm'
+    end
+
+    it 'should allow us to set and get a uuid' do
+      @stub.uuid = 'veryrandomuuid'
+      expect(@stub.uuid).to eql 'veryrandomuuid'
+    end
+
   end
 
   describe 'relations' do

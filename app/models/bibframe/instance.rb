@@ -4,23 +4,19 @@ module Bibframe
   module Instance
     extend ActiveSupport::Concern
     included do
+      fail 'The host class must extend ActiveFedora::Base!' unless self < ActiveFedora::Base
       has_metadata(name: 'bfMetadata',
                    type: Datastreams::Bibframe::InstanceMetadata)
-      has_attributes(:production_note, :production_date,
-                     :publication_note, :publication_date,
-                     :distribution_note, :distribution_date,
-                     :isbn13,
-                     datastream: 'bfMetadata', multiple: false)
-      has_attributes(:language, :language_authority, :note,
-                     :identifier_value, :identifier_scheme,
-                     datastream: 'bfMetadata', multiple: true)
 
-      def uuid
-        bfMetadata.uuid
-      end
+      has_attributes :note, datastream: 'bfMetadata', multiple: true
+      has_attributes :copyright_date, :isbn13, :mode_of_issuance, :title_statement,
+                     :extent, :dimensions, datastream: 'bfMetadata', multiple: false
 
-      def uuid=(val)
-        bfMetadata.uuid = val
+      # Try to delegate to datastream if possible
+      def method_missing(meth, *args)
+        super unless bfMetadata.respond_to?(meth)
+        args = args.first if args.size == 1
+        args.present? ? bfMetadata.send(meth, args) : bfMetadata.send(meth)
       end
     end
   end
