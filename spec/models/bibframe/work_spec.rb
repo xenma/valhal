@@ -9,6 +9,20 @@ describe Bibframe::Work do
   before :all do
     @stub = Stub.new
   end
+
+  describe 'on include' do
+    it 'fails when included from a non AF class' do
+      expect {
+        # doesn't extend AF::Base
+        class StubNoAF; include Bibframe::Work; end
+      }.to raise_error(RuntimeError)
+    end
+
+    it 'does not fail when included from an AF descendant' do
+      expect { class Desc < Stub; end }.not_to raise_error
+    end
+  end
+
   describe 'Datastreams:' do
     it 'should add Bibframe datastream' do
       expect(@stub.datastreams.keys).to include('bfMetadata')
@@ -43,5 +57,6 @@ describe Bibframe::Work do
     it 'can be preceded by other works'
     it 'can be followed by other works'
     it 'can be part of an Instance'
+    it 'can have a printer'
   end
 end

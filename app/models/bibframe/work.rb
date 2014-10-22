@@ -3,7 +3,10 @@ module Bibframe
   # should live in this module
   module Work
     extend ActiveSupport::Concern
+
     included do
+      fail 'The host class must extend ActiveFedora::Base!' unless self < ActiveFedora::Base
+
       has_metadata name: 'bfMetadata', type: Datastreams::Bibframe::WorkMetadata
       has_attributes :note, datastream: 'bfMetadata', multiple: true
 
