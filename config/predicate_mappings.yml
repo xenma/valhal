@@ -16,8 +16,11 @@
 #   :oai_item_id => ["info:fedora/oai:example.edu:changeme:500"]
 #
 :predicate_mapping:
-  http://www.kb.dk#:
+  http://bibframe.org/vocab/#:
     :instance_of: instanceOf
+    :is_part_of: isPartOf
+    :has_part: hasPart
+  http://www.kb.dk#:
     :content_for: contentFor
   info:fedora/fedora-system:def/relations-external#:
     :conforms_to: conformsTo

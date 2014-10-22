@@ -14,7 +14,7 @@ describe Bibframe::Instance do
     end
 
     it 'does not fail when included from an AF descendant' do
-      expect { class Desc < Stub; end }.not_to raise_error
+      expect { Instance.new }.not_to raise_error
     end
   end
 
@@ -58,11 +58,5 @@ describe Bibframe::Instance do
       @instance.uuid = 'veryrandomuuid'
       expect(@instance.uuid).to eql 'veryrandomuuid'
     end
-
-  end
-
-  describe 'relations' do
-    it 'is an instance of a work'
-    it 'can have parts which are Works'
   end
 end
