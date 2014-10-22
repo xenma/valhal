@@ -59,13 +59,4 @@ describe Bibframe::Work do
       expect(@stub.respond_to?(:nonsense_method)).to eql false
     end
   end
-
-  describe 'Relations:' do
-    it 'has many Instances'
-    it 'can be related to other works'
-    it 'can be preceded by other works'
-    it 'can be followed by other works'
-    it 'can be part of an Instance'
-    it 'can have a printer'
-  end
 end
