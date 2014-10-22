@@ -3,6 +3,7 @@ module Bibframe
   # should live in this module
   module Work
     extend ActiveSupport::Concern
+    include Bibframe::Concerns::MetadataDelegation
 
     included do
       fail 'The host class must extend ActiveFedora::Base!' unless self < ActiveFedora::Base
@@ -10,12 +11,6 @@ module Bibframe
       has_metadata name: 'bfMetadata', type: Datastreams::Bibframe::WorkMetadata
       has_attributes :note, datastream: 'bfMetadata', multiple: true
 
-      # Try to delegate to datastream if possible
-      def method_missing(meth, *args)
-        super unless bfMetadata.respond_to?(meth)
-        args = args.first if args.size == 1
-        args.present? ? bfMetadata.send(meth, args) : bfMetadata.send(meth)
-      end
     end
   end
 end

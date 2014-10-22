@@ -51,6 +51,15 @@ describe Bibframe::Work do
     end
   end
 
+  describe 'respond_to' do
+    it 'should return true for methods the datastream has' do
+      expect(@stub.respond_to?(:uuid=)).to eql true
+    end
+    it 'should return false for methods the datastream does not have' do
+      expect(@stub.respond_to?(:nonsense_method)).to eql false
+    end
+  end
+
   describe 'Relations:' do
     it 'has many Instances'
     it 'can be related to other works'
