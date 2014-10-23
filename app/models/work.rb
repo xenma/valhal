@@ -12,25 +12,44 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :related_works, class_name: 'Work', property: :related_work, inverse_of: :related_work
   has_and_belongs_to_many :preceding_works, class_name: 'Work', property: :preceded_by, inverse_of: :succeeded_by
   has_and_belongs_to_many :succeeding_works, class_name: 'Work', property: :succeeded_by, inverse_of: :preceded_by
-  has_and_belongs_to_many :creators, class_name: 'Authority::Base', property: :creator, inverse_of: :creator_of
-  # use this as an accessor for related_works
-  # to ensure the relationship is symmetrical
+  has_and_belongs_to_many :creators, class_name: 'Authority::Agent', property: :creator, inverse_of: :creator_of
+  has_and_belongs_to_many :authors, class_name: 'Authority::Agent', property: :author, inverse_of: :author_of
+  has_and_belongs_to_many :recipients, class_name: 'Authority::Agent', property: :recipient, inverse_of: :recipient_of
+
+  # In general use these accessors when you want
+  # to add a relationship. These will ensure
+  # that the relationship is symmetrical and
+  # prevent headaches down the line.
+  # Note also that these methods will automatically
+  # save the object, as AF does this for the related
+  # object when creating a relation.
   def add_related(work)
-    related_works << work
     work.related_works << self
+    related_works << work
   end
 
-  # use this as an accessor for preceding_works
-  # to ensure the relationship is symmetrical
   def add_preceding(work)
-    preceding_works << work
     work.succeeding_works << self
+    preceding_works << work
   end
 
-  # use this as an accessor for succeeding_works
-  # to ensure the relationship is symmetrical
   def add_succeeding(work)
-    succeeding_works << work
     work.preceding_works << self
+    succeeding_works << work
+  end
+
+  def add_creator(agent)
+    agent.created_works << self
+    creators << agent
+  end
+
+  def add_author(agent)
+    agent.authored_works << self
+    authors << agent
+  end
+
+  def add_recipient(agent)
+    agent.received_works << self
+    recipients << agent
   end
 end

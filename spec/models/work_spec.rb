@@ -50,9 +50,24 @@ describe Work do
     end
 
     it 'can have a creator' do
-      p = Authority::Person.new
-      @work.creators << p
-      expect(@work.creators).to include p
+      a = Authority::Agent.new
+      @work.add_creator(a)
+      expect(@work.creators).to include a
+      expect(a.created_works).to include @work
+    end
+
+    it 'can have an author' do
+      a = Authority::Agent.new
+      @work.add_author(a)
+      expect(@work.authors).to include a
+      expect(a.authored_works).to include @work
+    end
+
+    it 'can have a recipient' do
+      a = Authority::Agent.new
+      @work.add_recipient(a)
+      expect(@work.recipients).to include a
+      expect(a.received_works).to include @work
     end
   end
 end

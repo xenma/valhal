@@ -24,13 +24,20 @@
     :related_work: relatedWork
     :preceded_by: precededBy
     :succeeded_by: succeededBy
+  # We use LOC relators for describing relations
+  # on the Resource side.
   http://id.loc.gov/vocabulary/relators/#:
     :creator: cre
+    :author: aut
+    :recipient: rcp
   # Custom stuff we don't have a proper schema for yet
   # Try and find a proper schema before putting something here!
   http://www.kb.dk#:
+    # These show the Authority side of a relationship
     :content_for: contentFor
     :creator_of: creatorOf
+    :author_of: authorOf
+    :recipient_of: recipient_of
   info:fedora/fedora-system:def/relations-external#:
     :conforms_to: conformsTo
     :has_annotation: hasAnnotation
