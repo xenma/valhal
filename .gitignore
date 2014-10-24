@@ -17,3 +17,4 @@
 /jetty
 .keep
 /.idea
+/config/application.local.yml
