@@ -95,7 +95,7 @@ module Datastreams
       end
 
       def self.xml_template
-        Nokogiri::XML.parse('<bf:Resource xmlns:bf="http://bibframe.org/vocab/">')
+        Nokogiri::XML.parse('<bf:Resource xmlns:bf="http://bibframe.org/vocab/"/>')
       end
 
       # represents Language elements

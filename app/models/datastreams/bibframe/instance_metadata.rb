@@ -39,7 +39,7 @@ module Datastreams
       end
 
       def self.xml_template
-        Nokogiri::XML.parse('<bf:Instance xmlns:bf="http://bibframe.org/vocab/">')
+        Nokogiri::XML.parse('<bf:Instance xmlns:bf="http://bibframe.org/vocab/"/>')
       end
 
       # return a hash of identifiers such that

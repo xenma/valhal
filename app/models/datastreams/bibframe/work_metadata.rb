@@ -62,7 +62,7 @@ module Datastreams
       end
 
       def self.xml_template
-        Nokogiri::XML.parse('<bf:Work xmlns:bf="http://bibframe.org/vocab/">')
+        Nokogiri::XML.parse('<bf:Work xmlns:bf="http://bibframe.org/vocab/"/>')
       end
     end
 
