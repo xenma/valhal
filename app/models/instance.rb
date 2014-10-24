@@ -9,8 +9,9 @@ class Instance < ActiveFedora::Base
   include Hydra::AccessControls::Permissions
   include Concerns::AdminMetadata
   include Concerns::UUIDGenerator
-  belongs_to :work, property: :instance_of
   has_many :content_files, property: :content_for
+  belongs_to :work, property: :instance_of
+  has_and_belongs_to_many :parts, class_name: 'Work', property: :has_part, inverse_of: :is_part_of
   #   has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
   #   has_attributes :preservation_profile, :preservation_state, :preservation_details, :preservation_modify_date,
   #                  :preservation_comment, :warc_id, :preservation_bitsafety, :preservation_confidentiality,
