@@ -20,6 +20,6 @@ changed_files = `git status --porcelain`.split(/\n/).
   not ignored_files.include? file_name
 }.join(' ')
 
-#system("rubocop #{changed_files}") unless changed_files.empty?
+system("rubocop #{changed_files}") unless changed_files.empty?
 
 exit $CHILD_STATUS.to_s[-1].to_i
