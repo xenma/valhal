@@ -1,5 +1,5 @@
-== Chronos - The Royal Librarys 'Digital Library Platform'
-=== VALHAL. Digital Curation
+== VALHAL. Digital Curation Platform
+=== Part of Chronos - The Royal Librarys 'Digital Library Platform'
 
 
 === Up and running
@@ -8,21 +8,21 @@
 * Rails Version
 
 * System dependencies
-** Fedora Commons
-** Apache Solr
-** Redis
-** 
+ * Fedora Commons
+ * Apache Solr
+ * Redis
+ 
 
 * Configuration
-** <tt>rake jetty:config<tt> (If running the hydra jetty) else copy configuration from fedora_conf/ and solr_conf/ to the respective installation directories.
+ * <tt>rake jetty:config<tt> (If running the hydra jetty) else copy configuration from fedora_conf/ and solr_conf/ to the respective installation directories.
 
 * Database creation
-** <tt>rake:dbmigrate</tt>
+ * <tt>rake:dbmigrate</tt>
 
 * How to run the test suite
-** rake spec
+ * rake spec
 
 * Services (job queues, cache servers, search engines, etc.)
 
 * Public website
-** Valhal is only intended for curation inside the Royal Librarys firewall. All public material should evetually be published through our dissemination platform 'Bifrost'
+ * Valhal is only intended for curation inside the Royal Librarys firewall. All public material should evetually be published through our dissemination platform 'Bifrost'
