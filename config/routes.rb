@@ -11,6 +11,11 @@ Rails.application.routes.draw do
 
   root to: 'catalog#index'
 
+  # namespace for managing system
+  namespace :administration do
+    resources :controlled_lists
+  end
+
   blacklight_for :catalog
   devise_for :users
 
