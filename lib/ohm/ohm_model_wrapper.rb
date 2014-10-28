@@ -1,3 +1,9 @@
+# Monkey patch Ohm::Set to ensure
+# we have this standard functionality
+class Ohm::Set
+  alias_method :length, :size
+end
+
 # Helper functions and ActiveModel compliance
 # for inheriting classes
 class OhmModelWrapper < Ohm::Model
