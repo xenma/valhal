@@ -1,0 +1,11 @@
+# Enable pre-loading of vocabularies into Redis
+# Called by rake sifd:load_vocabs to be used on new deploys only.
+workflow_status:
+  name: Workflow status
+  entries:
+    ingested:
+      name: Ingested
+    complete:
+      name: Metadata complete
+    finished:
+      name: Færdig forvaltet
