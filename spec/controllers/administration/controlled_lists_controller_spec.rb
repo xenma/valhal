@@ -23,7 +23,7 @@ describe Administration::ControlledListsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Administration::ControlledList. As you add validations to Administration::ControlledList, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { name: 'Language codes' } }
+  let(:valid_attributes) { { name: 'Language codes', elements: [ { name: 'entry1' }, { name: 'entry2' }] } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -73,6 +73,11 @@ describe Administration::ControlledListsController, type: :controller do
         post :create, { controlled_list: valid_attributes }, valid_session
         expect(assigns(:controlled_list)).to be_a(Administration::ControlledList)
         expect(assigns(:controlled_list)).to be_persisted
+      end
+
+      it 'creates elements for the controlled list' do
+        post :create, { controlled_list: valid_attributes }, valid_session
+        expect(assigns(:controlled_list).elements.size).to be > 0
       end
     end
 
