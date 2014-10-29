@@ -27,9 +27,12 @@
       <%= render partial: 'element', object: Administration::ListEntry.new %>
     </div>
     <hr/>
-    <a class="btn btn-small" href="#" data-function="new-controlled_list-entry"><i class="icon-plus-sign"></i> <%= t '.add_new' %></a>
+    <a class="btn btn-sm btn-primary col-sm-offset-5" href="#" data-function="new-controlled_list-entry">
+      <span class="glyphicon glyphicon-plus"></span>
+      Add new
+    </a>
     <hr/>
-    <div class="actions">
-      <%= f.submit 'Save', class: 'btn' %>
+    <div class="action">
+      <%= f.submit 'Save', class: 'btn btn-lg btn-primary col-sm-offset-3' %>
     </div>
 <% end %>
