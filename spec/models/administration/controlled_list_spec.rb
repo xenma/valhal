@@ -11,9 +11,8 @@ describe Administration::ControlledList do
   end
 
   it 'should have a list of elements' do
-    cr = Administration::ControlledList.new
-    e = Administration::ListEntry.new(name: 'new element')
-    cr.elements.add(e)
-    expect(cr.elements).to include e
+    cr = Administration::ControlledList.create
+    e = Administration::ListEntry.create(name: 'new element', controlled_list: cr)
+    expect(cr.elements.first).to eql e
   end
 end
