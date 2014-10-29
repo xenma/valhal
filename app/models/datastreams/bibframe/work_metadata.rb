@@ -59,6 +59,11 @@ module Datastreams
         node
       end
 
+      def remove_titles
+        title.Title.nodeset.each {|n| n.remove}
+        content_will_change!
+      end
+
       def self.xml_template
         Nokogiri::XML.parse('<bf:Work xmlns:bf="http://bibframe.org/vocab/"/>')
       end
