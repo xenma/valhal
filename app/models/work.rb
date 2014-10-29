@@ -60,6 +60,13 @@ class Work < ActiveFedora::Base
     recipients << agent
   end
 
+  def titles=(val)
+    remove_titles
+    val.each do |v|
+      add_title(v)
+    end
+  end
+
   def to_solr(solr_doc = {})
     super
     Solrizer.insert_field(solr_doc, 'display_value',title_values.first, :displayable)
