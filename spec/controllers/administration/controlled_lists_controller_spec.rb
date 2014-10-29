@@ -28,7 +28,13 @@ describe Administration::ControlledListsController, type: :controller do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # Administration::ControlledListsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {}}
+
+  before :each do
+    @user = double('user', groups: ['admin'])
+    request.env['warden'].stub :authenticate! => @user
+    allow(controller).to receive(:current_user) { @user }
+  end
 
   describe 'GET index' do
     it 'assigns all instances as @instances' do

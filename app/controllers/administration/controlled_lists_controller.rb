@@ -1,8 +1,7 @@
 module Administration
   class ControlledListsController < ApplicationController
+    before_action :authenticate_user!
     before_action :set_controlled_list, only: [:show, :edit, :update, :destroy]
-
-    #authorize_resource
 
     # GET /controlled_lists
     def index
