@@ -65,18 +65,18 @@ describe Administration::ControlledListsController, type: :controller do
     describe 'with valid params' do
       it 'creates a new Administration::ControlledList' do
         expect {
-          post :create, { controlled_list: valid_attributes }, valid_session
+          post :create, { administration_controlled_list: valid_attributes }, valid_session
         }.to change(Administration::ControlledList, :count).by(1)
       end
 
       it 'assigns a newly created instance as @controlled_list' do
-        post :create, { controlled_list: valid_attributes }, valid_session
+        post :create, { administration_controlled_list: valid_attributes }, valid_session
         expect(assigns(:controlled_list)).to be_a(Administration::ControlledList)
         expect(assigns(:controlled_list)).to be_persisted
       end
 
       it 'creates elements for the controlled list' do
-        post :create, { controlled_list: valid_attributes }, valid_session
+        post :create, { administration_controlled_list: valid_attributes }, valid_session
         expect(assigns(:controlled_list).elements.size).to be > 0
       end
     end
@@ -85,14 +85,14 @@ describe Administration::ControlledListsController, type: :controller do
       it 'assigns a newly created but unsaved instance as @controlled_list' do
         # Trigger the behavior that occurs when invalid params are submitted
         Administration::ControlledList.any_instance.stub(:save).and_return(false)
-        post :create, { controlled_list: { name: ''} }, valid_session
+        post :create, { administration_controlled_list: { name: ''} }, valid_session
         expect(assigns(:controlled_list)).not_to be_persisted
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Administration::ControlledList.any_instance.stub(:save).and_return(false)
-        post :create, { controlled_list: { name: ''} }, valid_session
+        post :create, { administration_controlled_list: { name: ''} }, valid_session
         response.should render_template('new')
       end
     end
@@ -107,18 +107,18 @@ describe Administration::ControlledListsController, type: :controller do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Administration::ControlledList.any_instance.should_receive(:update).with('name' => 'galoshes!')
-        put :update, { id: controlled_list.id, controlled_list: { 'name' => 'galoshes!' } }, valid_session
+        put :update, { id: controlled_list.id, administration_controlled_list: { 'name' => 'galoshes!' } }, valid_session
       end
 
       it 'assigns the requested instance as @controlled_list' do
         instance = Administration::ControlledList.create(valid_attributes)
-        put :update, { id: instance.to_param, controlled_list: valid_attributes }, valid_session
+        put :update, { id: instance.to_param, administration_controlled_list: valid_attributes }, valid_session
         assigns(:controlled_list).should eq(instance)
       end
 
       it 'redirects to the instance' do
         instance = Administration::ControlledList.create(valid_attributes)
-        put :update, { id: instance.to_param, controlled_list: valid_attributes }, valid_session
+        put :update, { id: instance.to_param, administration_controlled_list: valid_attributes }, valid_session
         response.should redirect_to(instance)
       end
     end
@@ -128,7 +128,7 @@ describe Administration::ControlledListsController, type: :controller do
         controlled_list = Administration::ControlledList.create(valid_attributes)
         # Trigger the behavior that occurs when invalid params are submitted
         Administration::ControlledList.any_instance.stub(:save).and_return(false)
-        put :update, { id: controlled_list.to_param, controlled_list: { something: 'stupid' } }, valid_session
+        put :update, { id: controlled_list.to_param, administration_controlled_list: { something: 'stupid' } }, valid_session
         assigns(:controlled_list).should eq(controlled_list)
       end
 
@@ -136,7 +136,7 @@ describe Administration::ControlledListsController, type: :controller do
         controlled_list = Administration::ControlledList.create(valid_attributes)
         # Trigger the behavior that occurs when invalid params are submitted
         Administration::ControlledList.any_instance.stub(:save).and_return(false)
-        put :update, { id: controlled_list.to_param, controlled_list: { something: 'stupid' } }, valid_session
+        put :update, { id: controlled_list.to_param, administration_controlled_list: { something: 'stupid' } }, valid_session
         response.should render_template('edit')
       end
     end

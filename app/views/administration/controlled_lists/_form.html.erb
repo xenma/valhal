@@ -10,21 +10,19 @@
         </div>
     <% end %>
     <% unless @controlled_list.name %>
-        <div class="control-group">
-          <%= f.label t('.vocab_name'), class: 'control-label' %>
-          <div class="controls">
-            <%= f.text_field :name %>
+        <div class="form-group">
+          <%= f.label 'Controlled List Name', class: 'control-label col-sm-2' %>
+          <div class="col-sm-4">
+            <%= f.text_field :name, class: 'form-control' %>
           </div>
         </div>
     <% end %>
     <% if @controlled_list.elements.length > 0 %>
-        <h3><%= t '.entries' %></h3>
         <% @controlled_list.elements.each do |element| %>
             <%= render partial: 'element', object: element %>
-            <hr/>
         <% end %>
     <% end %>
-    <h4><%= t '.new_entry' %></h4>
+    <h4>New entry</h4>
     <div data-hook="empty-entries">
       <%= render partial: 'element', object: Administration::ListEntry.new %>
     </div>
