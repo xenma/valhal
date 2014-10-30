@@ -1,0 +1,32 @@
+<%= form_for(@authority_object, html: { class: 'form-horizontal' }) do |f| %>
+  <% if @authority_object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@authority_object.errors.count, "error") %> prohibited this authority_basis from being saved:</h2>
+
+      <ul>
+      <% @authority_object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <h2>Authorised Personal Names</h2>
+    <div class="form-group">
+      <div class="col-sm-4">Field</div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4">Field</div>
+    </div>
+    <h2>Variant Names</h2>
+    <div class="form-group">
+      <div class="col-sm-4">Field</div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-4">Field</div>
+    </div>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
