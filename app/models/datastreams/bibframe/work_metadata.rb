@@ -60,26 +60,12 @@ module Datastreams
       end
 
       def remove_titles
-        title.Title.nodeset.each {|n| n.remove}
+        title.nodeset.each {|n| n.remove}
         content_will_change!
       end
 
       def self.xml_template
         Nokogiri::XML.parse('<bf:Work xmlns:bf="http://bibframe.org/vocab/"/>')
-      end
-    end
-
-    # present easy accessors for title attributes
-    class Title
-      attr_reader :type, :value, :subtitle, :lang
-
-      # Create new object from a Nokogiri::XML::Element
-      def initialize(xml)
-        @type = xml.css('bf|titleType').text
-        @subtitle = xml.css('bf|subtitle').text
-        val_node = xml.css('bf|titleValue')
-        @value = val_node.text
-        @lang = val_node.attr('lang').present? ? val_node.attr('lang').text : nil
       end
     end
   end
