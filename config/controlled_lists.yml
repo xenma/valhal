@@ -9,3 +9,25 @@ workflow_status:
       name: Metadata complete
     finished:
       name: Færdig forvaltet
+title_type:
+  name: Title types
+  entries:
+    uniform:
+      name: Uniform
+    abbreviated:
+      name: Abbreviated
+    translated:
+      name: Traslated
+    alternative:
+      name: Alternative
+language:
+  name: Language
+  entries:
+    dan:
+      name: Dansk
+    eng:
+      name: Engelsk
+    sve:
+      name: Svensk
+    sam:
+      name: Samaritansk Aramæisk
