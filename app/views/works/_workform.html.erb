@@ -1,0 +1,15 @@
+<div class="work editMode">
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <%= form_for @work do |f| %>
+        <%= fields_for :title  do |title_fields| %>
+        <% end %>
+    <% end %>
+  </div>
+</div>

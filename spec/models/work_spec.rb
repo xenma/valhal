@@ -121,5 +121,17 @@ describe Work do
       vals = @work.to_solr.values.flatten
       expect(vals).to include 'Pablo Picasso'
     end
+
+    it 'should be able to add a list of title hash' do
+      titles = []
+      titles.push(value: 'Title1')
+      titles.push(value: 'Title2')
+      @work.titles = titles
+      @work.title_values.should == ['Title1','Title2']
+      titles.pop
+      titles.push(value: 'Title3')
+      @work.titles = titles
+      @work.title_values.should == ['Title1','Title3']
+    end
   end
 end
