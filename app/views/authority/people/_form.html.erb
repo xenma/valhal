@@ -10,13 +10,39 @@
       </ul>
     </div>
   <% end %>
+
     <h2>Authorised Personal Names</h2>
-    <div class="form-group">
-      <div class="col-sm-4">Field</div>
+    <div class='form-group'>
+      <div class='col-sm-2'>
+        <label>Scheme</label>
+      </div>
+      <div class='col-sm-2'>
+       <input class="form-control" name="authority_person[authorized_personal_name][scheme]"/>
+      </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-4">Field</div>
+    <div class='form-group'>
+      <div class='col-sm-2'>
+        <label>Given name</label>
+      </div>
+      <div class='col-sm-4'>
+        <input class="form-control" name="authority_person[authorized_personal_name][given]"/>
+      </div>
+      <div class='col-sm-2'>
+        <label>Family name</label>
+      </div>
+      <div class='col-sm-4'>
+        <input class="form-control" name="authority_person[authorized_personal_name][family]"/>
+      </div>
     </div>
+    <div class='form-group'>
+      <div class='col-sm-2'>
+        <label>Date</label>
+      </div>
+      <div class='col-sm-2'>
+        <input class="form-control" name="authority_person[authorized_personal_name][date]"/>
+      </div>
+    </div>
+
     <h2>Variant Names</h2>
     <div class="form-group">
       <div class="col-sm-4">Field</div>
