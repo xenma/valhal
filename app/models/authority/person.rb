@@ -16,9 +16,9 @@ module Authority
       super({})
       return if args.empty? || args.first.nil?
       if args.size == 1
-        add_authorized_personal_name(args.pop)
+        self.authorized_personal_name = args.pop
       else
-        args.each { |name| add_authorized_personal_name(name) }
+        args.each { |name| self.authorized_personal_name = name }
       end
     end
 
@@ -28,7 +28,7 @@ module Authority
       mads.authorized_personal_names
     end
 
-    def add_authorized_personal_name(name_hash)
+    def authorized_personal_name=(name_hash)
       mads.add_authorized_personal_name(name_hash)
     end
 
