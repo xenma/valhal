@@ -20,6 +20,21 @@ namespace :valhal do
       end
   end
 
+  desc 'Load pre-configured ControlledLists'
+  task load_controlled_lists: :environment do
+    Administration::ControlledList.delete_all
+    Administration::ListEntry.delete_all
+    lists = YAML.load_file(Rails.root.join('config', 'controlled_lists.yml'))
+    lists.each_value do |val|
+      current = Administration::ControlledList.create(name: val['name'])
+      if val.has_key?('entries')
+        val['entries'].each_value do |entry|
+          Administration::ListEntry.create(name: entry['name'], controlled_list: current)
+        end
+      end
+    end
+  end
+
   private
 
   def add_default_rights(obj)
