@@ -1,0 +1,29 @@
+<%= fields_for 'work[titles][]', title, index: nil do |title_fields| %>
+    <div class="<%= 'new-title' unless !title.blank? %>">
+        <div class='col-sm-8'>
+          <div class='form-group'>
+            <%= title_fields.label :value, 'Titel' %>
+            <%= title_fields.text_field :value, :placeholder => 'Titel', :class=>'form-control' %>
+          </div>
+        </div>
+      <div class='col-sm-2'>
+        <div class="form-group">
+          <%= title_fields.label :lang, 'Sprog' %>
+          <%= title_fields.text_field :lang, :placeholder => 'Sprog', :class=>'form-control' %>
+        </div>
+      </div>
+      <div class='col-sm-2'>
+        <div class="form-group">
+          <%= title_fields.label :type, 'Type' %>
+          <%= title_fields.text_field :type, :placeholder => 'Type', :class=>'form-control' %>
+        </div>
+      </div>
+        <div class='col-sm-12'>
+          <div class="form-group">
+            <%= title_fields.label :subtitle, 'Undertitel' %>
+            <%= title_fields.text_field :subtitle, :placeholder => 'Undertitel', :class=>'form-control' %>
+          </div>
+        </div>
+
+    </div>
+<% end %>

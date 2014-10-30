@@ -1,0 +1,30 @@
+<div class="work editMode">
+
+  <div class="page-header">
+    <div class="container">
+      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <%= form_for @work do |f| %>
+        <% if @work.titles.length > 0  %>
+            <h3>Titler</h3>
+            <% @work.titles.each do |title| %>
+                <%= render  partial: 'title', :object => title %>
+            <% end%>
+        <% end %>
+        <hr/>
+        <div data-hook="empty_titles">
+          <%= render partial: 'title', object: Datastreams::Bibframe::Title.new %>
+        </div>
+        <a class="btn btn-sm btn-primary col-sm-offset-5" href="#" data-function="new-title">
+          <span class="glyphicon glyphicon-plus"></span>
+          Tilføj Titel
+        </a>
+        <div class="actions">
+          <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-primary col-sm-offset-11' %>
+        </div>
+    <% end %>
+  </div>
+</div>
