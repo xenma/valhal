@@ -1,6 +1,27 @@
 module Authority
   # Model person authority records
   class Person < Authority::Agent
+    # Authority::Person can be initialized
+    # in several ways
+    # 1) without any arguments
+    # e.g. Authority::Person.new
+    # 2) with a hash of name elements
+    # e.g. Authority::Person.new(scheme: 'viaf', family: 'Joyce', given: 'James', date: '1882-1941' )
+    # 3) with an array of name element hashes
+    # e.g. Authority::Person.new(
+    #   { full: "Flann O'Brien", scheme: 'viaf' },
+    #   { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' },
+    # ...)
+    def initialize(*args)
+      super({})
+      return if args.empty? || args.first.nil?
+      if args.size == 1
+        add_authorized_personal_name(args.pop)
+      else
+        args.each { |name| add_authorized_personal_name(name) }
+      end
+    end
+
     # All authorized personal names
     # organised by their scheme
     def authorized_personal_names
