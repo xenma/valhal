@@ -63,7 +63,7 @@ class Work < ActiveFedora::Base
   def titles=(val)
     remove_titles
     val.each do |v|
-      add_title(v)
+      add_title(v) unless v['value'].blank? && v['subtitle'].blank?
     end
   end
 
