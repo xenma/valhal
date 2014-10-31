@@ -24,10 +24,8 @@ language:
   name: Language
   entries:
     dan:
-      name: Dansk
+      name: dan
     eng:
-      name: Engelsk
+      name: eng
     sve:
-      name: Svensk
-    sam:
-      name: Samaritansk Aramæisk
+      name: sve
