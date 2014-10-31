@@ -13,13 +13,13 @@
       <div class='col-sm-2'>
         <div class="form-group">
           <%= title_fields.label :lang, 'Sprog' %>
-          <%= title_fields.text_field :lang, :placeholder => 'Sprog', :class=>'form-control' %>
+          <%= title_fields.select :lang, get_controlled_vocab('Language'), {} , {:class=>'combobox'} %>
         </div>
       </div>
       <div class='col-sm-2'>
         <div class="form-group">
           <%= title_fields.label :type, 'Type' %>
-          <%= title_fields.text_field :type, :placeholder => 'Type', :class=>'form-control' %>
+          <%= title_fields.select :type, get_controlled_vocab('Title types'), {} , {:class=>'combobox'} %>
         </div>
       </div>
         <div class='col-sm-12'>

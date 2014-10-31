@@ -9,4 +9,9 @@ $(document).ready(function(){
     $('[data-function="delete-title"]').click(function(){
         $(this).parent().remove();
     })
+
+    $('.combobox').combobox();
+    $('.combobox').click(function(){
+        $(this).siblings('.dropdown-toggle').click();
+    });
 });
