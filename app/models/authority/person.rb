@@ -29,7 +29,11 @@ module Authority
     end
 
     def authorized_personal_name=(name_hash)
+      mads.ensure_valid_name_hash!(name_hash)
       mads.add_authorized_personal_name(name_hash)
+    # if we have a blank array just skip it
+    rescue
+      return
     end
 
     # Build a display value from the name and date
