@@ -31,6 +31,7 @@ describe Administration::ControlledListsController, type: :controller do
   let(:valid_session) { {}}
 
   before :each do
+    Administration::ControlledList.delete_all
     @user = double('user', groups: ['admin'])
     request.env['warden'].stub :authenticate! => @user
     allow(controller).to receive(:current_user) { @user }

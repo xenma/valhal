@@ -45,6 +45,7 @@ GEM
     amq-protocol (1.9.2)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.9)
+    bcrypt (3.1.9-x86-mingw32)
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -102,9 +103,13 @@ GEM
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    eventmachine (1.0.3-x86-mingw32)
     execjs (2.2.2)
+    fakeredis (0.5.0)
+      redis (~> 3.0)
     fastercsv (1.5.5)
     ffi (1.9.6)
+    ffi (1.9.6-x86-mingw32)
     haml (4.0.5)
       tilt
     hike (1.2.3)
@@ -189,12 +194,15 @@ GEM
     mini_portile (0.6.0)
     minitest (5.4.2)
     msgpack (0.5.9)
+    msgpack (0.5.9-x86-mingw32)
     multi_json (1.10.1)
     net-http-persistent (2.9.4)
     net-ldap (0.5.1)
     netrc (0.8.0)
     nido (0.0.1)
     nokogiri (1.6.3.1)
+      mini_portile (= 0.6.0)
+    nokogiri (1.6.3.1-x86-mingw32)
       mini_portile (= 0.6.0)
     nom-xml (0.5.1)
       activesupport
@@ -270,10 +278,15 @@ GEM
       json (~> 1.4)
     redic (1.1.1)
       hiredis
+    redis (3.1.0)
     ref (1.0.5)
     responders (1.1.1)
       railties (>= 3.2, < 4.2)
     rest-client (1.7.2)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
+    rest-client (1.7.2-x86-mingw32)
+      ffi (~> 1.9)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rsolr (1.0.10)
@@ -348,6 +361,7 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.9)
+    sqlite3 (1.3.9-x86-mingw32)
     stomp (1.3.3)
     sxp (0.1.5)
     systemu (2.6.4)
@@ -390,6 +404,7 @@ DEPENDENCIES
   devise
   devise-guests (~> 0.3)
   devise_ldap_authenticatable
+  fakeredis
   hydra
   isbn_validation
   jbuilder (~> 2.0)
