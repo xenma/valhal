@@ -13,13 +13,9 @@ module Authority
     #   { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' },
     # ...)
     def initialize(*args)
-      super({})
+      super
       return if args.empty? || args.first.nil?
-      if args.size == 1
-        self.authorized_personal_name = args.pop
-      else
-        args.each { |name| self.authorized_personal_name = name }
-      end
+      self.authorized_personal_name = args
     end
 
     # All authorized personal names
@@ -28,12 +24,20 @@ module Authority
       mads.authorized_personal_names
     end
 
-    def authorized_personal_name=(name_hash)
+    def authorized_personal_name=(args)
+      if args.is_a? Array
+        args.each { |h| add_authorized_personal_name(h) }
+      elsif args.is_a? Hash
+        add_authorized_personal_name(args)
+      end
+    end
+
+    def add_authorized_personal_name(name_hash)
       mads.ensure_valid_name_hash!(name_hash)
       mads.add_authorized_personal_name(name_hash)
-    # if we have a blank array just skip it
-    rescue
-      return
+      # if we have a blank hash just skip it
+      rescue
+        return
     end
 
     # Build a display value from the name and date
