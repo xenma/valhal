@@ -5,4 +5,8 @@ $(document).ready(function(){
         $('[data-hook="empty_titles"]').append(html);
         return false;
     })
+
+    $('[data-function="delete-title"]').click(function(){
+        $(this).parent().remove();
+    })
 });

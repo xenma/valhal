@@ -1,5 +1,9 @@
 <%= fields_for 'work[titles][]', title, index: nil do |title_fields| %>
     <div class="<%= 'new-title' unless !title.blank? %>">
+        <a class="btn btn-sm btn-error col-sm-offset-11" href="#" data-function="delete-title">
+            <span class="glyphicon glyphicon-minus"></span>
+            Slet
+        </a>
         <div class='col-sm-8'>
           <div class='form-group'>
             <%= title_fields.label :value, 'Titel' %>
@@ -24,6 +28,5 @@
             <%= title_fields.text_field :subtitle, :placeholder => 'Undertitel', :class=>'form-control' %>
           </div>
         </div>
-
     </div>
 <% end %>
