@@ -3,6 +3,7 @@ module Administration
   # for example Relator codes etc.
   class ControlledList < OhmModelWrapper
     attribute :name
+    unique :name
     collection :elements, Administration::ListEntry
 
     def elements=(elements)
