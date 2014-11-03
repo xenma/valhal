@@ -6,12 +6,12 @@ module Authority
     # 1) without any arguments
     # e.g. Authority::Person.new
     # 2) with a hash of name elements
-    # e.g. Authority::Person.new(scheme: 'viaf', family: 'Joyce', given: 'James', date: '1882-1941' )
+    # e.g. Authority::Person.new(authorized_personal_name: { full: 'James Joyce', scheme: 'KB' })
     # 3) with an array of name element hashes
     # e.g. Authority::Person.new(
-    #   { full: "Flann O'Brien", scheme: 'viaf' },
-    #   { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' },
-    # ...)
+    #       authorized_personal_name: { full: "Flann O'Brien", scheme: 'viaf' },
+    #       authorized_personal_name: { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' }
+    #     )
     def initialize(*args)
       super
       return if args.empty? || args.first.nil?
