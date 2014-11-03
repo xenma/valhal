@@ -24,9 +24,12 @@
   </xsl:template>
 
   <xsl:template match="bf:Instance">
-    <mods xsi:schemaLocation="http://www.loc.gov/mods/v3
-			      http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
-    <xsl:comment>We have found an instance!</xsl:comment>
+    <mods 
+	version="3.5"
+	xsi:schemaLocation="http://www.loc.gov/mods/v3
+			    http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+      <xsl:comment>We have found an instance!</xsl:comment>
+
       <xsl:if test="bf:instanceOf/@rdf:resource">
 	<xsl:apply-templates 
 	    select="document(concat(bf:instanceOf/@rdf:resource,'.rdf'))/rdf:RDF/bf:Work"/>

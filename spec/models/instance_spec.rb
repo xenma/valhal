@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "open-uri"
 
 # Since most Instance functionality is defined
 # in Bibframe::Instance, most tests take place
@@ -111,9 +112,9 @@ describe Instance do
       @instance = Instance.create
     end
     it 'is wellformed XML' do
-      expect {
-        Nokogiri::XML.parse(@instance.to_mods) { |config| config.strict }
-      }.not_to raise_error
+      xsd = Nokogiri::XML::Schema(open('http://www.loc.gov/standards/mods/v3/mods-3-5.xsd').read)
+      errors = xsd.validate(Nokogiri::XML.parse(@instance.to_mods) { |config| config.strict })
+      expect(errors).to eql []
     end
   end
 
