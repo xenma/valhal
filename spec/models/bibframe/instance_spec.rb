@@ -63,5 +63,9 @@ describe Bibframe::Instance do
       @instance.uuid = 'veryrandomuuid'
       expect(@instance.uuid).to eql 'veryrandomuuid'
     end
+    it 'should allow us to set and get a language' do
+      @instance.language = { value: 'french' }
+      expect(@instance.language_values).to include 'french'
+    end
   end
 end

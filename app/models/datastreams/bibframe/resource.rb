@@ -69,7 +69,7 @@ module Datastreams
         languages.map(&:value)
       end
 
-      def add_language(lang)
+      def language=(lang)
         add_to_sibling(:language, :language, lang[:part], lang[:value])
       end
 
