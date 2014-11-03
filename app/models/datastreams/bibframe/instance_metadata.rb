@@ -27,6 +27,7 @@ module Datastreams
         t.title_statement(path: 'titleStatement', index_as: :stored_searchable)
         t.extent
         t.dimensions
+        t.contents_note(path: 'contentsNote')
         t.isbn13(proxy: [:isbn_13, :Identifier, :label])
         t.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
         t.provider_date(proxy: [:publication, :Provider, :providerDate])
