@@ -7,14 +7,14 @@ describe Authority::Person do
       expect(Authority::Person.new).to be_an Authority::Person
     end
     it 'should be possible to initialize with a name hash' do
-      p = Authority::Person.new(full: 'James Joyce', scheme: 'KB')
+      p = Authority::Person.new(authorized_personal_name: { full: 'James Joyce', scheme: 'KB' })
       expect(p).to be_an Authority::Person
       expect(p.all_names).to include 'James Joyce'
     end
     it 'should be possible to initialize with an array of name hashes' do
       p = Authority::Person.new(
-          { full: "Flann O'Brien", scheme: 'viaf' },
-          { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' }
+          authorized_personal_name: { full: "Flann O'Brien", scheme: 'viaf' },
+          authorized_personal_name: { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' }
       )
       expect(p.all_names).to include "Flann O'Brien" && 'Myles Na Gopaleen'
     end
