@@ -24,11 +24,9 @@
   </xsl:template>
 
   <xsl:template match="bf:Instance">
-    <xsl:comment>We have found an instance!</xsl:comment>
     <mods xsi:schemaLocation="http://www.loc.gov/mods/v3
 			      http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
-
-
+    <xsl:comment>We have found an instance!</xsl:comment>
       <xsl:if test="bf:instanceOf/@rdf:resource">
 	<xsl:apply-templates 
 	    select="document(concat(bf:instanceOf/@rdf:resource,'.rdf'))/rdf:RDF/bf:Work"/>
@@ -47,8 +45,8 @@
       <xsl:apply-templates select="bf:isbn|bf:isbn10|bf:isbn13"/>
 
       <xsl:call-template name="encode_identifiers"/>
-
       <identifier>
+	<xsl:attribute name="type">uri</xsl:attribute>
 	<xsl:value-of select="@rdf:about"/>
       </identifier>
     </mods>
