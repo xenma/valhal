@@ -12,6 +12,7 @@ module Datastreams
         t.publication do
           t.Provider do
             t.copyrightDate
+            t.providerDate
           end
         end
         t.isbn_13(path: 'isbn13') do
@@ -28,6 +29,7 @@ module Datastreams
         t.dimensions
         t.isbn13(proxy: [:isbn_13, :Identifier, :label])
         t.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
+        t.provider_date(proxy: [:publication, :Provider, :providerDate])
       end
 
       define_template :isbn13 do |xml, value|
