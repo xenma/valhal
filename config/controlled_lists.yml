@@ -3,29 +3,6 @@
 workflow_status:
   name: Workflow status
   entries:
-    ingested:
-      name: Ingested
-    complete:
-      name: Metadata complete
-    finished:
-      name: Færdig forvaltet
-title_type:
-  name: Title types
-  entries:
-    uniform:
-      name: Uniform
-    abbreviated:
-      name: Abbreviated
-    translated:
-      name: Traslated
-    alternative:
-      name: Alternative
-language:
-  name: Language
-  entries:
-    dan:
-      name: dan
-    eng:
-      name: eng
-    sve:
-      name: sve
+    - Ingested
+    - Metadata complete
+    - Færdig forvaltet

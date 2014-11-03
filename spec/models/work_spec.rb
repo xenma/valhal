@@ -108,7 +108,7 @@ describe Work do
 
     it 'should contain all author names' do
       aut = Authority::Person.new
-      aut.add_authorized_personal_name(scheme: 'viaf', full: 'James Joyce')
+      aut.authorized_personal_name = { scheme: 'viaf', full: 'James Joyce' }
       @work.add_author(aut)
       vals = @work.to_solr.values.flatten
       expect(vals).to include 'James Joyce'
@@ -116,7 +116,7 @@ describe Work do
 
     it 'should contain all creator names' do
       cre = Authority::Person.new
-      cre.add_authorized_personal_name(scheme: 'viaf', full: 'Pablo Picasso')
+      cre.authorized_personal_name = { scheme: 'viaf', full: 'Pablo Picasso' }
       @work.add_creator(cre)
       vals = @work.to_solr.values.flatten
       expect(vals).to include 'Pablo Picasso'
