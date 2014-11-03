@@ -112,8 +112,27 @@ class InstancesController < ApplicationController
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
+  # Need to do some checking to get rid of blank params here.
   def instance_params
     params.require(:instance).permit(:title_statement, :extent, :copyright_date,
-                                     :provider_date, :dimensions, :note, language: [:value, :part])
+                                     :provider_date, :dimensions, :mode_of_issuance,
+                                     :contents_note, language: [:value, :part], note: []
+    ).tap { |elems| remove_blanks(elems) }
+  end
+
+  # Remove any blank attribute values, including those found in Arrays and Hashes
+  # to prevent AF being updated with empty values.
+  def remove_blanks(param_hash)
+    param_hash.each do |k,v|
+      if v.is_a? String
+        param_hash.delete(k) unless v.present?
+      elsif v.is_a? Array
+        param_hash[k] = v.reject(&:blank?)
+      elsif v.is_a? Hash
+        param_hash[k] = remove_blanks(v)
+        param_hash.delete(k) unless param_hash[k].present?
+      end
+    end
+    param_hash
   end
 end

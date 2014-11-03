@@ -4,43 +4,52 @@
     Bibliografiske metadata
   </legend>
   <div class="col-sm-6">
-    <div class="form-group">
-
-      <%= builder.input :title_statement, class: 'form-control' %>
-     <!-- <label for="title-statement">Title statement</label>
-      <input class="form-control" id="title-statement" placeholder="Title Statement"> -->
-    </div>
+    <%= builder.input :title_statement %>
   </div>
+  <%# In this case we need to manually create the input as language is not a simple accessor %>
+  <% @instance.languages.each do |lang| %>
   <div class="col-sm-6">
     <div class="form-group">
      <label for="language-value">Language</label>
-      <input class="form-control" id="language-value" placeholder="Language" name="instance[language][value]">
+      <input class="form-control" id="language-value" placeholder="Language"
+             name="instance[language][value]" value="<%= lang.value %>">
     </div>
   </div>
+  <% end %>
+  <% if @instance.languages.empty? %>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="language-value">Language</label>
+          <input class="form-control" id="language-value" placeholder="Language"
+                 name="instance[language][value]">
+        </div>
+      </div>
+  <% end %>
 
   <div class="col-sm-6">
-    <div class="form-group">
-      <label for="copyright-date">Copyright Date</label>
-      <input class="form-control" id="copyright-date" placeholder="Copyright Date">
-    </div>
+    <%= builder.input :copyright_date %>
   </div>
   <div class="col-sm-6">
-    <div class="form-group">
-      <label for="provider-date">Provider Date</label>
-      <input class="form-control" id="provider-date" placeholder="Provider Date">
-    </div>
+    <%= builder.input :provider_date %>
  </div>
   <div class="col-sm-6">
-    <div class="form-group">
-      <label for="dimensions">Dimensions</label>
-      <input class="form-control" id="dimensions" placeholder="Dimensions">
-    </div>
-</div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label for="note">Note</label>
-        <input class="form-control" id="note" placeholder="Note">
+    <%= builder.input :dimensions %>
+  </div>
+  <div class="col-sm-6">
+    <%= builder.input :mode_of_issuance %>
+  </div>
+  <div class="col-sm-6">
+    <%= builder.input :contents_note %>
+  </div>
+  <% if @instance.note.present? %>
+  <% @instance.note.each do |n| %>
+      <div class="col-sm-6">
+        <%= builder.input :note, input_html: { value: n, name: 'instance[note][]' } %>
       </div>
-    </div>
+  <% end %>
+<% end %>
+  <div class="col-sm-6">
+    <%= builder.input :note , input_html: { value: '', name: 'instance[note][]'} %>
+  </div>
 
 </fieldset>
