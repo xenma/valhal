@@ -11,8 +11,139 @@
       </ul>
     </div>
   <% end %>
-    <%= render 'preservation' %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="instans editMode">
+    <div class="page-header">
+      <div class="container">
+        <h1>Instans <small>Ukendt</small></h1>
+      </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+
+    <div class="col-sm-3">
+      <sidebar>
+        <ul class="nav nav-pills nav-stacked" id="myNav">
+          <li><a href="#bibliographic" class="">Bibliografiske metadata</a></li>
+          <li><a href="#administrative" class="">Administrative metadata</a></li>
+          <li><a href="#upload" class="">Fil upload</a></li>
+        </ul>
+      </sidebar>
+    </div>
+    <div class="col-sm-9">
+
+    <!--Bibliografiske metadata -->
+    <fieldset id="bibliographic" class="row">
+      <legend class="col-sm-12" >
+        Bibliografiske metadata
+      </legend>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="datering">Datering</label>
+          <input class="form-control" id="datering" placeholder="Datering">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="udgiver">Udgiver</label>
+          <input class="form-control" id="udgiver" placeholder="Udgiver">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label for="label">Label</label>
+          <input class="form-control" id="label" placeholder="Label">
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group pull-right">
+          <button class="btn btn-primary">Tilføj felt <span class="glyphicon glyphicon-plus"></span></button>
+        </div>
+      </div>
+    </fieldset>
+
+    <!--Administrative metadata -->
+    <fieldset class="row" id="administrative">
+      <legend class="col-sm-12">
+        Administrative metadata
+      </legend>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="samling">Ansvarlig samling</label>
+          <select class="form-control" id="samling">
+            <option>Liste over samlinger</option>
+          </select>
+        </div>
+        <hr>
+      </div>
+      <div class="col-sm-12">
+        <div class="checkbox">
+          <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            Tilgængeliggørelse
+          </label>
+
+          <label class="checkbox-inline">
+            <input type="checkbox" value="" checked>
+            Klausulering
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="klausuleringstype">Klausuleringstype</label>
+          <select class="form-control" id="klausuleringstype">
+            <option>Usynlig for eksterne</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="find">Find person/samling</label>
+          <input class="form-control" id="find" placeholder="Find person/samling">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="udløb">Udløb</label>
+          <input class="form-control" id="udløb" placeholder="Udløb">
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="ophavsretligInfomation">Ophavsretlig infomation</label>
+          <select class="form-control" id="ophavsretligInfomation">
+            <option>Ukendt</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label for="bevaringsprofil">Bevaringsprofil</label>
+          <select class="form-control" id="bevaringsprofil">
+            <option>Storage</option>
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+
+
+
+      <fieldset id="upload" class="row">
+        <legend class="col-sm-12" >
+          Upload fil(er)
+        </legend>
+      </fieldset>
+    </div>
+
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-save"></span>  Gem</button>
+    </div>
+    </div>
+    </div>
+</div>
+
 <% end %>
