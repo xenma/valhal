@@ -106,6 +106,17 @@ describe Instance do
     expect(i.uuid.present?).to be true
   end
 
+  describe 'to_mods' do
+    before :all do 
+      @instance = Instance.create
+    end
+    it 'is wellformed XML' do
+      expect {
+        Nokogiri::XML.parse(@instance.to_mods) { |config| config.strict }
+      }.not_to raise_error
+    end
+  end
+
   describe 'to_rdf' do
     before :all do
       @instance = Instance.create

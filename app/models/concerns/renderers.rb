@@ -27,9 +27,9 @@ module Concerns
   # </bf:Work>
   # </rdf:RDF>
 
-  module RDFOutput
-    BIBFRAME_URI = 'http://bibframe.org/vocab/#'
-    LOC_RELATORS_URI = 'http://id.loc.gov/vocabulary/relators/#'
+  module Renderers
+    BIBFRAME_URI = 'http://bibframe.org/vocab/'
+    LOC_RELATORS_URI = 'http://id.loc.gov/vocabulary/relators/'
     RDF_URI =  'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
 
     # This method pulls the rels ext and bibframe data together
@@ -41,6 +41,16 @@ module Concerns
       bf_vals = namespaced_relations(relations, BIBFRAME_URI)
       output = build_rdf_xml(bf_vals, relator_vals, bf_xml)
       correct_root_element(output)
+    end
+
+    # This method pulls the rels ext and bibframe data together
+    # to create a valid mods representation of the object.
+    def to_mods
+      fail "mods can only be instantiated for Instances"  unless self.is_a? Instance
+      document = Nokogiri::XML(self.to_rdf)
+      template = Nokogiri::XSLT(File.read(Rails.root.join('app','export','transforms','bibframe2mods.xsl')))
+      transformed_document = template.transform(document)
+      transformed_document.to_xml
     end
 
     # We create a new document with the correct namespaces and

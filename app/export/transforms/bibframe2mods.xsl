@@ -24,6 +24,7 @@
   </xsl:template>
 
   <xsl:template match="bf:Instance">
+    <xsl:comment>We have found an instance!</xsl:comment>
     <mods xsi:schemaLocation="http://www.loc.gov/mods/v3
 			      http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
 

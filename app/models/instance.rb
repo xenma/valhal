@@ -10,7 +10,7 @@ class Instance < ActiveFedora::Base
   include Concerns::AdminMetadata
   include Concerns::UUIDGenerator
   include Concerns::Preservation
-  include Concerns::RDFOutput
+  include Concerns::Renderers
 
   belongs_to :work, property: :instance_of, inverse_of: :has_instance
   has_many :content_files, property: :content_for
