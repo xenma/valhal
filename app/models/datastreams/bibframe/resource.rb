@@ -70,6 +70,7 @@ module Datastreams
       end
 
       def language=(lang)
+        return unless lang[:value].present?
         add_to_sibling(:language, :language, lang[:part], lang[:value])
       end
 
