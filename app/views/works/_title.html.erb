@@ -4,12 +4,16 @@
             <span class="glyphicon glyphicon-minus"></span>
             Slet
         </a>
-        <div class='col-sm-8'>
-          <div class='form-group'>
-            <%= title_fields.label :value, 'Titel' %>
-            <%= title_fields.text_field :value, :placeholder => 'Titel', :class=>'form-control' %>
-          </div>
-        </div>
+
+
+    <div class='col-sm-8'>
+      <div class='form-group nottitletypeahead'>
+        <%= title_fields.label :value, 'Titel' %>
+        <%= title_fields.text_field :value, :placeholder => 'Titel', :class=>'form-control' %>
+      </div>
+    </div>
+
+
       <div class='col-sm-2'>
         <div class="form-group">
           <%= title_fields.label :lang, 'Sprog' %>

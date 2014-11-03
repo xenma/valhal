@@ -2,7 +2,7 @@
 
   <div class="page-header">
     <div class="container">
-      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
+      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%><%= is_new %></small></h1>
     </div>
   </div>
 
@@ -11,12 +11,12 @@
         <% if @work.titles.length > 0  %>
             <h3>Titler</h3>
             <% @work.titles.each do |title| %>
-                <%= render  partial: 'title', :object => title %>
+                <%= render  partial: 'title',  locals: {title: title , is_new: is_new} %>
             <% end%>
         <% end %>
         <hr/>
         <div data-hook="empty_titles">
-          <%= render partial: 'title', object: Datastreams::Bibframe::Title.new %>
+          <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, is_new: is_new} %>
         </div>
         <a class="btn btn-sm btn-primary" href="#" data-function="new-title">
           <span class="glyphicon glyphicon-plus"></span>

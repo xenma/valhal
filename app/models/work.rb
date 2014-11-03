@@ -81,4 +81,13 @@ class Work < ActiveFedora::Base
     end
     solr_doc
   end
+
+
+  # Static methods
+
+  def self.get_title_typeahead_objs
+    ActiveFedora::SolrService.query("title_tesim:* && active_fedora_model_ssi:Work",
+                                    {:rows => ActiveFedora::SolrService.count("title_tesim:* && active_fedora_model_ssi:Work")})
+  end
+
 end
