@@ -3,27 +3,44 @@
   <legend class="col-sm-12" >
     Bibliografiske metadata
   </legend>
-  <div class="col-sm-4">
+  <div class="col-sm-6">
     <div class="form-group">
-      <label for="datering">Datering</label>
-      <input class="form-control" id="datering" placeholder="Datering">
+
+      <%= builder.input :title_statement, class: 'form-control' %>
+     <!-- <label for="title-statement">Title statement</label>
+      <input class="form-control" id="title-statement" placeholder="Title Statement"> -->
     </div>
   </div>
-  <div class="col-sm-4">
+  <div class="col-sm-6">
     <div class="form-group">
-      <label for="udgiver">Udgiver</label>
-      <input class="form-control" id="udgiver" placeholder="Udgiver">
+     <label for="language-value">Language</label>
+      <input class="form-control" id="language-value" placeholder="Language" name="instance[language][value]">
     </div>
   </div>
-  <div class="col-sm-4">
+
+  <div class="col-sm-6">
     <div class="form-group">
-      <label for="label">Label</label>
-      <input class="form-control" id="label" placeholder="Label">
+      <label for="copyright-date">Copyright Date</label>
+      <input class="form-control" id="copyright-date" placeholder="Copyright Date">
     </div>
   </div>
-  <div class="col-sm-12">
-    <div class="form-group pull-right">
-      <button class="btn btn-primary">Tilføj felt <span class="glyphicon glyphicon-plus"></span></button>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="provider-date">Provider Date</label>
+      <input class="form-control" id="provider-date" placeholder="Provider Date">
     </div>
-  </div>
+ </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="dimensions">Dimensions</label>
+      <input class="form-control" id="dimensions" placeholder="Dimensions">
+    </div>
+</div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label for="note">Note</label>
+        <input class="form-control" id="note" placeholder="Note">
+      </div>
+    </div>
+
 </fieldset>

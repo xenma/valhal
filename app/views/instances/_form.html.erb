@@ -26,7 +26,7 @@
     </div>
     <div class="col-sm-9">
 
-      <%= render partial: 'bibliographic' %>
+      <%= render partial: 'bibliographic', locals: { builder: f } %>
       <%= render partial: 'administrative' %>
       <%= render partial: 'upload' %>
 
@@ -38,6 +38,7 @@
         Gem
       </button>
     </div>
+      <%= f.submit 'Gem' %>
     </div>
     </div>
 </div>

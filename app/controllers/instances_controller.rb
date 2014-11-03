@@ -113,6 +113,7 @@ class InstancesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def instance_params
-    params[:instance]
+    params.require(:instance).permit(:title_statement, :extent, :copyright_date,
+                                     :provider_date, :dimensions, :note, language: [:value, :part])
   end
 end

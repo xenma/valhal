@@ -30,12 +30,12 @@ describe InstancesController, type: :controller do
 end
 
 
-describe InstancesController, broken: true do
+describe InstancesController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
   # Instance. As you add validations to Instance, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { {} }
+  let(:valid_attributes) { { title_statement: 'An Unfortunate Title' } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -46,7 +46,7 @@ describe InstancesController, broken: true do
     it 'assigns all instances as @instances' do
       instance = Instance.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:instances).should eq([instance])
+      expect(assigns(:instances)).to include instance
     end
   end
 
@@ -81,15 +81,20 @@ describe InstancesController, broken: true do
         }.to change(Instance, :count).by(1)
       end
 
+      it "saves the Instance's title" do
+        post :create, { instance: valid_attributes.merge(title_statement: 'War and Peace') }, valid_session
+        expect(Instance.last.title_statement).to eql 'War and Peace'
+      end
+
+      it "saves the Instance's language" do
+        post :create, { instance: valid_attributes.merge(language: { value: 'Latin' }) }, valid_session
+        expect(Instance.last.language_values).to include 'Latin'
+      end
+
       it 'assigns a newly created instance as @instance' do
         post :create, { instance: valid_attributes }, valid_session
         assigns(:instance).should be_a(Instance)
         assigns(:instance).should be_persisted
-      end
-
-      it 'redirects to the created instance' do
-        post :create, { instance: valid_attributes }, valid_session
-        response.should redirect_to(Instance.last)
       end
     end
 
