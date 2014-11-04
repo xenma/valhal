@@ -19,20 +19,20 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+da:
   Languages:
-    da: Danish
-    sv: Swedish
-    nb: Norwegian Bokmål
-    nn: Norwegian Nynorsk
-    en: English
-    fr: French
-    de: German
-    es: Spanish
-    nl: Dutch
-    it: Italian
-    pl: Polish
-    ro: Romanian
-    fi: Finnish
+    da: Dansk
+    sv: Svensk
+    nb: Norsk Bokmål
+    nn: Norsk Nynorsk
+    en: Engelsk
+    fr: Fransk
+    de: Tysk
+    es: Spansk
+    nl: Hollandsk
+    it: Italiensk
+    pl: Polsk
+    ro: Rumaensk
+    fi: Finsk
   blacklight:
-    application_name: 'Blacklight'
+    application_name: 'Valhal'
