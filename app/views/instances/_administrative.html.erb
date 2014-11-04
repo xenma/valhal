@@ -5,63 +5,33 @@
     Administrative metadata
   </legend>
   <div class="col-sm-12">
-    <div class="form-group">
-      <label for="samling">Ansvarlig samling</label>
-      <select class="form-control" id="samling">
-        <option>Liste over samlinger</option>
-      </select>
-    </div>
+      <%= builder.input :collection, collection: get_translated_list('Collections'), prompt: 'Samling' %>
     <hr>
   </div>
+
+    <div class="checkbox col-sm-12">
+      <div class="col-sm-3">
+        <%= builder.input :availability, as: :boolean, boolean_style: :inline,
+                     label_html: { class: 'checkbox-inline' },
+                     wrapper_html: { class: ''  }, input_html: { class: '' } %>
+      </div>
+      <div class="col-sm-3">
+        <%= builder.input :embargo, as: :boolean, boolean_style: :inline,
+                      label_html: { class: 'checkbox-inline' },
+                      wrapper_html: { class: ''  }, input_html: { class: '' } %>
+
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
+    </div>
   <div class="col-sm-12">
-    <div class="checkbox">
-      <label class="checkbox-inline">
-        <input type="checkbox" value="">
-        Tilgængeliggørelse
-      </label>
-
-      <label class="checkbox-inline">
-        <input type="checkbox" value="" checked>
-        Klausulering
-      </label>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="form-group">
-      <label for="klausuleringstype">Klausuleringstype</label>
-      <select class="form-control" id="klausuleringstype">
-        <option>Usynlig for eksterne</option>
-      </select>
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="form-group">
-      <label for="find">Find person/samling</label>
-      <input class="form-control" id="find" placeholder="Find person/samling">
-    </div>
-  </div>
-  <div class="col-sm-6">
-    <div class="form-group">
-      <label for="udløb">Udløb</label>
-      <input class="form-control" id="udløb" placeholder="Udløb">
-    </div>
+    <%= builder.input :embargo_date, as: :date, start_year: Date.today.year, end_year: Date.today.year + 100,
+                      order: [:day, :month, :year], input_html: { class: 'col-sm-3' } %>
   </div>
 
   <div class="col-sm-6">
-    <div class="form-group">
-      <label for="ophavsretligInfomation">Ophavsretlig infomation</label>
-      <select class="form-control" id="ophavsretligInfomation">
-        <option>Ukendt</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-sm-6">
-    <div class="form-group">
-      <label for="bevaringsprofil">Bevaringsprofil</label>
-      <select class="form-control" id="bevaringsprofil">
-        <option>Storage</option>
-      </select>
-    </div>
+    <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
   </div>
 </fieldset>

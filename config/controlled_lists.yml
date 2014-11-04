@@ -31,3 +31,36 @@ title_type:
     - Abbreviated
     - Translated
     - Alternative
+collections:
+  name: Collections
+  entries:
+    - dasamx
+    - dasam2
+    - dasam3
+    - dasmaa
+    - aesaml
+    - glsaml
+    - vmanus
+    - boghis
+    - kortsa
+    - billed
+    - luftfo
+    - mushos
+    - musman
+    - orkbib
+    - drabib
+    - ortsam
+    - judsam
+    - kubsam
+access_types:
+  name: Access types
+  entries:
+    - efter aftale
+    - læsesal
+    - ingen adgang
+preservation_profiles:
+  name: Preservation Profiles
+  entries:
+    - simple
+    - storage
+    - eternity
