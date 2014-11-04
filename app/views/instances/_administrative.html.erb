@@ -21,15 +21,18 @@
                       wrapper_html: { class: ''  }, input_html: { class: '' } %>
 
         </div>
+      <div class="col-sm-2">
+        <%= builder.input :embargo_date %>
+      </div>
+      <div class="col-sm-4">
+        <%= builder.input :embargo_condition %>
+      </div>
     </div>
 
     <div class="col-sm-6">
         <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
     </div>
-  <div class="col-sm-12">
-    <%= builder.input :embargo_date, as: :date, start_year: Date.today.year, end_year: Date.today.year + 100,
-                      order: [:day, :month, :year], input_html: { class: 'col-sm-3' } %>
-  </div>
+
 
   <div class="col-sm-6">
     <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
