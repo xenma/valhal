@@ -114,9 +114,11 @@ class InstancesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   # Need to do some checking to get rid of blank params here.
   def instance_params
-    params.require(:instance).permit(:title_statement, :extent, :copyright_date,
+    params.require(:instance).permit(:activity, :title_statement, :extent, :copyright_date,
                                      :provider_date, :dimensions, :mode_of_issuance,
-                                     :contents_note, language: [:value, :part], note: []
+                                     :contents_note, :embargo, :embargo_date, :embargo_condition,
+                                     :access_condition, :availability, :collection,
+                                     :preservation_profile, language: [:value, :part], note: []
     ).tap { |elems| remove_blanks(elems) }
   end
 
