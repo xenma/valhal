@@ -22,10 +22,10 @@
 
         </div>
       <div class="col-sm-2">
-        <%= builder.input :embargo_date %>
+        <%= builder.input :embargo_date, input_html: { data: { hook: 'embargo_detailed' }} %>
       </div>
       <div class="col-sm-4">
-        <%= builder.input :embargo_condition %>
+        <%= builder.input :embargo_condition, input_html: { data: { hook: 'embargo_detailed' }} %>
       </div>
     </div>
 
