@@ -117,7 +117,7 @@ class InstancesController < ApplicationController
     params.require(:instance).permit(:activity, :title_statement, :extent, :copyright_date,
                                      :provider_date, :dimensions, :mode_of_issuance,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
-                                     :access_condition, :availability, :collection,
+                                     :access_condition, :availability, :collection, :content_files,
                                      :preservation_profile, language: [:value, :part], note: []
     ).tap { |elems| remove_blanks(elems) }
   end
@@ -125,7 +125,7 @@ class InstancesController < ApplicationController
   # Remove any blank attribute values, including those found in Arrays and Hashes
   # to prevent AF being updated with empty values.
   def remove_blanks(param_hash)
-    param_hash.each do |k,v|
+    param_hash.each do |k, v|
       if v.is_a? String
         param_hash.delete(k) unless v.present?
       elsif v.is_a? Array

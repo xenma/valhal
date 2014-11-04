@@ -51,4 +51,14 @@ class Instance < ActiveFedora::Base
     logger.debug "Found following inheiritable objects: #{res}"
     res
   end
+
+  # very simple method to enable
+  # single file uploads
+  # will need to be expanded to handle
+  # multiple files
+  def content_files=(file)
+    cf = ContentFile.new
+    cf.file.content = file
+    content_files << cf
+  end
 end
