@@ -21,7 +21,7 @@
       <div class="col-sm-6">
         <label for="language-value">Language</label>
         <select id="language-value" name="instance[language][value]" class="form-control">
-         <%=  options_for_select(get_translated_list('Languages')) %>
+         <%=  options_for_select(get_translated_list('Languages').unshift(['Vælg sprog', '']) ) %>
        </select>
       </div>
   <% end %>
