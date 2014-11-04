@@ -1,8 +1,26 @@
 # Enable pre-loading of vocabularies into Redis
-# Called by rake sifd:load_vocabs to be used on new deploys only.
+# Called by rake valhal:load_controlled_lists to be used on new deploys only.
 workflow_status:
   name: Workflow status
   entries:
     - Ingested
     - Metadata complete
     - Færdig forvaltet
+# TODO: update this list with a complete representation
+# e.g. http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+languages:
+  name: Languages
+  entries:
+    - da
+    - sv
+    - nb
+    - nn
+    - en
+    - fr
+    - de
+    - es
+    - nl
+    - it
+    - pl
+    - ro
+    - fi
