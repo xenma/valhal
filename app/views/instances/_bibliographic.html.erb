@@ -11,18 +11,18 @@
   <div class="col-sm-6">
     <div class="form-group">
      <label for="language-value">Language</label>
-      <input class="form-control" id="language-value" placeholder="Language"
-             name="instance[language][value]" value="<%= lang.value %>">
+      <select id="language-value" name="instance[language][value]" class="form-control">
+        <%=  options_for_select(get_translated_list('Languages'), selected: lang.value) %>
+      </select>
     </div>
   </div>
   <% end %>
-  <% if @instance.languages.empty? %>
+      <% if @instance.languages.empty? %>
       <div class="col-sm-6">
-        <div class="form-group">
-          <label for="language-value">Language</label>
-          <input class="form-control" id="language-value" placeholder="Language"
-                 name="instance[language][value]">
-        </div>
+        <label for="language-value">Language</label>
+        <select id="language-value" name="instance[language][value]" class="form-control">
+         <%=  options_for_select(get_translated_list('Languages')) %>
+       </select>
       </div>
   <% end %>
 
