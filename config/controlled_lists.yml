@@ -24,3 +24,10 @@ languages:
     - pl
     - ro
     - fi
+title_type:
+  name: Title types
+  entries:
+    - Uniform
+    - Abbreviated
+    - Translated
+    - Alternative

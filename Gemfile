@@ -65,6 +65,10 @@ group :development do
   gem 'binding_of_caller'
 end
 
+group :test do
+  gem 'fakeredis'
+end
+
 #logging start
 gem 'log4r', '1.1.10'
 gem 'quiet_assets'
