@@ -66,6 +66,7 @@ end
 
 group :test do
   gem 'fakeredis'
+  gem 'factory_girl_rails'
 end
 
 #logging start
