@@ -1,7 +1,7 @@
 <h2><%= "#{@instance.class.to_s}: #{@instance.title_statement}" %> </h2>
 
 <p>Copyright Date <%= @instance.copyright_date %></p>
-<p>Provider Date <%= @instance.provider_date %></p>
+<p>Date published<%= @instance.published_date %></p>
 <p>Mode of issuance <%= @instance.mode_of_issuance %></p>
 <% @instance.languages.each do |lang| %>
     <p>Language: <%= lang.value %> <%= lang.part %></p>
