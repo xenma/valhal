@@ -5,6 +5,7 @@ class InstancesController < ApplicationController
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
   :update_preservation_profile, :update_administration]
 
+  respond_to :html
   # GET /instances
   # GET /instances.json
   def index
@@ -33,30 +34,15 @@ class InstancesController < ApplicationController
   # POST /instances.json
   def create
     @instance = @klazz.new(instance_params)
-
-    respond_to do |format|
-      if @instance.save
-        format.html { redirect_to @instance, notice: 'Instance was successfully created.' }
-        format.json { render :show, status: :created, location: @instance }
-      else
-        format.html { render :new }
-        format.json { render json: @instance.errors, status: :unprocessable_entity }
-      end
-    end
+    flash[:notice] = "#{@klazz} was successfully saved" if @instance.save
+    respond_with @instance
   end
 
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
-    respond_to do |format|
-      if @instance.update(instance_params)
-        format.html { redirect_to @instance, notice: 'Instance was successfully updated.' }
-        format.json { render :show, status: :ok, location: @instance }
-      else
-        format.html { render :edit }
-        format.json { render json: @instance.errors, status: :unprocessable_entity }
-      end
-    end
+    flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
+    respond_with @instance
   end
 
   # Updates the preservation profile metadata.
@@ -80,13 +66,11 @@ class InstancesController < ApplicationController
   end
 
   # DELETE /instances/1
-  # DELETE /instances/1.json
   def destroy
     @instance.destroy
-    respond_to do |format|
-      format.html { redirect_to instances_url, notice: 'Instance was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @instances = @klazz.all
+    flash[:notice] = "#{@klazz} was successfully deleted"
+    redirect_to action: :index
   end
 
   # Updates the administration metadata for the ordered instance.
