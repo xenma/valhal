@@ -5,6 +5,10 @@
     Administrative metadata
   </legend>
   <div class="col-sm-12">
+    <%= builder.input :activity, placeholder: 'Aktivitet' %>
+    <hr>
+  </div>
+  <div class="col-sm-12">
       <%= builder.input :collection, collection: get_translated_list('Collections'), prompt: 'Samling' %>
     <hr>
   </div>
