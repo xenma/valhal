@@ -25,6 +25,7 @@ module Hel
     config.autoload_paths += Dir[Rails.root.join('app', 'models', 'datastreams', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'helpers', 'constants.rb')]
     config.autoload_paths += Dir[Rails.root.join('app', 'export', '{**}')]
+    config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
 
     config.generators do |g|
       g.test_framework :rspec, :spec => true

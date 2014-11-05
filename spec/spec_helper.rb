@@ -3,7 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 
 # calulate code coverage and generates a 'coverage/' directory
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter "/spec/"
+end
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
