@@ -5,10 +5,10 @@ describe Administration::Activity do
 
   it_behaves_like 'ActiveModel'
 
-  it 'should have a name' do
+  it 'should have an activity' do
     act = Administration::Activity.new
-    act.name = 'my first controlled list'
-    expect(act.name).to eql 'my first controlled list'
+    act.activity = 'my first activity'
+    expect(act.activity).to eql 'my first activity'
   end
 
 end
