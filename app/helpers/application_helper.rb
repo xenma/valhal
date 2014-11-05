@@ -14,6 +14,12 @@ module ApplicationHelper
                  {include_blank: true, class: 'combobox form-control input-large', data_function: 'title-selected'}
     end
 
+    #Renders a list of Agents for a typeahead field
+    def get_agent_list
+      results = Authority::Agent.get_typeahead_objs
+      results.nil? ? [] : results.collect{|result| [result['display_value_ssm'].first,result['id']]}
+    end
+
     private
 
 

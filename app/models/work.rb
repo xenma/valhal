@@ -56,8 +56,7 @@ class Work < ActiveFedora::Base
 
   def titles=(val)
     remove_titles
-    val.each do |v|
-      logger.debug("#{v}")
+    val.each_value do |v|
       add_title(v) unless v['value'].blank? && v['subtitle'].blank?
     end
   end
@@ -65,17 +64,17 @@ class Work < ActiveFedora::Base
   def creators
     creators = []
     authors.each do |a|
-      creators.push({id: a.id, name: a.display_value, type: 'aut'})
+      creators.push({"id" => a.id, "type"=> 'aut'})
     end
+    logger.debug("creators #{creators}")
     creators
   end
 
   def creators=(val)
     remove_creators
-    val.each do |v|
-      type = v['type']
+    val.each_value do |v|
       if (v['type'] == 'aut')
-        add_author(ActiveFedora::Base.find(v['id']))
+        add_author(ActiveFedora::Base.find(v['id'])) unless v['id'].blank?
       end
     end
   end

@@ -62,6 +62,12 @@ module Authority
       solr_doc
     end
 
+    #static methods
+    def self.get_typeahead_objs
+      ActiveFedora::SolrService.query("typeahead_tesim:* && has_model_ssim:*Authority_Person",
+                                      {:rows => ActiveFedora::SolrService.count("typeahead_tesim:* && has_model_ssim:*Authority_Person")})
+    end
+
     private
 
     # build a name and date string from the available elements
@@ -87,11 +93,4 @@ module Authority
       name.strip
     end
   end
-
-  #static methods
-  def self.get_typeahead_objs
-    ActiveFedora::SolrService.query("typeahead_tesim:* && active_fedora_model_ssi:Person",
-                                    {:rows => ActiveFedora::SolrService.count("title_tesim:* && active_fedora_model_ssi:Person")})
-  end
-
 end
