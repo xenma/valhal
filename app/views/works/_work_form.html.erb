@@ -2,29 +2,50 @@
 
   <div class="page-header">
     <div class="container">
-      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%><%= is_new %></small></h1>
+      <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
     </div>
   </div>
 
   <div class="container">
     <%= form_for @work do |f| %>
-        <% if @work.titles.length > 0  %>
-            <h3>Titler</h3>
-            <% @work.titles.each do |title| %>
-                <%= render  partial: 'title',  locals: {title: title , is_new: is_new} %>
-            <% end%>
-        <% end %>
-        <hr/>
-        <div data-hook="empty_titles">
-          <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, is_new: is_new} %>
-        </div>
-        <a class="btn btn-sm btn-primary" href="#" data-function="new-title">
-          <span class="glyphicon glyphicon-plus"></span>
-          Tilføj Titel
-        </a>
+        <fieldset class="row">
+            <legend class="col-sm-12">Titler</legend>
+            <% if @work.titles.length > 0  %>
+                <% @work.titles.each do |title| %>
+                    <%= render  partial: 'title',  locals: {title: title , is_new: is_new} %>
+                <% end%>
+            <% end %>
+            <hr/>
+            <div data-hook="empty_titles">
+              <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, is_new: is_new} %>
+            </div>
+            <a class="btn btn-sm btn-primary" href="#" data-function="new-title">
+              <span class="glyphicon glyphicon-plus"></span>
+              Tilføj Titel
+            </a>
+        </fieldset>
+        <fieldset class="row">
+          <legend class="col-sm-12">Ophav</legend>
+
+          <button class="btn btn-default" data-toggle="modal" data-target="#new-agent-modal" onclick="return false;">Opret ny Agent</button>
+        </fieldset>
         <div class="actions">
           <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-primary col-sm-offset-11' %>
         </div>
     <% end %>
   </div>
-</div>
+
+  <div class="modal fade" id="new-agent-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            <%= render partial: 'authority/people/form' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>

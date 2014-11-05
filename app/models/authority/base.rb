@@ -23,7 +23,14 @@ module Authority
     def to_solr(solr_doc = {})
       super
       Solrizer.insert_field(solr_doc, 'display_value', display_value, :displayable)
+      Solrizer.insert_field(solr_doc, 'typeahead', display_value, :stored_searchable)
       solr_doc
+    end
+
+    #static methods
+    def self.get_typeahead_objs
+      ActiveFedora::SolrService.query("typeahead_tesim:* && active_fedora_model_ssi:Agent",
+                                      {:rows => ActiveFedora::SolrService.count("title_tesim:* && active_fedora_model_ssi:Agent")})
     end
   end
 end
