@@ -32,13 +32,14 @@
 
     </div>
 
-    <div class="btn-group pull-right">
-      <button type="button" class="btn btn-success">
-        <span class="glyphicon glyphicon-save"></span>
-        Gem
-      </button>
+      <div class="btn-group pull-right">
+        <%= f.button :button, 'Gem', class: 'btn btn-success' do %>
+            <span class="glyphicon glyphicon-save"></span>
+            Gem
+        <% end %>
+
     </div>
-      <%= f.submit 'Gem' %>
+
     </div>
     </div>
 </div>
