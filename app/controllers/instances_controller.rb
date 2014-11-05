@@ -1,9 +1,10 @@
 # Perform actions on Instances
 class InstancesController < ApplicationController
   include PreservationHelper
-  before_action :set_klazz, only: [:index, :new, :edit, :create, :show]
+  before_action :set_klazz, only: [:index, :new, :create, :update]
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
   :update_preservation_profile, :update_administration]
+
   # GET /instances
   # GET /instances.json
   def index
@@ -107,12 +108,14 @@ class InstancesController < ApplicationController
 
   private
 
+  # This helper method enables controller subclassing
   def set_klazz
     @klazz = Instance
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_instance
+    set_klazz if @klazz.nil?
     @instance = @klazz.find(params[:id])
   end
 

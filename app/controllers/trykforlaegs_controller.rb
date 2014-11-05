@@ -1,4 +1,4 @@
-class TrykforlaegController < InstancesController
+class TrykforlaegsController < InstancesController
 
   private
 

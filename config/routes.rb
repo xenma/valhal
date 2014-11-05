@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
   resources :works
-  resources :trykforlaeg
+  resources :trykforlaegs
 
   root to: 'catalog#index'
 
