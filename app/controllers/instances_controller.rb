@@ -1,13 +1,13 @@
 # Perform actions on Instances
 class InstancesController < ApplicationController
   include PreservationHelper
+  before_action :set_klazz, only: [:index, :new, :edit, :create, :show]
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
-                                      :update_preservation_profile, :update_administration]
-
+  :update_preservation_profile, :update_administration]
   # GET /instances
   # GET /instances.json
   def index
-    @instances = Instance.all
+    @instances = @klazz.all
   end
 
   # GET /instances/1
@@ -21,7 +21,7 @@ class InstancesController < ApplicationController
 
   # GET /instances/new
   def new
-    @instance = Instance.new
+    @instance = @klazz.new
   end
 
   # GET /instances/1/edit
@@ -31,7 +31,7 @@ class InstancesController < ApplicationController
   # POST /instances
   # POST /instances.json
   def create
-    @instance = Instance.new(instance_params)
+    @instance = @klazz.new(instance_params)
 
     respond_to do |format|
       if @instance.save
@@ -104,18 +104,23 @@ class InstancesController < ApplicationController
     end
   end
 
+
   private
+
+  def set_klazz
+    @klazz = Instance
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_instance
-    @instance = Instance.find(params[:id])
+    @instance = @klazz.find(params[:id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   # Need to do some checking to get rid of blank params here.
   def instance_params
-    params.require(:instance).permit(:activity, :title_statement, :extent, :copyright_date,
-                                     :provider_date, :dimensions, :mode_of_issuance,
+    params.require(@klazz.to_s.downcase.to_sym).permit(:activity, :title_statement, :extent, :copyright_date,
+                                     :published_date, :dimensions, :mode_of_issuance, :isbn13,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
                                      :access_condition, :availability, :collection, :content_files,
                                      :preservation_profile, language: [:value, :part], note: []
