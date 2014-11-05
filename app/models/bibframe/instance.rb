@@ -11,7 +11,7 @@ module Bibframe
                    type: Datastreams::Bibframe::InstanceMetadata)
 
       has_attributes :note, datastream: 'bfMetadata', multiple: true
-      has_attributes :copyright_date, :provider_date, :isbn13, :mode_of_issuance, :title_statement,
+      has_attributes :copyright_date, :published_date, :isbn13, :mode_of_issuance, :title_statement,
                      :contents_note, :extent, :dimensions, datastream: 'bfMetadata', multiple: false
 
     end

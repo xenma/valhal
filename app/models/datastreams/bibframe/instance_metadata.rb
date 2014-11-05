@@ -30,7 +30,7 @@ module Datastreams
         t.contents_note(path: 'contentsNote')
         t.isbn13(proxy: [:isbn_13, :Identifier, :label])
         t.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
-        t.provider_date(proxy: [:publication, :Provider, :providerDate])
+        t.published_date(proxy: [:publication, :Provider, :providerDate])
       end
 
       define_template :isbn13 do |xml, value|
