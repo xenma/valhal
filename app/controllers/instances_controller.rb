@@ -16,6 +16,7 @@ class InstancesController < ApplicationController
     respond_to do |format|
       format.html
       format.rdf { render rdf: @instance }
+      format.mods { render mods: @instance }
     end
   end
 

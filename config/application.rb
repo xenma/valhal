@@ -31,6 +31,7 @@ module Hel
       g.test_framework :rspec, :spec => true
     end
 
+    config.encoding = "UTF-8"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
