@@ -6,8 +6,9 @@ require 'spec_helper'
 # is not encapsulated in Bibframe::Instance here,
 # e.g. validations, relations etc.
 describe Instance do
-  before :all do
-    @instance = Instance.new
+  include_context 'shared'
+  before :each do
+    @instance = Instance.new(instance_params)
   end
 
   describe 'relations' do
@@ -16,8 +17,8 @@ describe Instance do
     end
 
     describe 'to work' do
-      before :all do
-        @i = Instance.create
+      before :each do
+        @i = Instance.create(instance_params)
         @w = Work.create
         @i.set_work(@w)
       end
@@ -45,7 +46,6 @@ describe Instance do
 
   describe 'administration' do
     it 'should be possible to edit the activity field' do
-      @instance.activity.should be_nil
       @instance.activity = 'TEST'
       @instance.activity.should == 'TEST'
     end
@@ -57,7 +57,6 @@ describe Instance do
     end
 
     it 'should be possible to edit the embargo field' do
-      @instance.embargo.should be_nil
       @instance.embargo = 'TEST'
       @instance.embargo.should == 'TEST'
     end
@@ -81,7 +80,6 @@ describe Instance do
     end
 
     it 'should be possible to edit the copyright field' do
-      @instance.copyright.should be_nil
       @instance.copyright = 'TEST'
       @instance.copyright.should == 'TEST'
     end
@@ -93,7 +91,6 @@ describe Instance do
     end
 
     it 'should be possible to edit the availability field' do
-      @instance.availability.should be_nil
       @instance.availability = 'TEST'
       @instance.availability.should == 'TEST'
     end
@@ -107,8 +104,8 @@ describe Instance do
   end
 
   describe 'to_rdf' do
-    before :all do
-      @instance = Instance.create
+    before :each do
+      @instance = Instance.create(instance_params)
     end
     # This test will only catch the worst errors
     # as the Reader is very forgiving

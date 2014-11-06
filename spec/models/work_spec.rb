@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Work do
+  include_context 'shared'
   describe 'on creation' do
     it 'should have a uuid on creation' do
       w = Work.new
@@ -89,7 +90,7 @@ describe Work do
     end
 
     it 'includes the hasInstance relations' do
-      @work.instances << Instance.new
+      @work.instances << Instance.new(instance_params)
       @work.save
       expect(@work.to_rdf).to include('hasInstance')
     end
