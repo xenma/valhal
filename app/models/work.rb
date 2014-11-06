@@ -8,7 +8,7 @@ class Work < ActiveFedora::Base
   include Bibframe::Work
   include Hydra::AccessControls::Permissions
   include Concerns::UUIDGenerator
-  include Concerns::RDFOutput
+  include Concerns::Renderers
 
   has_and_belongs_to_many :instances, property: :has_instance, inverse_of: :instance_of
   has_and_belongs_to_many :related_works, class_name: 'Work', property: :related_work, inverse_of: :related_work

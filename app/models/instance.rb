@@ -10,7 +10,7 @@ class Instance < ActiveFedora::Base
   include Concerns::AdminMetadata
   include Concerns::UUIDGenerator
   include Concerns::Preservation
-  include Concerns::RDFOutput
+  include Concerns::Renderers
 
   belongs_to :work, property: :instance_of, inverse_of: :has_instance
   has_many :content_files, property: :content_for
@@ -50,5 +50,15 @@ class Instance < ActiveFedora::Base
     end
     logger.debug "Found following inheiritable objects: #{res}"
     res
+  end
+
+  # very simple method to enable
+  # single file uploads
+  # will need to be expanded to handle
+  # multiple files
+  def content_files=(file)
+    cf = ContentFile.new
+    cf.file.content = file
+    content_files << cf
   end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :instances do
     member do
       get 'preservation'
@@ -8,12 +9,14 @@ Rails.application.routes.draw do
     end
   end
   resources :works
+  resources :trykforlaeg
 
   root to: 'catalog#index'
 
   # namespace for managing system
   namespace :administration do
     resources :controlled_lists
+    resources :activities
   end
 
   blacklight_for :catalog

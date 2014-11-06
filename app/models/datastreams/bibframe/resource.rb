@@ -69,7 +69,8 @@ module Datastreams
         languages.map(&:value)
       end
 
-      def add_language(lang)
+      def language=(lang)
+        return unless lang[:value].present?
         add_to_sibling(:language, :language, lang[:part], lang[:value])
       end
 
