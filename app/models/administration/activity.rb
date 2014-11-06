@@ -5,5 +5,7 @@ module Administration
     include Concerns::AdminMetadata
     include Concerns::Preservation
 
+    validates :activity, presence: true
+
   end
 end
