@@ -47,12 +47,11 @@ module Administration
 
     def activity_params
       params.require(:administration_activity).permit( :activity,
-                                                       :preservation_profile, 
+                                                       :access_condition,
                                                        :availability,
                                                        :collection, 
                                                        :embargo,
                                                        :embargo_condition,
-                                                       :access_condition,
                                                        :preservation_profile)
     end
   end
