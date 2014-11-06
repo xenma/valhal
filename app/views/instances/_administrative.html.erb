@@ -33,12 +33,16 @@
       </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
     </div>
 
 
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
+  </div>
+
+  <div class="col-sm-4">
+    <%= builder.input :copyright, collection: get_controlled_vocab('Copyright Licenses'),  prompt: 'Vælg licens' %>
   </div>
 </fieldset>

@@ -106,8 +106,8 @@ class InstancesController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   # Need to do some checking to get rid of blank params here.
   def instance_params
-    params.require(@klazz.to_s.downcase.to_sym).permit(:activity, :title_statement, :extent, :copyright_date,
-                                     :published_date, :dimensions, :mode_of_issuance, :isbn13,
+    params.require(@klazz.to_s.downcase.to_sym).permit(:activity, :title_statement, :extent, :copyright,
+                                     :copyright_date, :published_date, :dimensions, :mode_of_issuance, :isbn13,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
                                      :access_condition, :availability, :collection, :content_files,
                                      :preservation_profile, language: [:value, :part], note: []
