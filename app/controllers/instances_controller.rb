@@ -110,7 +110,7 @@ class InstancesController < ApplicationController
                                      :copyright_date, :published_date, :dimensions, :mode_of_issuance, :isbn13,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
                                      :access_condition, :availability, :collection, :content_files,
-                                     :preservation_profile, language: [:value, :part], note: []
+                                     :preservation_profile, language: [[:value, :part]], note: []
     ).tap { |elems| remove_blanks(elems) }
   end
 
