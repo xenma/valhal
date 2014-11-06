@@ -20,6 +20,7 @@ class WorksController < ApplicationController
   # GET /works/new
   def new
     @work = Work.new
+    @authority_object = Authority::Person.new
   end
 
   # GET /works/1/edit
@@ -75,6 +76,6 @@ class WorksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def work_params
-    params[:work].permit(titles: [[:value, :subtitle, :lang, :type]])
+    params[:work].permit(titles: [[:value, :subtitle, :lang, :type]], creators: [[:id, :type]])
   end
 end

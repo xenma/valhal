@@ -19,7 +19,7 @@ class CatalogController < ApplicationController
     }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'display_value_ssm'
+    config.index.title_field = 'display_value'
     config.index.display_type_field = 'has_model_ssim'
 
 

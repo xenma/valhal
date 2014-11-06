@@ -50,7 +50,29 @@
           </td>
         </tr>
       <% end %>
-      </tbody></table>
+      </tbody>
+    </table>
+    <h4>Ophav</h4>
+    <table class="table table-striped"><tbody>
+    <% @work.creators.each do |creator| %>
+      <tr>
+        <td>
+          <strong>Navn</strong>
+        </td>
+        <td>
+          <span><%= creator['display_value'] %></span>
+        </td>
+      </tr>
+        <tr>
+          <td>
+            <strong>Type</strong>
+          </td>
+          <td>
+            <span><%= creator['type'] %></span>
+          </td>
+        </tr>
+    <% end %>
+    </tbody></table>
 
   </div>
   <div class="dot"></div>
