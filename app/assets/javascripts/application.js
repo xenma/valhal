@@ -15,4 +15,5 @@
 //
 // Required by Blacklight
 //= require blacklight/blacklight
+//= require bootstrap-combobox
 //= require_tree .

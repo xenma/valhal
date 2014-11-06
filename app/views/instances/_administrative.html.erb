@@ -1,0 +1,44 @@
+
+<!--Administrative metadata -->
+<fieldset class="row" id="administrative">
+  <legend class="col-sm-12">
+    Administrative metadata
+  </legend>
+  <div class="col-sm-12">
+    <%= builder.input :activity, placeholder: 'Aktivitet' %>
+    <hr>
+  </div>
+  <div class="col-sm-12">
+      <%= builder.input :collection, collection: get_translated_list('Collections'), prompt: 'Samling' %>
+    <hr>
+  </div>
+
+    <div class="checkbox col-sm-12">
+      <div class="col-sm-3">
+        <%= builder.input :availability, as: :boolean, boolean_style: :inline,
+                     label_html: { class: 'checkbox-inline' },
+                     wrapper_html: { class: ''  }, input_html: { class: '' } %>
+      </div>
+      <div class="col-sm-3">
+        <%= builder.input :embargo, as: :boolean, boolean_style: :inline,
+                      label_html: { class: 'checkbox-inline' },
+                      wrapper_html: { class: ''  }, input_html: { class: '' } %>
+
+        </div>
+      <div class="col-sm-2">
+        <%= builder.input :embargo_date, input_html: { data: { hook: 'embargo_detailed' }} %>
+      </div>
+      <div class="col-sm-4">
+        <%= builder.input :embargo_condition, input_html: { data: { hook: 'embargo_detailed' }} %>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+        <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
+    </div>
+
+
+  <div class="col-sm-6">
+    <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
+  </div>
+</fieldset>

@@ -60,6 +60,13 @@ class Work < ActiveFedora::Base
     recipients << agent
   end
 
+  def titles=(val)
+    remove_titles
+    val.each do |v|
+      add_title(v) unless v['value'].blank? && v['subtitle'].blank?
+    end
+  end
+
   def to_solr(solr_doc = {})
     super
     Solrizer.insert_field(solr_doc, 'display_value',title_values.first, :displayable)
@@ -74,4 +81,13 @@ class Work < ActiveFedora::Base
     end
     solr_doc
   end
+
+
+  # Static methods
+
+  def self.get_title_typeahead_objs
+    ActiveFedora::SolrService.query("title_tesim:* && active_fedora_model_ssi:Work",
+                                    {:rows => ActiveFedora::SolrService.count("title_tesim:* && active_fedora_model_ssi:Work")})
+  end
+
 end

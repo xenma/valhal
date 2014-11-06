@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   def get_ldap_email
     emails = Devise::LDAP::Adapter.get_ldap_param(self.username, 'mail')
     self.email = emails.first.to_s unless emails.blank?
+  rescue => e
+    logger.error "Could not connect to LDAP: #{e}"
   end
 
   def get_ldap_name
