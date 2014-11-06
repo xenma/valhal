@@ -32,6 +32,15 @@
   <div class="col-sm-6">
     <%= builder.input :published_date %>
  </div>
+
+  <div class="col-sm-6">
+    <%= builder.input :mode_of_issuance %>
+  </div>
+
+  <div class="col-sm-6">
+    <%= builder.input :extent %>
+  </div>
+
   <% if @instance.note.present? %>
   <% @instance.note.each do |n| %>
       <div class="col-sm-6">
