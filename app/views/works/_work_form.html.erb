@@ -1,4 +1,4 @@
-<div class="work editMode">
+<div class="work editMode" data-hook="work-form">
 
   <div class="page-header">
     <div class="container">
@@ -7,7 +7,7 @@
   </div>
 
   <div class="container">
-    <%= form_for @work do |f| %>
+    <%= form_for(@work, remote: true) do |f| %>
         <fieldset class="row">
             <legend class="col-sm-12">Titler</legend>
             <% if @work.titles.length > 0  %>

@@ -25,6 +25,7 @@ class InstancesController < ApplicationController
   # GET /instances/new
   def new
     @instance = @klazz.new
+    render layout: nil
   end
 
   # GET /instances/1/edit

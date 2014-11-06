@@ -2,8 +2,14 @@ var creator_counter = 0;
 var title_counter = 0;
 
 $(document).ready(function(){
+    $('#new_work').on('ajax:success', function(event, xhr, settings){
+       $('[data-hook="work-form"]').after(xhr);
+        activateLoaderListener();
+    });
     // Add/remove title functions
     $(".hidden-title").hide();
+    // TODO: this stuff needs to be cleaned up
+    // e.g. refactor into functions, remove unused code (some of the combobox stuff)
     title_counter = $(".title, .new-title, .hidden-title").length;
     $('[data-function="new-title"]').click(function(){
         hidden_title = $("div.hidden-title");
@@ -19,7 +25,7 @@ $(document).ready(function(){
             $(this).click(function(){
                 $(this).siblings('.dropdown-toggle').click();
             });
-        })
+        });
         hidden_title.show();
         new_title.insertAfter(hidden_title);
         title_counter = title_counter +1;
@@ -28,7 +34,7 @@ $(document).ready(function(){
     $('[data-function="delete-title"]').click(function(){
         $(this).parent().parent().remove();
         return false;
-    })
+    });
 
     // Add/remove creator functions
     $(".hidden-creator").hide();
@@ -63,3 +69,9 @@ $(document).ready(function(){
         $(this).siblings('.dropdown-toggle').click();
     });
 });
+
+function activateLoaderListener(){
+    $('[data-role="form-loader"]').on('ajax:success', function(event, xhr, settings){
+        $('[data-hook="dropdown-button"]').after(xhr);
+    });
+}
