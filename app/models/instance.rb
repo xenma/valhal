@@ -21,6 +21,8 @@ class Instance < ActiveFedora::Base
                  :preservation_comment, :warc_id, :preservation_bitsafety, :preservation_confidentiality,
                  datastream: 'preservationMetadata', multiple: false
 
+  validates :activity, :collection, :copyright, presence: true
+
   before_validation(on: :create) do
     self.preservation_profile = 'Undefined' if preservation_profile.blank?
     self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
