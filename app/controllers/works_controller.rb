@@ -20,6 +20,7 @@ class WorksController < ApplicationController
   # GET /works/new
   def new
     @work = Work.new
+    @authority_object = Authority::Person.new
   end
 
   # GET /works/1/edit

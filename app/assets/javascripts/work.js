@@ -2,7 +2,6 @@ var creator_counter = 0;
 var title_counter = 0;
 
 $(document).ready(function(){
-
     // Add/remove title functions
     $(".hidden-title").hide();
     title_counter = $(".title, .new-title, .hidden-title").length;
@@ -40,13 +39,13 @@ $(document).ready(function(){
             .find("select.creator-id").attr("name","work[creators]["+creator_counter+"][id]").end()
             .find("select.creator-type").attr("name","work[creators]["+creator_counter+"][type]").end();
         hidden_creator.removeClass('hidden-creator').addClass("creator");
-        hidden_creator.find("select").each(function(index){
+    /*    hidden_creator.find("select").each(function(index){
             $(this).addClass("combobox");
             $(this).combobox();
             $(this).click(function(){
                 $(this).siblings('.dropdown-toggle').click();
             });
-        })
+        }) */
         hidden_creator.show();
         new_creator.insertAfter(hidden_creator);
         creator_counter = creator_counter +1;
