@@ -6,12 +6,16 @@ workflow_status:
     - Ingested
     - Metadata complete
     - Færdig forvaltet
-  name: Title Types
+title_types:
+  name: Title types
+  entries:
     - Uniform
     - Abbreviated
     - Translated
     - Alternative
+language:
   name: Language
+  entries:
     - dan
     - eng
     - sve
