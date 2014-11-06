@@ -115,9 +115,9 @@ describe Work do
       title1[:value] = "Title1"
       title2[:value] = "Title2"
       title3[:value] = "Title3"
-      @work.titles = [title1,title2]
+      @work.titles = {'0' => title1,'1' => title2}
       @work.title_values.should == ['Title1','Title2']
-      @work.titles = [title1,title3]
+      @work.titles = {'0' => title1,'1' => title3}
       @work.title_values.should == ['Title1','Title3']
     end
   end
