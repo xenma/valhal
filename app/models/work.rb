@@ -65,7 +65,7 @@ class Work < ActiveFedora::Base
   def creators
     creators = []
     authors.each do |a|
-      creators.push({"id" => a.id, "type"=> 'aut'})
+      creators.push({"id" => a.id, "type"=> 'aut', 'display_value' => a.display_value})
     end
     logger.debug("creators #{creators}")
     creators
