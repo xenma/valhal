@@ -17,7 +17,6 @@ function fetchActivityData(){
             if (item == null) return;
             if (item == 'Undefined') return;
             var selector = "[name$=\"" + i + "]\"]";
-            console.log(selector + ": " + item);
             $(selector).val(item);
         });
         //make sure all checkboxes appearances match their values
