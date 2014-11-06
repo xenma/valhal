@@ -1,14 +1,31 @@
 var creator_counter = 0;
+var title_counter = 0;
 
 $(document).ready(function(){
 
-    // Add remove title function
+    // Add/remove title functions
+    $(".hidden-title").hide();
+    title_counter = $(".title, .new-title, .hidden-title").length;
     $('[data-function="new-title"]').click(function(){
-        var html = '<div class="empty-titles">' + $('.new-title').first().html() + '</div>'
-
-        $('[data-hook="empty_titles"]').append(html);
+        hidden_title = $("div.hidden-title");
+        new_title = hidden_title.clone(true)
+            .find("input.title-value").attr("name","work[titles]["+title_counter+"][value]").end()
+            .find("select.title-lang").attr("name","work[titles]["+title_counter+"][lang]").end()
+            .find("select.title-type").attr("name","work[titles]["+title_counter+"][type]").end()
+            .find("input.title-subtitle").attr("name","work[titles]["+title_counter+"][subtitle]").end();
+        hidden_title.removeClass('hidden-title').addClass("title");
+        hidden_title.find("select").each(function(index){
+            $(this).addClass("combobox");
+            $(this).combobox();
+            $(this).click(function(){
+                $(this).siblings('.dropdown-toggle').click();
+            });
+        })
+        hidden_title.show();
+        new_title.insertAfter(hidden_title);
+        title_counter = title_counter +1;
         return false;
-    })
+    });
     $('[data-function="delete-title"]').click(function(){
         $(this).parent().parent().remove();
         return false;
@@ -34,10 +51,8 @@ $(document).ready(function(){
         new_creator.insertAfter(hidden_creator);
         creator_counter = creator_counter +1;
         return false;
-    })
-
+    });
     $('[data-function="delete-creator"]').click(function(){
-
         $(this).parent().parent().remove();
         return false;
     })

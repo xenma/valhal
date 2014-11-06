@@ -57,6 +57,7 @@ class Work < ActiveFedora::Base
   def titles=(val)
     remove_titles
     val.each_value do |v|
+      logger.debug("adding titel #{v}")
       add_title(v) unless v['value'].blank? && v['subtitle'].blank?
     end
   end

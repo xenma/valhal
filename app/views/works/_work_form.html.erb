@@ -18,7 +18,7 @@
             <hr/>
 
           <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length, hidden:false} %>
-          <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length+1, hidden:false} %>
+          <%= render partial: 'title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length+1, hidden:true} %>
 
             <div class='col-sm-12'>
                 <a class="btn btn-sm btn-primary" href="#" data-function="new-title">
