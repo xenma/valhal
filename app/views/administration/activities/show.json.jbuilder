@@ -1,1 +1,3 @@
-json.extract! @activity, :id, :created_at, :updated_at
+json.extract! @activity, :activity, :access_condition, :availability,
+                                                       :collection, :embargo,
+                                                       :embargo_condition, :preservation_profile
