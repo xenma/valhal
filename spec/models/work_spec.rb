@@ -49,12 +49,6 @@ describe Work do
       expect(@rel.preceding_works).to include @work
     end
 
-    it 'can have a creator' do
-      a = Authority::Agent.new
-      @work.add_creator(a)
-      expect(@work.creators).to include a
-      expect(a.created_works).to include @work
-    end
 
     it 'can have an author' do
       a = Authority::Agent.new
@@ -114,23 +108,16 @@ describe Work do
       expect(vals).to include 'James Joyce'
     end
 
-    it 'should contain all creator names' do
-      cre = Authority::Person.new
-      cre.authorized_personal_name = { scheme: 'viaf', full: 'Pablo Picasso' }
-      @work.add_creator(cre)
-      vals = @work.to_solr.values.flatten
-      expect(vals).to include 'Pablo Picasso'
-    end
-
     it 'should be able to add a list of title hash' do
-      titles = []
-      titles.push(value: 'Title1')
-      titles.push(value: 'Title2')
-      @work.titles = titles
+      title1 = HashWithIndifferentAccess.new
+      title2 = HashWithIndifferentAccess.new
+      title3 = HashWithIndifferentAccess.new
+      title1[:value] = "Title1"
+      title2[:value] = "Title2"
+      title3[:value] = "Title3"
+      @work.titles = {'0' => title1,'1' => title2}
       @work.title_values.should == ['Title1','Title2']
-      titles.pop
-      titles.push(value: 'Title3')
-      @work.titles = titles
+      @work.titles = {'0' => title1,'1' => title3}
       @work.title_values.should == ['Title1','Title3']
     end
   end

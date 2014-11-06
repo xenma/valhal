@@ -14,8 +14,7 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :related_works, class_name: 'Work', property: :related_work, inverse_of: :related_work
   has_and_belongs_to_many :preceding_works, class_name: 'Work', property: :preceded_by, inverse_of: :succeeded_by
   has_and_belongs_to_many :succeeding_works, class_name: 'Work', property: :succeeded_by, inverse_of: :preceded_by
-  has_and_belongs_to_many :creators, class_name: 'Authority::Agent', property: :creator, inverse_of: :creator_of
-  has_and_belongs_to_many :authors, class_name: 'Authority::Agent', property: :author, inverse_of: :author_of
+  has_and_belongs_to_many :authors, class_name: 'Authority::Agent',  property: :author, inverse_of: :author_of
   has_and_belongs_to_many :recipients, class_name: 'Authority::Agent', property: :recipient, inverse_of: :recipient_of
 
   # In general use these accessors when you want
@@ -45,11 +44,6 @@ class Work < ActiveFedora::Base
     succeeding_works << work
   end
 
-  def add_creator(agent)
-    agent.created_works << self
-    creators << agent
-  end
-
   def add_author(agent)
     agent.authored_works << self
     authors << agent
@@ -62,9 +56,35 @@ class Work < ActiveFedora::Base
 
   def titles=(val)
     remove_titles
-    val.each do |v|
+    val.each_value do |v|
+      logger.debug("adding titel #{v}")
       add_title(v) unless v['value'].blank? && v['subtitle'].blank?
     end
+  end
+
+  def creators
+    creators = []
+    authors.each do |a|
+      creators.push({"id" => a.id, "type"=> 'aut', 'display_value' => a.display_value})
+    end
+    logger.debug("creators #{creators}")
+    creators
+  end
+
+  def creators=(val)
+    remove_creators
+    val.each_value do |v|
+      if (v['type'] == 'aut')
+        add_author(ActiveFedora::Base.find(v['id'])) unless v['id'].blank?
+      end
+    end
+  end
+
+  def remove_creators
+    authors.each do |aut|
+      aut.authored_works.delete self
+    end
+    authors=[]
   end
 
   def to_solr(solr_doc = {})
@@ -75,9 +95,6 @@ class Work < ActiveFedora::Base
     end
     authors.each do |aut|
       Solrizer.insert_field(solr_doc, 'author', aut.all_names,:stored_searchable, :facetable, :displayable)
-    end
-    creators.each do |cre|
-      Solrizer.insert_field(solr_doc, 'creator', cre.all_names, :stored_searchable,:facetable, :displayable)
     end
     solr_doc
   end
