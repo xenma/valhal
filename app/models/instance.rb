@@ -30,9 +30,28 @@ class Instance < ActiveFedora::Base
 
   # Use this setter to manage work relations
   # as it ensures relationship symmetry
-  def set_work(work)
+  # We allow it to take pids as Strings
+  # to enable it to be written to via forms
+  # @params Work | String (pid)
+  def set_work=(work_input)
+    if work_input.is_a? String
+      work = Work.find(work_input)
+    elsif work_input.is_a? Work
+      work = work_input
+    else
+      fail "Can only take args of type Work or String where string represents a Work's pid"
+    end
     work.instances << self
     self.work = work
+  end
+
+  # This is actually a getter!
+  # In order to wrap work= as above, we also
+  # need to provide a reader for our form input
+  # It returns an id because this is what is used
+  # in the form.
+  def set_work
+    work.id
   end
 
   # @return whether any operations can be cascading (e.g. updating administrative or preservation metadata)

@@ -23,8 +23,12 @@ class InstancesController < ApplicationController
   end
 
   # GET /instances/new
+  # We presume that this method is being called remotely
+  # so don't render layout.
+  # If work_id is given in the params, add this to the object.
   def new
     @instance = @klazz.new
+    @instance.work = Work.find(params[:work_id]) if params[:work_id].present?
     render layout: nil
   end
 
@@ -37,7 +41,7 @@ class InstancesController < ApplicationController
   def create
     @instance = @klazz.new(instance_params)
     flash[:notice] = "#{@klazz} was successfully saved" if @instance.save
-    respond_with @instance
+    respond_with @instance.work
   end
 
   # PATCH/PUT /instances/1
@@ -112,7 +116,7 @@ class InstancesController < ApplicationController
                                      :copyright_date, :published_date, :dimensions, :mode_of_issuance, :isbn13,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
                                      :access_condition, :availability, :collection, :content_files,
-                                     :preservation_profile, language: [[:value, :part]], note: []
+                                     :preservation_profile, :set_work, language: [[:value, :part]], note: []
     ).tap { |elems| remove_blanks(elems) }
   end
 

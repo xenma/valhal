@@ -21,7 +21,7 @@ describe Instance do
       before :each do
         @i = Instance.create(instance_params)
         @w = Work.create
-        @i.set_work(@w)
+        @i.set_work = @w
       end
 
       it 'can be an instance of a work' do
