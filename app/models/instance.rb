@@ -12,7 +12,7 @@ class Instance < ActiveFedora::Base
   include Concerns::Preservation
   include Concerns::Renderers
 
-  belongs_to :work, property: :instance_of, inverse_of: :has_instance
+  belongs_to :work, property: :instance_of
   has_many :content_files, property: :content_for
   has_and_belongs_to_many :parts, class_name: 'Work', property: :has_part, inverse_of: :is_part_of
 
@@ -32,7 +32,10 @@ class Instance < ActiveFedora::Base
       fail "Can only take args of type Work or String where string represents a Work's pid"
     end
     work.instances << self
+    work.save
     self.work = work
+    save
+    work
   end
 
   # This is actually a getter!

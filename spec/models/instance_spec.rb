@@ -1,5 +1,4 @@
 require 'spec_helper'
-require "open-uri"
 
 # Since most Instance functionality is defined
 # in Bibframe::Instance, most tests take place
@@ -22,10 +21,12 @@ describe Instance do
         @i = Instance.create(instance_params)
         @w = Work.create
         @i.set_work = @w
+        @i.reload
+        @w.reload
       end
 
       it 'can be an instance of a work' do
-        expect(@i.work).to eql @w
+        expect(@i.work.pid).to eql @w.pid
       end
 
       it 'is a symmetrical relationship' do
@@ -33,8 +34,8 @@ describe Instance do
       end
 
       it 'is expressed symmetrically in rels-ext' do
-        expect(@i.rels_ext.to_rels_ext).to include('instanceOf')
         expect(@w.rels_ext.to_rels_ext).to include('hasInstance')
+        expect(@i.rels_ext.to_rels_ext).to include('instanceOf')
       end
     end
 
