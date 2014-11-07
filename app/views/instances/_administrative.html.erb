@@ -5,7 +5,11 @@
     Administrative metadata
   </legend>
   <div class="col-sm-12">
-    <%= builder.input :activity, placeholder: 'Aktivitet' %>
+    <%#
+        We render this as a partial to enable different views that include this form to define it differently
+        e.g. as a dropdown or a text input.
+    %>
+    <%= render partial: 'activity_input', locals: { builder: builder } %>
     <hr>
   </div>
   <div class="col-sm-12">
