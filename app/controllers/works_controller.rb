@@ -34,7 +34,7 @@ class WorksController < ApplicationController
 
     respond_to do |format|
       if @work.save
-        format.html { render 'new_instance', layout: nil }
+        format.html { render 'add_instance', layout: nil }
         format.json { render :show, status: :created, location: @work }
       else
         format.html { render :new }
