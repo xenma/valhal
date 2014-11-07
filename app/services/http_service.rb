@@ -1,9 +1,8 @@
 # -*- encoding : utf-8 -*-
-require 'net/http'
-require 'httparty'
+require "net/http"
+require "httparty"
 
 class HttpService
-
   def do_post(uri_string, params)
 
     logger.debug "Base URl = #{uri_string}"

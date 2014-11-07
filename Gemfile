@@ -51,6 +51,7 @@ gem 'devise-guests', "~> 0.3"
 gem 'devise_ldap_authenticatable'
 
 gem 'ohm'
+gem 'httparty'
 
 group :development, :test do
   gem 'simplecov'
