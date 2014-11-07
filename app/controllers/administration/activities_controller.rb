@@ -52,7 +52,9 @@ module Administration
                                                        :collection, 
                                                        :embargo,
                                                        :embargo_condition,
-                                                       :preservation_profile)
+                                                       :preservation_profile,
+                                                       :copyright
+      )
     end
   end
 end
