@@ -3,7 +3,8 @@ var title_counter = 0;
 
 $(document).ready(function(){
     $('#new_work').on('ajax:success', function(event, xhr, settings){
-       $('[data-hook="work-form"]').after(xhr);
+       // append button after form
+        $(this).after(xhr);
         activateLoaderListener();
     });
     // Add/remove title functions
@@ -70,8 +71,16 @@ $(document).ready(function(){
     });
 });
 
+// bind handlers to returned button
 function activateLoaderListener(){
     $('[data-role="form-loader"]').on('ajax:success', function(event, xhr, settings){
-        $('[data-hook="dropdown-button"]').after(xhr);
+        var $button = $('[data-hook="dropdown-button"]');
+        $button.dropdown('toggle'); // close the dropdown
+        $('[data-hook="work-form"]').after(xhr); // append the response
+        //disable the links
+        $('[data-role="form-loader"]')
+            .attr('href', '#')
+            .attr('data-remote', 'false')
+            .unbind();
     });
 }
