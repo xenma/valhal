@@ -1,3 +1,5 @@
+<%= render partial: 'works/show' %>
+
 <h2><%= "#{@instance.class.to_s}: #{@instance.title_statement}" %> </h2>
 
 <p>Copyright Date <%= @instance.copyright_date %></p>
@@ -12,5 +14,5 @@
     <p>Note: <%= n %></p>
 <% end %>
 
-<%= link_to 'Edit', edit_trykforlaeg_path(@instance) %> |
-<%= link_to 'Back', trykforlaegs_path %>
+<%= link_to 'Edit', edit_work_trykforlaeg_path(@work, @instance) %> |
+<%= link_to 'Back', @work%>

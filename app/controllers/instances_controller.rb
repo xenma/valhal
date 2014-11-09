@@ -28,7 +28,8 @@ class InstancesController < ApplicationController
   # If work_id is given in the params, add this to the object.
   def new
     @instance = @klazz.new
-    @instance.work = Work.find(params[:work_id]) if params[:work_id].present?
+    @work = Work.find(params[:work_id])
+    @instance.work = @work
     render layout: nil
   end
 
@@ -41,14 +42,14 @@ class InstancesController < ApplicationController
   def create
     @instance = @klazz.new(instance_params)
     flash[:notice] = "#{@klazz} was successfully saved" if @instance.save
-    respond_with @instance.work
+    respond_with(@instance.work, @instance)
   end
 
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
     flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
-    respond_with @instance
+    respond_with(@instance.work, @instance)
   end
 
   # Updates the preservation profile metadata.
@@ -106,7 +107,12 @@ class InstancesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_instance
     set_klazz if @klazz.nil?
+    set_work if @work.nil? && params[:work_id].present?
     @instance = @klazz.find(params[:id])
+  end
+
+  def set_work
+    @work = Work.find(params[:work_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

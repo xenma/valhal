@@ -5,7 +5,11 @@
         Tilføj ny instans <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="<%= "#{new_trykforlaeg_path}?work_id=#{@work.id}" %>" data-remote="true" data-role="form-loader">Trykforlaeg</a></li>
+        <li>
+          <a href="<%= new_work_trykforlaeg_path(@work) %>" data-remote="true" data-role="form-loader">
+          Trykforlaeg
+          </a>
+        </li>
       </ul>
     </div>
   </div>
