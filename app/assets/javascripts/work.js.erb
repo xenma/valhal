@@ -1,12 +1,17 @@
 var creator_counter = 0;
 var title_counter = 0;
 
+
 $(document).ready(function(){
+    evaluateEmbargoFields();
+    attachInstanceBindings();
     $('#new_work').on('ajax:success', function(event, xhr, settings){
        // append button after form
         $(this).after(xhr);
+        restyleButton();
         activateLoaderListener();
     });
+    $('[data-hook="work-form"]').on('ajax:success', restyleButton);
     // Add/remove title functions
     $(".hidden-title").hide();
     // TODO: this stuff needs to be cleaned up
@@ -135,4 +140,12 @@ function evaluateEmbargoFields() {
     } else {
         $detailed.attr('disabled', true);
     }
+}
+
+// turn the button green to give the user some feedback
+function restyleButton() {
+    $('[data-hook="work-submit-button"]')
+            .removeClass('btn-primary')
+            .addClass('btn-success')
+            .val('Gemt');
 }
