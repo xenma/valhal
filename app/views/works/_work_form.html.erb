@@ -7,7 +7,7 @@
   </div>
 
   <div class="container">
-    <%= form_for(@work, remote: true, data: { hook: 'work-form' }) do |f| %>
+    <%= form_for(@work, remote: true, data: { hook: 'work-input-form' }) do |f| %>
         <fieldset class="row">
             <legend class="col-sm-12">Titler</legend>
             <% if @work.titles.length > 0  %>
