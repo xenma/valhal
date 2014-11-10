@@ -1,6 +1,6 @@
 development:
   aleph:
-    aleph_base_url: http://aleph-00.kb.dk/X
+    aleph_base_url: http://rex.kb.dk/X
   dod_ebog_files:
     dod_server: webext-03
     user_name: valhal-reader
@@ -9,7 +9,7 @@ development:
     download_path: /tmp
 test:
   aleph:
-    aleph_base_url: http://aleph-test-00.kb.dk/X
+    aleph_base_url: http://rex.kb.dk/X
   dod_ebog_files:
     dod_server: webext-03
     user_name: valhal-reader
@@ -18,7 +18,7 @@ test:
     download_path: /tmp
 production:
   aleph:
-    aleph_base_url: http://aleph-00.kb.dk/X
+    aleph_base_url: http://rex.kb.dk/X
   dod_ebog_files:
     dod_server: webext-03
     user_name: valhal-reader
