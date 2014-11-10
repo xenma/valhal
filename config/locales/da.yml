@@ -55,3 +55,7 @@ da:
     kubsam: "NB-værker i KUB-samlinger (eksempler: UBF-samling, osv.)"
   blacklight:
     application_name: 'Valhal'
+  activefedora:
+    errors:
+      messages:
+        record_invalid: 'Ugyldig data'

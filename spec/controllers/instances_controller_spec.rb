@@ -102,14 +102,14 @@ describe InstancesController, type: :controller do
       it 'assigns a newly created but unsaved instance as @instance' do
         # Trigger the behavior that occurs when invalid params are submitted
         Instance.any_instance.stub(:save).and_return(false)
-        post :create, { instance: {} }, valid_session
+        post :create, {instance: valid_attributes }, valid_session
         assigns(:instance).should be_a_new(Instance)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Instance.any_instance.stub(:save).and_return(false)
-        post :create, { instance: {} }, valid_session
+        post :create, { instance: valid_attributes  }, valid_session
         response.should render_template('new')
       end
     end

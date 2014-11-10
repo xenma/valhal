@@ -39,9 +39,15 @@ class InstancesController < ApplicationController
   # POST /instances
   # POST /instances.json
   def create
-    @instance = @klazz.new(instance_params)
-    flash[:notice] = "#{@klazz} was successfully saved" if @instance.save
-    respond_with(@instance.work, @instance)
+    begin
+      @instance = @klazz.new(instance_params)
+      flash[:notice] = "#{@klazz} was successfully saved" if @instance && @instance.save
+    rescue ActiveFedora::RecordInvalid => exception
+      logger.error("Invalid instance params #{instance_params}")
+      @instance = Instance.new
+    end
+
+    respond_with(@work, @instance)
   end
 
   # PATCH/PUT /instances/1
