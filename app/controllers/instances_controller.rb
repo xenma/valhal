@@ -30,7 +30,6 @@ class InstancesController < ApplicationController
     @instance = @klazz.new
     @work = Work.find(params[:work_id])
     @instance.work = @work
-    render layout: nil
   end
 
   # GET /instances/1/edit
