@@ -11,7 +11,6 @@ module Concerns
                      :copyright, :material_type, :availability, :collection,
                      datastream: 'adminMetadata', :multiple => false
 
-
     end
   end
 end

@@ -44,6 +44,7 @@ gem 'bunny', '~> 1.1.0'
 gem 'amq-protocol', '>= 1.9.2'
 
 gem 'isbn_validation'
+gem 'edtf'
 
 gem 'devise'
 gem 'devise-guests', "~> 0.3"
@@ -66,6 +67,7 @@ end
 
 group :test do
   gem 'fakeredis'
+  gem 'factory_girl_rails'
 end
 
 #logging start

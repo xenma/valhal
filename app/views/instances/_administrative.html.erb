@@ -5,7 +5,11 @@
     Administrative metadata
   </legend>
   <div class="col-sm-12">
-    <%= builder.input :activity, placeholder: 'Aktivitet' %>
+    <%#
+        We render this as a partial to enable different views that include this form to define it differently
+        e.g. as a dropdown or a text input.
+    %>
+    <%= render partial: 'activity_input', locals: { builder: builder } %>
     <hr>
   </div>
   <div class="col-sm-12">
@@ -21,8 +25,8 @@
       </div>
       <div class="col-sm-3">
         <%= builder.input :embargo, as: :boolean, boolean_style: :inline,
-                      label_html: { class: 'checkbox-inline' },
-                      wrapper_html: { class: ''  }, input_html: { class: '' } %>
+                      label_html: { class: 'checkbox-inline' }, wrapper_html: { class: ''  },
+                      input_html: { class: '', data: { toggle: 'embargo_detailed' } } %>
 
         </div>
       <div class="col-sm-2">
@@ -33,12 +37,16 @@
       </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
     </div>
 
 
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
+  </div>
+
+  <div class="col-sm-4">
+    <%= builder.input :copyright, collection: get_controlled_vocab('Copyright Licenses'),  prompt: 'Vælg licens' %>
   </div>
 </fieldset>
