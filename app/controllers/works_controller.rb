@@ -43,6 +43,11 @@ class WorksController < ApplicationController
     end
   end
 
+
+  def aleph
+    render text: params[:work][:isbn]
+  end
+
   # PATCH/PUT /works/1
   # PATCH/PUT /works/1.json
   def update

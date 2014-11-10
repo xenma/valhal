@@ -54,6 +54,13 @@
           <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-primary col-sm-offset-11' %>
         </div>
     <% end %>
+    <div class="btn-group ">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <span class="glyphicon glyphicon-import"></span>
+        Importer
+      </button>
+    </div>
   </div>
 </div>
 <%= render partial: 'new_agent_modal' %>
+<%= render partial: 'aleph_import' %>

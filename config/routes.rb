@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       patch 'update_administration'
     end
   end
-  resources :works
+  resources :works do
+    post 'aleph', on: :collection
+  end
   resources :trykforlaegs
 
   root to: 'catalog#index'
