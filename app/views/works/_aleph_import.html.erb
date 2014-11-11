@@ -7,8 +7,11 @@
       </div>
       <div class="modal-body">
         <%= simple_form_for(@work, url: aleph_works_path) do |f| %>
-            ISBN
-            <input name="work[isbn]"/>
+            <select name="aleph[field]">
+              <option value="isbn" selected>ISBN</option>
+              <option value="SYS" selected>System nummer</option>
+            </select>
+            <input name="aleph[value]"/>
             <%= f.button :button, 'Import', class: 'btn btn-primary' %>
         <% end %>
       </div>
