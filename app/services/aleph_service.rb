@@ -46,8 +46,7 @@ class AlephService
           :set_entry => entry_num,
           :format    => "marc"})
     rescue => e
-      #logger.error "get_record failed for entry_num #{entry_num} set_number #{set_number}"
-      # logger.error e.backtrace.join("\n")
+     
     end
   end
 
@@ -74,8 +73,7 @@ class AlephService
                               :code    => '',
                               :request => search_string })
     rescue => e
-      #logger.error "search_aleph failed #{search_string}"
-      #logger.error e.backtrace.join("\n")
+    
     end
   end
 end
