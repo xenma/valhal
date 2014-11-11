@@ -1,4 +1,5 @@
 <% remote ||= false %>
+<% @authority_object ||= Authority::Person.new %>
 <%= form_for(@authority_object, remote: remote, html: { class: 'form-horizontal' }) do |f| %>
   <% if @authority_object.errors.any? %>
     <div id="error_explanation">

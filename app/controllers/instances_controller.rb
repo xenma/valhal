@@ -1,6 +1,7 @@
 # Perform actions on Instances
 class InstancesController < ApplicationController
   include PreservationHelper
+  before_action :set_work, only: [:create]
   before_action :set_klazz, only: [:index, :new, :create, :update]
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
   :update_preservation_profile, :update_administration]
@@ -23,8 +24,13 @@ class InstancesController < ApplicationController
   end
 
   # GET /instances/new
+  # We presume that this method is being called remotely
+  # so don't render layout.
+  # If work_id is given in the params, add this to the object.
   def new
     @instance = @klazz.new
+    @work = Work.find(params[:work_id])
+    @instance.work = @work
   end
 
   # GET /instances/1/edit
@@ -34,16 +40,20 @@ class InstancesController < ApplicationController
   # POST /instances
   # POST /instances.json
   def create
-    @instance = @klazz.new(instance_params)
-    flash[:notice] = "#{@klazz} was successfully saved" if @instance.save
-    respond_with @instance
+      @instance = @klazz.new(instance_params)
+      if @instance.save
+        flash[:notice] = "#{@klazz} was successfully saved"
+      else
+        @instance.work = @work
+      end
+      respond_with(@work, @instance)
   end
 
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
     flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
-    respond_with @instance
+    respond_with(@instance.work, @instance)
   end
 
   # Updates the preservation profile metadata.
@@ -101,7 +111,12 @@ class InstancesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_instance
     set_klazz if @klazz.nil?
+    set_work if @work.nil? && params[:work_id].present?
     @instance = @klazz.find(params[:id])
+  end
+
+  def set_work
+    @work = Work.find(params[:work_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
@@ -111,7 +126,7 @@ class InstancesController < ApplicationController
                                      :copyright_date, :published_date, :dimensions, :mode_of_issuance, :isbn13,
                                      :contents_note, :embargo, :embargo_date, :embargo_condition,
                                      :access_condition, :availability, :collection, :content_files,
-                                     :preservation_profile, language: [[:value, :part]], note: []
+                                     :preservation_profile, :set_work, language: [[:value, :part]], note: []
     ).tap { |elems| remove_blanks(elems) }
   end
 

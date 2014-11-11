@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'Trykforlaeg' do
+  include_context 'shared'
 
   describe 'validations' do
 
@@ -68,6 +69,15 @@ describe 'Trykforlaeg' do
         t = build(:trykforlaeg, published_date: '110u')
         expect(t.valid?).to be true
       end
+    end
+  end
+
+  describe 'to_mods' do
+    it 'is wellformed XML' do
+      tf = Trykforlaeg.create(valid_trykforlaeg)
+      xsd = Nokogiri::XML::Schema(open('http://www.loc.gov/standards/mods/v3/mods-3-5.xsd').read)
+      errors = xsd.validate(Nokogiri::XML.parse(tf.to_mods) { |config| config.strict })
+      expect(errors).to eql []
     end
   end
 end

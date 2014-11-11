@@ -64,8 +64,8 @@ module Concerns
                        'xmlns:rdf' => RDF_URI,
                        'xmlns:relators' => LOC_RELATORS_URI
         ) do
-          #  Use .class method to make it class agnostic
-          xml['bf'].send(self.class.to_s, 'rdf:about' => create_resource_url(id)) do
+          # It can either be an Instance or a Work
+          xml['bf'].send(base_class, 'rdf:about' => create_resource_url(id)) do
             # Add the relational data
             bf_rels.each do |key, val|
               xml['bf'].send(key, 'rdf:resource' => val)
@@ -123,6 +123,12 @@ module Concerns
     # so we cheat and do it like this.
     def correct_root_element(xml)
       xml.gsub('rdf:rdf', 'rdf:RDF')
+    end
+
+    # class can either be a Work or Instance
+    # so we need to find out which one we are
+    def base_class
+      self.is_a?(Instance) ? 'Instance' : 'Work'
     end
   end
 end

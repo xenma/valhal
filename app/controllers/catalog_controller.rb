@@ -19,7 +19,7 @@ class CatalogController < ApplicationController
     }
 
     # solr field configuration for search results/index views
-    config.index.title_field = 'display_value'
+    config.index.title_field = solr_name('display_value', :displayable)
     config.index.display_type_field = 'has_model_ssim'
 
 
@@ -43,7 +43,7 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
     config.add_facet_field solr_name('author', :facetable), :label => 'Author'
-    config.add_facet_field solr_name('creator', :facetable), :label => 'Creator'
+    config.add_facet_field 'active_fedora_model_ssi', :label => 'Model'
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -55,15 +55,15 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
-    config.add_index_field solr_name('title', :stored_searchable, type: :string), :label => 'Title:'
-    config.add_index_field solr_name('author', :stored_searchable, type: :string), :label => 'Author:'
-    config.add_index_field solr_name('person_name', :stored_searchable, type: :string), :label => 'Name:'
+    config.add_index_field solr_name('title', :stored_searchable, type: :string), :label => 'Title'
+    config.add_index_field solr_name('author', :stored_searchable, type: :string), :label => 'Author'
+    config.add_index_field solr_name('person_name', :stored_searchable, type: :string), :label => 'Name'
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field solr_name('title', :stored_searchable, type: :string), :label => 'Title:'
-    config.add_show_field solr_name('author', :stored_searchable, type: :string), :label => 'Author:'
-    config.add_show_field solr_name('person_name', :stored_searchable, type: :string), :label => 'Name:'
+    config.add_show_field solr_name('title', :stored_searchable, type: :string), :label => 'Title'
+    config.add_show_field solr_name('author', :stored_searchable, type: :string), :label => 'Author'
+    config.add_show_field solr_name('person_name', :stored_searchable, type: :string), :label => 'Name'
 
 
     # "fielded" search configuration. Used by pulldown among other places.
@@ -112,7 +112,7 @@ class CatalogController < ApplicationController
     # Specifying a :qt only to show it's possible, and so our internal automated
     # tests can test it. In this case it's the same as
     # config[:default_solr_parameters][:qt], so isn't actually neccesary.
-    config.add_search_field('subject') do |field|
+    config.add_search_field('Persons') do |field|
       field.qt = 'search'
       field.solr_local_parameters = {
         :qf => '$subject_qf',
@@ -125,7 +125,6 @@ class CatalogController < ApplicationController
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
     config.add_sort_field 'score desc, pub_date_dtsi desc, title_tesi asc', :label => 'relevance'
-    config.add_sort_field 'pub_date_dtsi desc, title_tesi asc', :label => 'year'
     config.add_sort_field 'author_tesi asc, title_tesi asc', :label => 'author'
     config.add_sort_field 'title_tesi asc, pub_date_dtsi desc', :label => 'title'
 

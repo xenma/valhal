@@ -1,0 +1,151 @@
+var creator_counter = 0;
+var title_counter = 0;
+
+
+$(document).ready(function(){
+    evaluateEmbargoFields();
+    attachInstanceBindings();
+    $('#new_work').on('ajax:success', function(event, xhr, settings){
+       // append button after form
+        $(this).after(xhr);
+        restyleButton();
+        activateLoaderListener();
+    });
+    $('[data-hook="work-input-form"]').on('ajax:success', restyleButton);
+    // Add/remove title functions
+    $(".hidden-title").hide();
+    // TODO: this stuff needs to be cleaned up
+    // e.g. refactor into functions, remove unused code (some of the combobox stuff)
+    title_counter = $(".title, .new-title, .hidden-title").length;
+    $('[data-function="new-title"]').click(function(){
+        hidden_title = $("div.hidden-title");
+        new_title = hidden_title.clone(true)
+            .find("input.title-value").attr("name","work[titles]["+title_counter+"][value]").end()
+            .find("select.title-lang").attr("name","work[titles]["+title_counter+"][lang]").end()
+            .find("select.title-type").attr("name","work[titles]["+title_counter+"][type]").end()
+            .find("input.title-subtitle").attr("name","work[titles]["+title_counter+"][subtitle]").end();
+        hidden_title.removeClass('hidden-title').addClass("title");
+        hidden_title.find("select").each(function(index){
+            $(this).addClass("combobox");
+            $(this).combobox();
+            $(this).click(function(){
+                $(this).siblings('.dropdown-toggle').click();
+            });
+        });
+        hidden_title.show();
+        new_title.insertAfter(hidden_title);
+        title_counter = title_counter +1;
+        return false;
+    });
+    $('[data-function="delete-title"]').click(function(){
+        $(this).parent().parent().remove();
+        return false;
+    });
+
+    // Add/remove creator functions
+    $(".hidden-creator").hide();
+    creator_counter = $(".creator, .new-creator, .hidden-creator").length;
+    $('[data-function="new-creator"]').click(function(){
+        hidden_creator = $("div.hidden-creator");
+        new_creator = hidden_creator.clone(true)
+            .find("select.creator-id").attr("name","work[creators]["+creator_counter+"][id]").end()
+            .find("select.creator-type").attr("name","work[creators]["+creator_counter+"][type]").end();
+        hidden_creator.removeClass('hidden-creator').addClass("creator");
+    /*    hidden_creator.find("select").each(function(index){
+            $(this).addClass("combobox");
+            $(this).combobox();
+            $(this).click(function(){
+                $(this).siblings('.dropdown-toggle').click();
+            });
+        }) */
+        hidden_creator.show();
+        new_creator.insertAfter(hidden_creator);
+        creator_counter = creator_counter +1;
+        return false;
+    });
+    $('[data-function="delete-creator"]').click(function(){
+        $(this).parent().parent().remove();
+        return false;
+    })
+
+
+    // Combobox functionallity
+    $('.combobox').combobox();
+    $('.combobox').click(function(){
+        $(this).siblings('.dropdown-toggle').click();
+    });
+});
+
+// when the form-loader retrieves a form, append it to
+function activateLoaderListener(){
+    function closeLoader() {
+        $('[data-hook="dropdown-button"]').dropdown('toggle');
+        $('[data-role="form-loader"]')
+                .attr('href', '#')
+                .attr('data-remote', 'false')
+                .unbind();
+    }
+
+    function appendResponse(xhr) {
+        $('[data-hook="work-form"]').after(xhr);
+    }
+
+    $('[data-role="form-loader"]').on('ajax:success', function(event, xhr, settings){
+        closeLoader();
+        appendResponse(xhr);
+        evaluateEmbargoFields();
+        attachInstanceBindings();
+    });
+}
+
+function attachInstanceBindings(){
+    $('[data-toggle="embargo_detailed"]').click(evaluateEmbargoFields);
+    $('[data-function="fetch_activity_data"]').change(fetchActivityData);
+}
+
+
+// call the Activity show.json
+// and populate the form fields with its values
+function fetchActivityData(){
+    var activity_id = $(this).val();
+    var activity_url = "<%= Rails.application.routes.url_helpers.administration_activities_path %>/" + activity_id + '.json';
+
+    $.get(activity_url, function(data) {
+        // iterate over response and apply values to the corresponding inputs
+        $.each(data, function(i, item){
+            if (i == 'activity') return;
+            if (item == null) return;
+            if (item == 'Undefined') return;
+            var selector = "[name$=\"" + i + "]\"]";
+            $(selector).val(item);
+        });
+        //make sure all checkboxes appearances match their values
+        var $checkboxes = $('input[type="checkbox"]');
+        $checkboxes.each(function(){
+            var checked = ($(this).val() == '1');
+            $(this).prop('checked', checked);
+        });
+        //make sure fields are enabled if relevant
+        evaluateEmbargoFields();
+    });
+
+}
+
+//enable the detailed embargo fields if there is an embargo
+function evaluateEmbargoFields() {
+    var $checkbox = $('[data-toggle="embargo_detailed"]');
+    var $detailed = $('[data-hook="embargo_detailed"]');
+    if ($checkbox.is(':checked')) {
+        $detailed.attr('disabled', false);
+    } else {
+        $detailed.attr('disabled', true);
+    }
+}
+
+// turn the button green to give the user some feedback
+function restyleButton() {
+    $('[data-hook="work-submit-button"]')
+            .removeClass('btn-primary')
+            .addClass('btn-success')
+            .val('Gemt');
+}

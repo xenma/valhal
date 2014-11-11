@@ -5,7 +5,10 @@ class ResourcesController < ApplicationController
   # Redirect to the correct namespace
   # for the specific object type
   def show
-    redirect_to @resource
+    respond_to do |format|
+      format.rdf { render rdf: @resource  }
+      format.html { redirect_to @resource }
+    end
   end
 
   private
