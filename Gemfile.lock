@@ -124,6 +124,9 @@ GEM
     hooks (0.3.6)
       uber (~> 0.0.4)
     htmlentities (4.3.2)
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     hydra (7.1.0)
       active-fedora (~> 7.1.0)
       blacklight (~> 5.5.1)
@@ -203,6 +206,7 @@ GEM
     msgpack (0.5.9)
     msgpack (0.5.9-x86-mingw32)
     multi_json (1.10.1)
+    multi_xml (0.5.5)
     net-http-persistent (2.9.4)
     net-ldap (0.5.1)
     netrc (0.8.0)
@@ -412,6 +416,7 @@ DEPENDENCIES
   edtf
   factory_girl_rails
   fakeredis
+  httparty
   hydra
   isbn_validation
   jbuilder (~> 2.0)
