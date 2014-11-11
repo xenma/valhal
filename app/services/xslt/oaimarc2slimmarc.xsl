@@ -17,15 +17,21 @@
     <marc:record>
       <xsl:apply-templates/>
 
-      <xsl:element name="marc:datafield">
-	<xsl:attribute name="ind1">#</xsl:attribute>
-	<xsl:attribute name="ind2">1</xsl:attribute>
-	<xsl:attribute name="tag">856</xsl:attribute>
-	<xsl:element name="marc:subfield">
-	  <xsl:attribute name="code">u</xsl:attribute>
-	  <xsl:value-of select="$pdfUri"/>
+      <!-- we shouldn't create this field unless we have a non-zero length
+      $pdfUri -->
+
+      <xsl:if test="$pdfUri">
+	<xsl:element name="marc:datafield">
+	  <xsl:attribute name="ind1">#</xsl:attribute>
+	  <xsl:attribute name="ind2">1</xsl:attribute>
+	  <xsl:attribute name="tag">856</xsl:attribute>
+	  <xsl:element name="marc:subfield">
+	    <xsl:attribute name="code">u</xsl:attribute>
+	    <xsl:value-of select="$pdfUri"/>
+	  </xsl:element>
 	</xsl:element>
-      </xsl:element>
+      </xsl:if>
+
     </marc:record>
   </xsl:template>
 
