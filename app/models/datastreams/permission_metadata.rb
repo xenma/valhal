@@ -19,6 +19,14 @@ module Datastreams
       end
     end
 
+    def get_file_groups(access,type)
+      get_file_permissions.select{|p| p['access']==access && p['type']==type}.collect{|p| p['name']}
+    end
+
+    def get_instance_groups(access,type)
+      get_instance_permissions.select{|p| p['access']==access && p['type']==type}.collect{|p| p['name']}
+    end
+
     def get_file_permissions
       permissions = []
       file.permission.nodeset.each do |n|
