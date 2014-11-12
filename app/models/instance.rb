@@ -78,6 +78,7 @@ class Instance < ActiveFedora::Base
   def content_files=(file)
     cf = ContentFile.new
     cf.file.content = file
+    set_rights_metadata_on_file(cf)
     content_files << cf
   end
 
@@ -87,6 +88,13 @@ class Instance < ActiveFedora::Base
     self.edit_groups = a.permissions['instance']['group']['edit']
     self.read_groups = a.permissions['instance']['group']['read']
     self.discover_groups = a.permissions['instance']['group']['discover']
+  end
+
+  def set_rights_metadata_on_file(file)
+    a = Administration::Activity.find(self.activity)
+    file.edit_groups = a.permissions['file']['group']['edit']
+    file.read_groups = a.permissions['file']['group']['read']
+    file.discover_groups = a.permissions['file']['group']['discover']
   end
 
 end
