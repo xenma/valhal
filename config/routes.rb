@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   end
   resources :works do
     post 'aleph', on: :collection
+    resources :instances
+    resources :trykforlaegs
   end
-  resources :trykforlaegs
 
   root to: 'catalog#index'
 
