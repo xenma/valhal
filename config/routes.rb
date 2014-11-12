@@ -11,10 +11,11 @@ Rails.application.routes.draw do
   resources :works do
     resources :instances
     resources :trykforlaegs
+    post 'aleph', on: :collection
   end
+  resources :trykforlaegs
 
   root to: 'catalog#index'
-
   # namespace for managing system
   namespace :administration do
     resources :controlled_lists

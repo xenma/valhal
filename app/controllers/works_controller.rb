@@ -43,6 +43,11 @@ class WorksController < ApplicationController
     end
   end
 
+
+  def aleph
+    render text: aleph_params
+  end
+
   # PATCH/PUT /works/1
   # PATCH/PUT /works/1.json
   def update
@@ -72,6 +77,11 @@ class WorksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_work
     @work = Work.find(params[:id])
+  end
+
+  # special whitelist for when we're importing from Aleph
+  def aleph_params
+    params.require(:aleph).permit(:field, :value)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
