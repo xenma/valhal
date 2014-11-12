@@ -7,7 +7,7 @@ describe HttpService do
     HttpService.new
   end
 
-  describe '#get_xml_with_http?' do
+  describe '#do_post?' do
     it 'should return a string containing XML from a HTTP request to Aleph' do
       http_service = HttpService.new
       xml_response = http_service.do_post(

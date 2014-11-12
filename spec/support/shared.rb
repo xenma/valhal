@@ -8,4 +8,5 @@
 # end
 RSpec.shared_context 'shared' do
   let (:instance_params) { { collection: 'Sample', activity: 'Default', copyright: 'cc' }}
+  let (:valid_trykforlaeg) { instance_params.merge(isbn13: '9780521169004', published_date: '2004')}
 end

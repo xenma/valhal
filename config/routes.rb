@@ -8,8 +8,10 @@ Rails.application.routes.draw do
       patch 'update_administration'
     end
   end
-  resources :works
-  resources :trykforlaegs
+  resources :works do
+    resources :instances
+    resources :trykforlaegs
+  end
 
   root to: 'catalog#index'
 

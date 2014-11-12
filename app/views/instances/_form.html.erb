@@ -1,4 +1,4 @@
-<%= simple_form_for(@instance, html: { class: 'form-horizontal' }, defaults: {
+<%= simple_form_for([@work, @instance], html: { class: 'form-horizontal' }, defaults: {
         wrapper_html: { class: 'form-group' }, input_html: { class: 'form-control' } }) do |f| %>
   <% if @instance.errors.any? %>
     <div id="error_explanation">
@@ -14,7 +14,7 @@
     <div class="instans editMode">
       <div class="page-header">
         <div class="container">
-          <h1>Instans <small>Ukendt</small></h1>
+          <h1>Instans <small><%= @klazz %></small></h1>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
         <%= render partial: 'sidebar' %>
     </div>
     <div class="col-sm-9">
-
+      <%= f.input :set_work, as: :hidden %>
       <%= render partial: 'bibliographic', locals: { builder: f } %>
       <%= render partial: 'administrative', locals: { builder: f }  %>
       <%= render partial: 'upload', locals: { builder: f }  %>
