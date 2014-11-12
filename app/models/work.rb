@@ -17,6 +17,8 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :authors, class_name: 'Authority::Agent',  property: :author, inverse_of: :author_of
   has_and_belongs_to_many :recipients, class_name: 'Authority::Agent', property: :recipient, inverse_of: :recipient_of
 
+  before_save :set_rights_metadata
+
   # In general use these accessors when you want
   # to add a relationship. These will ensure
   # that the relationship is symmetrical and
@@ -97,6 +99,13 @@ class Work < ActiveFedora::Base
       Solrizer.insert_field(solr_doc, 'author', aut.all_names,:stored_searchable, :facetable, :displayable)
     end
     solr_doc
+  end
+
+  # method to set the rights metadata stream based on activity
+  def set_rights_metadata
+    self.edit_groups = ['Chronos-Pligtaflevering']
+    self.read_groups = ['Chronos-Alle']
+    self.discover_groups = ['Chronos-Alle']
   end
 
 

@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
   #TODO: Change to reflect the Valhal usergroups, when they are defined
   #TODO: group names should be loaded from a config file
   def groups
-    groups = []
+    groups = ['Chronos-Alle']
     unless self.member_of.blank?
       if self.member_of.include? 'CN=Brugerbasen_SuperAdmins,OU=Brugerbasen,OU=Adgangsstyring,DC=kb,DC=dk'
-        groups << 'admin'
+        groups << 'Chronos-Admin'
       end
     end
     groups
