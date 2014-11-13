@@ -13,7 +13,7 @@ module Concerns
                      datastream: 'adminMetadata', :multiple => false
 
       def permissions=(val)
-        logger.debug("setting permissions #{val}")
+        permissionMetadata.remove_permissions
         val['instance']['group'].each do |access,groups|
           groups.each{|g| permissionMetadata.add_instance_permission(g,access,'group')} unless groups.blank?
         end
@@ -32,7 +32,7 @@ module Concerns
         permissions['instance'] = {}
         permissions['instance']['group'] = {}
         Administration::ControlledList.with(:name, 'Hydra Access Types').elements.each do |elem|
-          permissions['instance']['group'][elem.name] = permissionMetadata.get_file_groups(elem.name,'group')
+          permissions['instance']['group'][elem.name] = permissionMetadata.get_instance_groups(elem.name,'group')
         end
         permissions
       end

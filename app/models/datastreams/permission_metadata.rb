@@ -55,6 +55,12 @@ module Datastreams
       content_will_change!
     end
 
+    def remove_permissions
+      file.permission.nodeset.each{|n| n.remove}
+      instance.permission.nodeset.each{|n| n.remove}
+      content_will_change!
+    end
+
     define_template :permission do |xml, name, access, type|
       xml.permission do
         xml.Permission do
