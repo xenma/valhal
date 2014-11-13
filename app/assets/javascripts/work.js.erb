@@ -3,6 +3,9 @@ var title_counter = 0;
 
 
 $(document).ready(function(){
+    // Inform users that there are unsaved data in the form
+    $('form').areYouSure( {'message':'Er du sikker? Du har ikke gemt din formular!'} );
+
     evaluateEmbargoFields();
     attachInstanceBindings();
     $('#new_work').on('ajax:success', function(event, xhr, settings){
