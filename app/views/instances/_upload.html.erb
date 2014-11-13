@@ -1,8 +1,42 @@
-<fieldset id="upload" class="row">
-  <legend class="col-sm-12" >
-    Upload fil(er)
-  </legend>
+<% if @instance.content_files.blank? %>
 
-  <%= builder.input :content_files, as: :file, input_html: { class: ''},
-                    wrapper_html: { class: ''} %>
-</fieldset>
+    <fieldset id="upload" class="row">
+
+
+      <legend class="col-sm-12" >
+        Upload Ny Fil
+      </legend>
+
+      <%= builder.input :content_files, as: :file, input_html: { class: ''},
+                        wrapper_html: { class: ''} %>
+    </fieldset>
+
+<% else %>
+
+    <% if can?(:edit,@instance.content_files.first) %>
+        <fieldset id="upload" class="row">
+          <legend class="col-sm-12" >
+            Upload Ny Fil
+          </legend>
+
+          <%= builder.input :content_files, as: :file, input_html: { class: ''},
+                            wrapper_html: { class: ''} %>
+        </fieldset>
+    <% end %>
+        <fieldset id="files" class="row">
+          <legend class="col-sm-12" >
+            Eksisterende fil
+          </legend>
+          <%if can?(:show,@instance.content_files.first) %>
+            <% @instance.content_files.each do |cf| %>
+              <%= cf.original_filename %>
+              <%if can?(:download,@instance.content_files.first) %>
+                <%= link_to "Download", download_content_file_path(cf)%>
+              <% end %>
+            <% end %>
+          <% else %>
+              Du har ikke adgang til at se filen
+          <% end %>
+        </fieldset>
+
+<% end %>

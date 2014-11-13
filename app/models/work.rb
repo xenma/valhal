@@ -103,9 +103,9 @@ class Work < ActiveFedora::Base
 
   # method to set the rights metadata stream based on activity
   def set_rights_metadata
-    self.edit_groups = ['Chronos-Pligtaflevering']
-    self.read_groups = ['Chronos-Alle']
     self.discover_groups = ['Chronos-Alle']
+    self.read_groups = ['Chronos-Alle']
+    self.edit_groups = ['Chronos-Alle']
   end
 
 

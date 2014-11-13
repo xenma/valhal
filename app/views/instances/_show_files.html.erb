@@ -6,7 +6,10 @@
         <strong><%= f.original_filename %></strong>
       </td>
       <td>
-        <%= link_to "Download", download_content_file_path(f)%>
+        <%if can?(:download,@instance.content_files.first) %>
+            <%= link_to "Download", download_content_file_path(f)%>
+        <% end %>
+
       </td>
     </tr>
     <tr>

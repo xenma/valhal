@@ -6,6 +6,9 @@ class InstancesController < ApplicationController
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
   :update_preservation_profile, :update_administration]
 
+  load_and_authorize_resource :work
+  load_and_authorize_resource :instance, :through => :work
+
   respond_to :html
   # GET /instances
   # GET /instances.json

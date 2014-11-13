@@ -14,8 +14,14 @@ class User < ActiveRecord::Base
   before_save :get_ldap_name, :get_ldap_member_of
 
   def get_ldap_email
-    emails = Devise::LDAP::Adapter.get_ldap_param(self.username, 'mail')
-    self.email = emails.first.to_s unless emails.blank?
+    #Hack for sifd test users, which do not have an email
+    logger.debug("getting email for #{self.username}")
+    if (self.username.start_with? 'sfidtest')
+      self.email = "#{self.username}@kb.dk"
+    else
+      emails = Devise::LDAP::Adapter.get_ldap_param(self.username, 'mail')
+      self.email = emails.first.to_s unless emails.blank?
+    end
   rescue => e
     logger.error "Could not connect to LDAP: #{e}"
   end

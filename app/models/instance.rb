@@ -85,16 +85,16 @@ class Instance < ActiveFedora::Base
   # method to set the rights metadata stream based on activity
   def set_rights_metadata
     a = Administration::Activity.find(self.activity)
-    self.edit_groups = a.permissions['instance']['group']['edit']
-    self.read_groups = a.permissions['instance']['group']['read']
     self.discover_groups = a.permissions['instance']['group']['discover']
+    self.read_groups = a.permissions['instance']['group']['read']
+    self.edit_groups = a.permissions['instance']['group']['edit']
   end
 
   def set_rights_metadata_on_file(file)
     a = Administration::Activity.find(self.activity)
-    file.edit_groups = a.permissions['file']['group']['edit']
-    file.read_groups = a.permissions['file']['group']['read']
     file.discover_groups = a.permissions['file']['group']['discover']
+    file.read_groups = a.permissions['file']['group']['read']
+    file.edit_groups = a.permissions['file']['group']['edit']
   end
 
 end
