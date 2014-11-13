@@ -77,7 +77,7 @@ class Instance < ActiveFedora::Base
   # multiple files
   def content_files=(file)
     cf = ContentFile.new
-    cf.file.content = file
+    cf.add_file(file)
     set_rights_metadata_on_file(cf)
     content_files << cf
   end
