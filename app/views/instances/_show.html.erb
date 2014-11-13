@@ -1,0 +1,26 @@
+<div class="instans editMode">
+  <div class="page-header">
+    <div class="container">
+      <h1>Instans
+        <small><%= @klazz %></small>
+      </h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-3">
+        <%= render partial: 'sidebar' %>
+      </div>
+      <div class="col-sm-9">
+        <%= render partial:  'instances/show_bibliograph' %>
+        <%= render partial:  'instances/show_administrative' %>
+        <%= render partial:  'instances/show_files' %>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>

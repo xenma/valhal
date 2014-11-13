@@ -1,0 +1,14 @@
+<h4>Files</h4>
+<table class="table table-striped"><tbody>
+<% @instance.content_files.each do |f| %>
+    <tr>
+      <td>
+        <strong><%= f.original_filename %></strong>
+      </td>
+      <td>
+        <%= link_to "Download", download_content_file_path(f)%>
+      </td>
+    </tr>
+    <tr>
+</tbody></table>
+<% end %>

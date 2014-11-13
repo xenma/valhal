@@ -1,3 +1,5 @@
+require 'fileutils'
+
 # This class should be used to represent
 # all content datastreams. File order should
 # be given on the Instance level.

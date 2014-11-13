@@ -1,0 +1,52 @@
+<h4>Administrative Data</h4>
+<table class="table table-striped"><tbody>
+<tr>
+<td>
+  <strong>Activity</strong>
+</td>
+<td>
+  <span><%= Administration::Activity.find(@instance.activity).activity %></span>
+</td>
+</tr>
+<tr>
+  <td>
+    <strong>Collection</strong>
+  </td>
+  <td>
+    <span><%= @instance.collection %></span>
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>Perservation Profile</strong>
+  </td>
+  <td>
+    <span><%= @instance.preservation_profile %></span>
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>Copyright</strong>
+  </td>
+  <td>
+    <span><%= @instance.copyright %></span>
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>Embargo Date</strong>
+  </td>
+  <td>
+    <span><%= @instance.embargo_date %></span>
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>Embargo Condition</strong>
+  </td>
+  <td>
+    <span><%= @instance.embargo_condition %></span>
+  </td>
+</tr>
+
+</tbody></table>
