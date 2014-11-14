@@ -3,11 +3,14 @@ class Ability
   include Hydra::Ability
 
   def create_permissions
-    can [:create], ActiveFedora::Base do |obj|
-      current_user
+
+    if user_groups.include?('Chronos-Alle')
+      can [:create], Work
     end
-    can [:aleph], Work do |w|
-      current_user
+
+    if (user_groups & ['Chronos-Pligtaflevering','Chronos-Admin']).present?
+      can [:create], Instance
+      can [:create], Trykforlaeg
     end
   end
 
@@ -18,6 +21,9 @@ class Ability
 
     can [:download], ContentFile do |cf|
       test_read(cf.pid)
+    end
+    if user_groups.include?('Chronos-Alle')
+      can [:aleph], Work
     end
   end
 end

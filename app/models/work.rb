@@ -26,6 +26,12 @@ class Work < ActiveFedora::Base
   # Note also that these methods will automatically
   # save the object, as AF does this for the related
   # object when creating a relation.
+
+  # This method i insertet to make cancan authorization work with nested ressources and subclassing
+  def trykforlaegs
+    instances.where(class: 'Trygforlaeg')
+  end
+
   def add_instance(instance)
     instance.work = self
     work.instances << instance

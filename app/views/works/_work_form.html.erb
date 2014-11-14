@@ -7,7 +7,7 @@
   </div>
 
   <div class="container">
-    <%= form_for(@work, remote: true, data: { hook: 'work-input-form' }) do |f| %>
+    <%= form_for(@work) do |f| %>
         <fieldset class="row">
             <legend class="col-sm-12">Titler</legend>
             <% if @work.titles.length > 0  %>
@@ -51,8 +51,7 @@
         </div>
 
         <div class="actions">
-          <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-primary col-sm-offset-11',
-                       data: { hook: 'work-submit-button'} %>
+          <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-primary col-sm-offset-11'%>
         </div>
     <% end %>
     <div class="btn-group ">

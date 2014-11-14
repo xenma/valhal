@@ -46,7 +46,9 @@ class User < ActiveRecord::Base
 
   #TODO: group names should be loaded from a config file
   def groups
-    groups = ['Chronos-Alle']
+    groups = []
+    groups << 'Chronos-Alle' unless (self.new_record?)
+
     unless self.member_of.blank?
       if self.member_of.include? 'CN=Chronos-Pligtaflevering,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
         groups << 'Chronos-Pligtaflevering'
