@@ -16,7 +16,7 @@ class CatalogController < ApplicationController
     config.default_solr_params = {
       :qf => 'author_tesim title_tesim person_name_tesim',
       :qt => 'search',
-      :fq => "-active_fedora_model_ssi:(Instance OR Trykforlaeg OR ContentFile)", # exclude fileresults from search result
+      :fq => "-active_fedora_model_ssi:(Instance OR Trykforlaeg OR ContentFile)", # exclude fileresults and instances from search result
       :rows => 10
     }
 

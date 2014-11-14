@@ -3,8 +3,6 @@ module Administration
     before_action :authenticate_user!
     before_action :set_controlled_list, only: [:show, :edit, :update, :destroy]
 
-    before_save :set_rights_metadata
-
     # GET /controlled_lists
     def index
       @controlled_lists = ControlledList.all

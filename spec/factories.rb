@@ -12,4 +12,16 @@ FactoryGirl.define do
     isbn13 '9780521169004'
   end
 
+  factory :admin, class: User do
+    email "admin@kb.dk"
+    password "admin123"
+    name "administrator"
+    member_of "CN=Chronos-Admin,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk"
+
+    after(:create) do |user|
+      user.stub(update_attributes: false)
+    end
+  end
+
 end
+

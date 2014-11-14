@@ -26,14 +26,18 @@ module Concerns
         permissions = {}
         permissions['file'] = {}
         permissions['file']['group'] = {}
-        Administration::ControlledList.with(:name, 'Hydra Access Types').elements.each do |elem|
-          permissions['file']['group'][elem.name] = permissionMetadata.get_file_groups(elem.name,'group')
-        end
+
+        permissions['file']['group']['discover'] = permissionMetadata.get_file_groups('discover','group')
+        permissions['file']['group']['read'] = permissionMetadata.get_file_groups('read','group')
+        permissions['file']['group']['edit'] = permissionMetadata.get_file_groups('edit','group')
+
         permissions['instance'] = {}
         permissions['instance']['group'] = {}
-        Administration::ControlledList.with(:name, 'Hydra Access Types').elements.each do |elem|
-          permissions['instance']['group'][elem.name] = permissionMetadata.get_instance_groups(elem.name,'group')
-        end
+
+        permissions['instance']['group']['discover'] = permissionMetadata.get_file_groups('discover','group')
+        permissions['instance']['group']['read'] = permissionMetadata.get_file_groups('read','group')
+        permissions['instance']['group']['edit'] = permissionMetadata.get_file_groups('edit','group')
+
         permissions
       end
     end

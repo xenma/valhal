@@ -22,6 +22,15 @@ class Ability
     can [:download], ContentFile do |cf|
       test_read(cf.pid)
     end
+
+    can [:update_preservation_profile, :update_adminstration], Instance do |obj|
+      test_edit(obj.pid)
+    end
+
+    can [:preservation], Instance do |obj|
+      test_read(obj.pid)
+    end
+
     if user_groups.include?('Chronos-Alle')
       can [:aleph], Work
     end
