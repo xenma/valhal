@@ -11,10 +11,12 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:add_access_controls_to_solr_params]
 
 
+
   configure_blacklight do |config|
     config.default_solr_params = {
       :qf => 'author_tesim title_tesim person_name_tesim',
       :qt => 'search',
+      :fq => "-active_fedora_model_ssi:(Instance OR Trykforlaeg OR ContentFile)", # exclude fileresults from search result
       :rows => 10
     }
 
