@@ -8,6 +8,17 @@
 
   <div class="container">
     <%= form_for(@work) do |f| %>
+        <% if @work.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@work.errors.count, "error") %> prohibited this instance from being saved:</h2>
+
+              <ul>
+                <% @work.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
         <fieldset class="row">
             <legend class="col-sm-12">Titler</legend>
             <% if @work.titles.length > 0  %>

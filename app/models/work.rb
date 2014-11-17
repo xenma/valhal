@@ -18,6 +18,12 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :recipients, class_name: 'Authority::Agent', property: :recipient, inverse_of: :recipient_of
 
   before_save :set_rights_metadata
+  validate :has_a_title,:has_a_creator
+
+  # This method i insertet to make cancan authorization work with nested ressources and subclassing
+  def trykforlaegs
+    instances.where(class: 'Trygforlaeg')
+  end
 
   # In general use these accessors when you want
   # to add a relationship. These will ensure
@@ -27,45 +33,39 @@ class Work < ActiveFedora::Base
   # save the object, as AF does this for the related
   # object when creating a relation.
 
-  # This method i insertet to make cancan authorization work with nested ressources and subclassing
-  def trykforlaegs
-    instances.where(class: 'Trygforlaeg')
-  end
-
   def add_instance(instance)
-    instance.work = self
     work.instances << instance
+    instance.work = self
   end
 
   def add_related(work)
-    work.related_works << self
     related_works << work
+    work.related_works << self
   end
 
   def add_preceding(work)
-    work.succeeding_works << self
     preceding_works << work
+    work.succeeding_works << self
   end
 
   def add_succeeding(work)
-    work.preceding_works << self
     succeeding_works << work
+    work.preceding_works << self
   end
 
   def add_author(agent)
-    agent.authored_works << self
     authors << agent
+    agent.authored_works << self
   end
 
   def add_recipient(agent)
-    agent.received_works << self
     recipients << agent
+    agent.received_works << self
   end
 
   def titles=(val)
     remove_titles
     val.each_value do |v|
-      logger.debug("adding titel #{v}")
       add_title(v) unless v['value'].blank? && v['subtitle'].blank?
     end
   end
@@ -75,7 +75,6 @@ class Work < ActiveFedora::Base
     authors.each do |a|
       creators.push({"id" => a.id, "type"=> 'aut', 'display_value' => a.display_value})
     end
-    logger.debug("creators #{creators}")
     creators
   end
 
@@ -112,6 +111,20 @@ class Work < ActiveFedora::Base
     self.discover_groups = ['Chronos-Alle']
     self.read_groups = ['Chronos-Alle']
     self.edit_groups = ['Chronos-Alle']
+  end
+
+
+  # Validation methods
+  def has_a_title
+    if titles.blank?
+      errors.add(:titles,"Et værk skal have mindst en titel")
+    end
+  end
+
+  def has_a_creator
+    if creators.blank?
+      errors.add(:creators,"Et værk skal have mindst et ophav")
+    end
   end
 
 
