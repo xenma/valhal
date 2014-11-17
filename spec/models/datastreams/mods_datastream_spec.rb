@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe 'personal name' do
@@ -18,6 +19,16 @@ describe 'personal name' do
     f = File.new(Rails.root.join('spec', 'fixtures', 'mods_digitized_book_with_2_authors.xml'))
     mods = Datastreams::Mods.from_xml(f)
     expect(mods.primary.name).to eql ['Klee, Frederik']
+  end
+
+  it 'should retrieve the author from a record from aleph' do
+    @service = AlephService.new
+    set = @service.find_set("isbn=9788711396322") 
+    rec = @service.get_record(set[:set_num],set[:num_entries])
+    @converter = ConversionService.new(rec)
+    doc = @converter.to_mods("")
+    mods = Datastreams::Mods.from_xml(doc)
+    expect(mods.primary.name).to eql ['Knausgård, Karl Ove']
   end
 
 end

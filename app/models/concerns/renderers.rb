@@ -6,7 +6,7 @@ module Concerns
   # The Bibframe Metadata is combined with the Fedora RelsExt
   # and outputted as a single RDF compliant document.
   # <?xml version="1.0"?>
-  #       <rdf:RDF xmlns:bf="http://bibframe.org/vocab/#" 
+  # <rdf:RDF xmlns:bf="http://bibframe.org/vocab/#" 
   #       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
   #       xmlns:relators="http://id.loc.gov/vocabulary/relators/#">
   #   <bf:Work rdf:about="http://valhal.kb.dk/resources/valhal:1">
