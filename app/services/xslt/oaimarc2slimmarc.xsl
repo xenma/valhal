@@ -326,6 +326,28 @@
     </xsl:element>
   </xsl:template>
 
+  
+  <xsl:template match="varfield[@id='720']">
+    <xsl:element name="marc:datafield">
+      <xsl:attribute name="tag">
+	<xsl:value-of select="@id"/>
+      </xsl:attribute>
+      <xsl:if test="subfield[@label = 'o']">
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">a</xsl:attribute>
+	  <xsl:value-of select="subfield[@label = 'o']"/>
+	</xsl:element>
+      </xsl:if>
+      <xsl:if test="subfield[@label = '4']">
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">4</xsl:attribute>
+	  <xsl:value-of select="subfield[@label = '4']"/>
+	</xsl:element>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
+
+
   <xsl:template match="varfield">
     <xsl:element name="marc:datafield">
       <xsl:attribute name="ind1">
