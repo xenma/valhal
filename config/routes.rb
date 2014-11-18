@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     resources :trykforlaegs
     post 'aleph', on: :collection
   end
+  resources :content_files, :except => [:new, :index, :delete, :create, :edit, :show, :update, :destroy] do
+    member do
+      get 'download'
+    end
+  end
   root to: 'catalog#index'
   # namespace for managing system
   namespace :administration do

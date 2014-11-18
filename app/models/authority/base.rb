@@ -9,6 +9,8 @@ module Authority
     has_attributes :identifiers, datastream: 'mads', multiple: true
     has_attributes :uuid, datastream: 'mads', multiple: false
 
+    before_save :set_rights_metadata
+
     def display_value
       id
     end
@@ -25,6 +27,13 @@ module Authority
       Solrizer.insert_field(solr_doc, 'display_value', display_value, :displayable)
       Solrizer.insert_field(solr_doc, 'typeahead', display_value, :stored_searchable)
       solr_doc
+    end
+
+    # method to set the rights metadata stream based on activity
+    def set_rights_metadata
+      self.edit_groups = ['Chronos-Pligtaflevering']
+      self.read_groups = ['Chronos-Alle']
+      self.discover_groups = ['Chronos-Alle']
     end
   end
 end

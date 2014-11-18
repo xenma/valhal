@@ -6,6 +6,5 @@ module Administration
     include Concerns::Preservation
 
     validates :activity, presence: true
-
   end
 end

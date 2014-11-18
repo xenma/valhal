@@ -34,6 +34,7 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryGirl::Syntax::Methods
+  config.include Devise::TestHelpers, :type => :controller
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -50,4 +51,17 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before :all do
+    ActiveRecord::Base.subclasses.each(&:delete_all)
+    ActiveFedora::Base.subclasses.each(&:delete_all)
+    a = Administration::Activity.create("activity"=>"Trygforlæg", "collection"=>"billed", "availability"=>"0", "embargo"=>"0", "access_condition"=>"efter aftale", "preservation_profile"=>"storage", "copyright"=>"Attribution-ShareAlike CC BY-SA", "permissions"=>{"instance"=>{"group"=>{"discover"=>["Chronos-Alle"], "read"=>["Chronos-NSA"], "edit"=>["Chronos-Pligtaflevering"]}}, "file"=>{"group"=>{"discover"=>["Chronos-NSA"], "read"=>["Chronos-Pligtaflevering"], "edit"=>["Chronos-Admin"]}}})
+    @default_activity_id = a.id
+  end
+
+  def login_admin
+    @admin = FactoryGirl.create(:admin)
+    controller.stub(:current_user).and_return(@admin)
+  end
+
 end
