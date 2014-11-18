@@ -79,8 +79,7 @@ describe InstancesController, type: :controller do
 
   describe 'POST create' do
     describe 'with valid params' do
-      it 'creates a new Instance' do
-        pending "Why are 2 instances created when no Instances exists in Fedora"
+      xit 'creates a new Instance. Pending: why are 2 instances created when no Instances exists in Fedora' do
         w = Work.create valid_work_attributes
         expect {
           post :create, {instance: valid_attributes.merge(set_work: w.id), work_id: w.id}, valid_session
@@ -357,9 +356,7 @@ describe InstancesController, type: :controller do
 
   describe 'GET preservation' do
 
-    it 'should assign \'@ins\' to the ordered_instance' do
-      pending 'Perservation not fully implementet yet'
-
+    xit 'should assign \'@ins\' to the ordered_instance. Pending: perservation not fully implementet yet' do
       @ins = Instance.create! valid_attributes
       get :preservation, {:id => @ins.pid}
       assigns(:instance).should eq(@ins)

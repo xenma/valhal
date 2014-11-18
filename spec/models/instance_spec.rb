@@ -7,6 +7,14 @@ require 'spec_helper'
 # e.g. validations, relations etc.
 describe Instance do
   include_context 'shared'
+
+  let(:work_attributes) do
+    agent = Authority::Person.create(
+        authorized_personal_name: { given: 'Fornavn', family: 'Efternavn', scheme: 'KB' }
+    )
+    $valid_attributes = {titles: {'0' => {'value'=> 'A work title'} }, creators: {'0'=>{'id'=> agent.id, 'type'=>'aut'} } }
+  end
+
   before :each do
     @instance = Instance.new(instance_params)
   end
@@ -19,7 +27,7 @@ describe Instance do
     describe 'to work' do
       before :each do
         @i = Instance.create(instance_params)
-        @w = Work.create
+        @w = Work.create(work_attributes)
         @i.set_work = @w
         @i.reload
         @w.reload
@@ -40,7 +48,7 @@ describe Instance do
     end
 
     it 'can have parts which are Works' do
-      w = Work.new
+      w = Work.create(work_attributes)
       @instance.parts << w
       expect(@instance.parts).to include w
     end
