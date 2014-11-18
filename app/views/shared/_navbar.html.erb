@@ -11,19 +11,6 @@
       <a class="navbar-brand" href="#">Valhal</a>
     </div>
 
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <span class="glyphicon glyphicon-user"></span> Tom Juul Andersen <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="">Mine Opgaver</a></li>
-            <li><a href="">Administrator</a></li>
-            <li><a href="">Log ud</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+    <%= render partial: '/shared/user_dropdown' %>
   </div>
 </div>

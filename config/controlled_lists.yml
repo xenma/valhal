@@ -74,3 +74,16 @@ copyrights:
     - Attribution-NonCommercial CC BY-NC
     - Attribution-NonCommercial-ShareAlike CC BY-NC-SA
     - Attribution-NonCommercial-NoDerivs CC BY-NC-ND
+hydra_access_groups:
+  name: Hydra Access Groups
+  entries:
+    - Chronos-Alle
+    - Chronos-Admin
+    - Chronos-Pligtaflevering
+    - Chronos-NSA
+hydra_access_types:
+  name: Hydra Access Types
+  entries:
+    - discover
+    - read
+    - edit

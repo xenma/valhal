@@ -18,8 +18,17 @@ describe Work do
   # a Fedora mock (which doesn't exist)
   describe 'Relations:' do
     before :each do
+      agent = Authority::Person.create(
+          authorized_personal_name: { given: 'Fornavn', family: 'Efternavn', scheme: 'KB' }
+      )
       @work = Work.new
+      @work.add_title({'value'=> 'A title'})
+      @work.add_author(agent)
+      @work.save # for these tests to work. Object has to be persisted. Otherwise relations cannot be updated
       @rel = Work.new
+      @rel.add_title({'value'=> 'A title'})
+      @rel.add_author(agent)
+      @rel.save # for these tests to work. Object has to be persisted. Otherwise relation cannot be updated
     end
 
     it 'has many Instances' do
@@ -52,7 +61,9 @@ describe Work do
 
 
     it 'can have an author' do
-      a = Authority::Agent.new
+      a = Authority::Person.create(
+          authorized_personal_name: { given: 'Fornavn', family: 'Efternavn', scheme: 'KB' }
+      )
       @work.add_author(a)
       expect(@work.authors).to include a
       expect(a.authored_works).to include @work
@@ -72,7 +83,13 @@ describe Work do
   # with invalid RDF output.
   describe 'to_rdf' do
     before :all do
-      @work = Work.create
+      agent = Authority::Person.create(
+          authorized_personal_name: { given: 'Fornavn', family: 'Efternavn', scheme: 'KB' }
+      )
+      @work = Work.new
+      @work.add_title({'value'=> 'A title'})
+      @work.add_author(agent)
+      @work.save # for these tests to work. Object has to be persisted. Otherwise relations cannot be updated
     end
     # This test will only catch the worst errors
     # as the Reader is very forgiving
@@ -92,7 +109,13 @@ describe Work do
 
   describe 'to_solr' do
     before :each do
+      agent = Authority::Person.create(
+          authorized_personal_name: { given: 'Fornavn', family: 'Efternavn', scheme: 'KB' }
+      )
       @work = Work.new
+      @work.add_title({'value'=> 'A title'})
+      @work.add_author(agent)
+      @work.save # for these tests to work. Object has to be persisted. Otherwise relations cannot be updated
     end
 
     it 'should contain all title values' do
@@ -104,6 +127,7 @@ describe Work do
     it 'should contain all author names' do
       aut = Authority::Person.new
       aut.authorized_personal_name = { scheme: 'viaf', full: 'James Joyce' }
+      aut.save
       @work.add_author(aut)
       vals = @work.to_solr.values.flatten
       expect(vals).to include 'James Joyce'

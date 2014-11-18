@@ -1,0 +1,16 @@
+<fields>
+  <file>
+    <permission>
+      <name>chronos-alle</name>
+      <access>discover</access>
+      <type>group</type>
+    </permission>
+  </file>
+  <instance>
+    <permission>
+      <name>chronos-alle</name>
+      <access>read</access>
+      <type>group</type>
+    </permission>
+  </instance>
+</fields>

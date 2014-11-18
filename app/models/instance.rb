@@ -19,6 +19,8 @@ class Instance < ActiveFedora::Base
 
   validates :activity, :collection, :copyright, presence: true
 
+  before_save :set_rights_metadata
+
   # Use this setter to manage work relations
   # as it ensures relationship symmetry
   # We allow it to take pids as Strings
@@ -76,7 +78,24 @@ class Instance < ActiveFedora::Base
   # multiple files
   def content_files=(file)
     cf = ContentFile.new
-    cf.file.content = file
+    cf.add_file(file)
+    set_rights_metadata_on_file(cf)
     content_files << cf
   end
+
+  # method to set the rights metadata stream based on activity
+  def set_rights_metadata
+    a = Administration::Activity.find(self.activity)
+    self.discover_groups = a.permissions['instance']['group']['discover']
+    self.read_groups = a.permissions['instance']['group']['read']
+    self.edit_groups = a.permissions['instance']['group']['edit']
+  end
+
+  def set_rights_metadata_on_file(file)
+    a = Administration::Activity.find(self.activity)
+    file.discover_groups = a.permissions['file']['group']['discover']
+    file.read_groups = a.permissions['file']['group']['read']
+    file.edit_groups = a.permissions['file']['group']['edit']
+  end
+
 end

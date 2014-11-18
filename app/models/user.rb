@@ -14,8 +14,14 @@ class User < ActiveRecord::Base
   before_save :get_ldap_name, :get_ldap_member_of
 
   def get_ldap_email
-    emails = Devise::LDAP::Adapter.get_ldap_param(self.username, 'mail')
-    self.email = emails.first.to_s unless emails.blank?
+    #Hack for sifd test users, which do not have an email
+    logger.debug("getting email for #{self.username}")
+    if (self.username.start_with? 'sfidtest')
+      self.email = "#{self.username}@kb.dk"
+    else
+      emails = Devise::LDAP::Adapter.get_ldap_param(self.username, 'mail')
+      self.email = emails.first.to_s unless emails.blank?
+    end
   rescue => e
     logger.error "Could not connect to LDAP: #{e}"
   end
@@ -37,14 +43,25 @@ class User < ActiveRecord::Base
     name
   end
 
-  #TODO: Change to reflect the Valhal usergroups, when they are defined
+
   #TODO: group names should be loaded from a config file
   def groups
     groups = []
+    groups << 'Chronos-Alle' unless (self.new_record?)
+
     unless self.member_of.blank?
-      if self.member_of.include? 'CN=Brugerbasen_SuperAdmins,OU=Brugerbasen,OU=Adgangsstyring,DC=kb,DC=dk'
-        groups << 'admin'
+      if self.member_of.include? 'CN=Chronos-Pligtaflevering,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
+        groups << 'Chronos-Pligtaflevering'
       end
+      if self.member_of.include? 'CN=Chronos-NSA,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
+        groups << 'Chronos-NSA'
+      end
+      if self.member_of.include? 'CN=Chronos-Admin,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
+        groups << 'Chronos-Admin'
+      end
+ #     if self.member_of.include? 'CN=Chronos-alle,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
+ #       groups << 'Chronos-Alle'
+ #     end
     end
     groups
   end
