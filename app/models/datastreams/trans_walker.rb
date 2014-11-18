@@ -15,11 +15,13 @@ module Datastreams
 
     def to_work(mods)
       name =  { full: "And, Anders", scheme: 'KB' }
-      mads =Datastreams::Authority::Person.new(authorized_personal_name: name)
-      tit = {value: 'The Unbearable Lightness of Being', subtitle: '',type:'KB',lang: 'en'}
+      mads = Authority::Person.new(authorized_personal_name: name)
+      tit = {value: 'The Unbearable Lightness of Being', 
+          subtitle: '',
+              type: 'KB',
+              lang: 'en'}
       self.add_title(tit)
       self.add_author(mads)
-
     end
 
     def to_instance(mods)
