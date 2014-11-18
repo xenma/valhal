@@ -16,9 +16,24 @@ class CatalogController < ApplicationController
     config.default_solr_params = {
       :qf => 'author_tesim title_tesim person_name_tesim',
       :qt => 'search',
-      :fq => "-active_fedora_model_ssi:(Instance OR Trykforlaeg OR ContentFile)", # exclude fileresults and instances from search result
+    #  :fq => "-active_fedora_model_ssi:(Instance OR Trykforlaeg OR ContentFile)", # exclude fileresults and instances from search result
       :rows => 10
     }
+
+
+    # This filters out objects that you want to exclude from search results, like FileAssets
+    CatalogController.solr_search_params_logic += [:exclude_unwanted_models]
+
+    def exclude_unwanted_models(solr_parameters, user_parameters)
+      solr_parameters[:fq] ||= []
+      unwanted_models.each do |model|
+        solr_parameters[:fq] << "-has_model_ssim:\"#{model.to_class_uri}\""
+      end
+    end
+
+    def unwanted_models
+      [Instance, Trykforlaeg, ContentFile]
+    end
 
     # solr field configuration for search results/index views
     config.index.title_field = solr_name('display_value', :displayable)

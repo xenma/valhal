@@ -8,7 +8,7 @@ class ContentFilesController < ApplicationController
 
   # Retrieve the content file for a given ContentFile.
   # If a wrong BasicFile-id, then a 404 is returned.
-  # If something goes wrong service-side, then a 500 is returned.
+  # If something goes wrong server-side, then a 500 is returned.
   def download
     begin
       send_data @file.datastreams['content'].content, {:filename => @file.original_filename, :type => @file.mime_type}
