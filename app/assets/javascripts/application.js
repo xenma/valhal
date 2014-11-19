@@ -17,3 +17,4 @@
 //= require blacklight/blacklight
 //= require bootstrap-combobox
 //= require_tree .
+//= require jquery.are-you-sure
