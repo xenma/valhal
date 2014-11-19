@@ -59,25 +59,10 @@ class InstancesController < ApplicationController
     respond_with(@instance.work, @instance)
   end
 
-  # Updates the preservation profile metadata.
-  def update_preservation_profile
-    begin
-      notice = update_preservation_profile_from_controller(params, @instance)
-      redirect_to @instance, notice: notice
-    rescue => error
-      error_msg = "Could not update preservation profile: #{error.inspect}"
-      error.backtrace.each do |l|
-        error_msg += "\n#{l}"
-      end
-      logger.error error_msg
-      @instance.errors[:preservation] << error.inspect.to_s
-      render action: 'preservation'
-    end
+  def send_message_to_preservation
+    redirect_to @instance, notice: 'Instance and content files send for preservation'
   end
 
-  def preservation
-    @instance = Instance.find(params[:id])
-  end
 
   # DELETE /instances/1
   def destroy
