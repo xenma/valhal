@@ -14,12 +14,14 @@ module Datastreams
     end
 
     def to_work(mods)
-      name =  { full: "And, Anders", scheme: 'KB' }
-      mads = Authority::Person.new(authorized_personal_name: name)
-      tit = {value: 'The Unbearable Lightness of Being', 
-          subtitle: '',
+      p = mods.person.first
+      p = p.chomp ? p : p.strip
+      name={authorized_personal_name: { full: p, scheme: 'KB' }}
+      mads=Authority::Person.create(name)
+      tit = {value: mods.title.first,
+          subtitle: mods.subTitle.first,
               type: 'KB',
-              lang: 'en'}
+              lang: 'da'}
       self.add_title(tit)
       self.add_author(mads)
     end
