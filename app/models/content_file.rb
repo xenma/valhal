@@ -7,6 +7,7 @@ class ContentFile < ActiveFedora::Base
   include Hydra::AccessControls::Permissions
   include Concerns::TechMetadata
   include Concerns::Preservation
+  include Concerns::UUIDGenerator
 
   belongs_to :instance, property: :content_for
 

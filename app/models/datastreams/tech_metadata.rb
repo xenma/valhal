@@ -12,6 +12,7 @@ module Datastreams
 
     set_terminology do |t|
       t.root(:path=>'fields')
+      t.uuid
       t.file_checksum
       t.original_filename
       t.mime_type
