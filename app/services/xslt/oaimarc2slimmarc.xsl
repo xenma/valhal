@@ -80,6 +80,17 @@
 
   </xsl:template>
 
+  <xsl:template match="varfield[@id='021']">
+    <xsl:if test="subfield[@label='e']">
+      <marc:datafield tag='020'>
+	<xsl:attribute name="ind1">0</xsl:attribute><xsl:attribute name="ind2">0</xsl:attribute>
+	<marc:subfield code="a"> 
+	  <xsl:value-of select="subfield[@label='e']"/>
+	</marc:subfield>
+      </marc:datafield>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="varfield[@id='100']">
 
     <xsl:element name="marc:datafield">

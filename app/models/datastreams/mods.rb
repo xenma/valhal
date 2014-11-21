@@ -8,6 +8,7 @@ module Datastreams
     set_terminology do |t|
       t.root(:path=>'mods', :xmlns=>"http://www.loc.gov/mods/v3")
       t.uuid(:path=>"identifier[@type='uri']")
+      t.isbn(:path=>"identifier[@type='isbn']")
       t.genre()
       t.typeOfResource()
       t.location do

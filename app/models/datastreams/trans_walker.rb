@@ -28,7 +28,30 @@ module Datastreams
     end
 
     def to_instance(mods)
+      # self.note
+      # self.identifier 
+      # self.Identifier
 
+      # self.publication 
+      # self.Provider 
+      # self.copyrightDate
+      # self.providerDate
+
+
+      # self.language
+      # self.mode_of_issuance(path: 'modeOfIssuance')
+      # self.title_statement(path: 'titleStatement', index_as: :stored_searchable)
+    
+      self.extent=mods.physicalExtent.first 
+
+      # self.dimensions
+      # self.contents_note(path: 'contentsNote')
+      # self.isbn13(proxy: [:isbn_13, :Identifier, :label])
+
+      self.isbn13=mods.isbn.first
+
+      # self.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
+      # self.published_date(proxy: [:publication, :Provider, :providerDate])
     end
 
     
