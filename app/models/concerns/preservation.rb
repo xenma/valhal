@@ -100,8 +100,7 @@ module Concerns
 
         if self.kind_of?(ContentFile)
           message['File_UUID'] = self.file_uuid
-          #TODO: add view_controller
-          #message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid)
+          message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid, :only_path => true)
         end
 
         metadata = create_message_metadata

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "view_file/show"
+
   resources :instances do
     member do
       get 'preservation'
@@ -15,9 +17,6 @@ Rails.application.routes.draw do
     resources :trykforlaegs
     post 'aleph', on: :collection
   end
-
-
-
 
   resources :content_files, :except => [:new, :index, :delete, :create, :edit, :show, :update, :destroy] do
     member do
