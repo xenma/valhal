@@ -1,10 +1,10 @@
 # Perform actions on Instances
 class InstancesController < ApplicationController
   include PreservationHelper
-  before_action :set_work, only: [:create]
+  before_action :set_work, only: [:create, :send_to_preservation]
   before_action :set_klazz, only: [:index, :new, :create, :update]
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
-  :update_preservation_profile, :update_administration]
+  :send_to_preservation, :update_administration]
 
   authorize_resource :work
   authorize_resource :instance, :through => :work
@@ -33,7 +33,7 @@ class InstancesController < ApplicationController
   def new
     @instance = @klazz.new
     @work = Work.find(params[:work_id])
-    @instance.work = @work
+    @instance.work << @work
   end
 
   # GET /instances/1/edit
@@ -47,7 +47,7 @@ class InstancesController < ApplicationController
       if @instance.save
         flash[:notice] = "#{@klazz} was successfully saved"
       else
-        @instance.work = @work
+        @instance.work << @work
       end
       respond_with(@work, @instance)
   end
@@ -56,13 +56,17 @@ class InstancesController < ApplicationController
   # PATCH/PUT /instances/1.json
   def update
     flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
-    respond_with(@instance.work, @instance)
+    respond_with(@instance.work.first, @instance)
   end
 
-  def send_message_to_preservation
-    redirect_to @instance, notice: 'Instance and content files send for preservation'
+  def send_to_preservation
+    if @instance.initiate_preservation
+      flash[:notice] = 'Instance and content files send for preservation'
+    else
+      flash[:notice] = 'Failed sending instance to preservation'
+    end
+    redirect_to work_instance_path(@instance.work.first,@instance)
   end
-
 
   # DELETE /instances/1
   def destroy

@@ -63,6 +63,19 @@ class ContentFile < ActiveFedora::Base
     self.last_modified = file.mtime.to_s
   end
 
+
+  ## Model specific preservation functionallity
+  def create_preservation_message_metadata
+
+    res = "<provenanceMetadata><fields><uuid>#{self.uuid}</uuid></fields><provenanceMetadata"
+    res +="<preservationMetadata>"
+    res += self.preservationMetadata.content
+    res +="</preservationMetadata>"
+    res +="<techMetadata>"
+    res += self.techMetadata.content
+    res +="</techMetadata>"
+  end
+
   def can_perform_cascading?
     false
   end
