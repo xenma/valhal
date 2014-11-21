@@ -46,6 +46,7 @@ class InstancesController < ApplicationController
       @instance = @klazz.new(instance_params)
       if @instance.save
         flash[:notice] = "#{@klazz} was successfully saved"
+        @instance.cascade_preservation
       else
         @instance.work << @work
       end
@@ -55,7 +56,10 @@ class InstancesController < ApplicationController
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
-    flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
+    if @instance.update(instance_params)
+      flash[:notice] = "#{@klazz} was successfully updated."
+      @instance.cascade_preservation
+    end
     respond_with(@instance.work.first, @instance)
   end
 

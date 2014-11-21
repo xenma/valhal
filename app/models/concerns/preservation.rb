@@ -7,7 +7,7 @@ module Concerns
 
     included do
       include ActiveFedora::Callbacks # to be able to define the 'before_validation' method
-    #  include PreservationHelper # only for method: set_preservation_time
+      include Rails.application.routes.url_helpers
 
       has_metadata :name => 'preservationMetadata', :type => Datastreams::PreservationDatastream
       has_attributes :preservation_profile, :preservation_state, :preservation_details, :preservation_modify_date,
@@ -16,7 +16,6 @@ module Concerns
 
       validate :validate_preservation
 
-      after_save :cascade_preservation
       before_save do
         logger.debug("now saving #{self.class.name} - #{self.pid}")
       end
@@ -52,6 +51,7 @@ module Concerns
       # should be cascaded.
       # @param element The element to have stuff cascaded.
       def cascade_preservation
+        self.reload
         logger.debug("cascade preservation#{self.class.name} - #{self.pid} ")
         if self.can_perform_cascading?
           self.cascading_elements.each do |pib|
@@ -100,7 +100,8 @@ module Concerns
 
         if self.kind_of?(ContentFile)
           message['File_UUID'] = self.file_uuid
-          message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid => element.pid)
+          #TODO: add view_controller
+          #message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid)
         end
 
         metadata = create_message_metadata

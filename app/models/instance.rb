@@ -57,6 +57,11 @@ class Instance < ActiveFedora::Base
   # will need to be expanded to handle
   # multiple files
   def content_files=(file)
+    #remove old file
+    content_files.each do |cf|
+      cf.delete
+    end
+
     cf = ContentFile.new
     cf.add_file(file)
     set_rights_metadata_on_file(cf)
