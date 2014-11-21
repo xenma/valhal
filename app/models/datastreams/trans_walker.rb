@@ -19,7 +19,6 @@ module Datastreams
               type: 'KB',
               lang: 'da'}
       self.add_title(tit)
-#      p = mods.person.first
       mods.person.each { |p|
         p = p.chomp ? p : p.strip
         name={authorized_personal_name: { full: p, scheme: 'KB' }}
