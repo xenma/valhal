@@ -14,16 +14,18 @@ module Datastreams
     end
 
     def to_work(mods)
-      p = mods.person.first
-      p = p.chomp ? p : p.strip
-      name={authorized_personal_name: { full: p, scheme: 'KB' }}
-      mads=Authority::Person.create(name)
       tit = {value: mods.title.first,
           subtitle: mods.subTitle.first,
               type: 'KB',
               lang: 'da'}
       self.add_title(tit)
-      self.add_author(mads)
+#      p = mods.person.first
+      mods.person.each { |p|
+        p = p.chomp ? p : p.strip
+        name={authorized_personal_name: { full: p, scheme: 'KB' }}
+        mads=Authority::Person.create(name)
+        self.add_author(mads)
+      }
     end
 
     def to_instance(mods)
