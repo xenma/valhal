@@ -28,7 +28,6 @@ module Concerns
         Resque.enqueue(SendToPreservationJob,self.pid)
       end
 
-
       def update_preservation_profile
         self.preservation_profile = 'Undefined' if self.preservation_profile.blank?
         self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
@@ -81,6 +80,7 @@ module Concerns
             raise "Initate_Preservation: Failed to update preservation data"
           end
         end
+
       end
 
       private
