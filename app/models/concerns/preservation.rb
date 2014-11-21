@@ -80,11 +80,17 @@ module Concerns
           message = create_preservation_message
           self.save && send_message_to_preservation(message)
         end
+
+        if self.can_perform_cascading?
+          self.cascading_elements.each do |pib|
+            pib.initiate_preservation
+          end
+        end
+
         logger.debug("initiating preservation END")
       end
 
       private
-
       def create_preservation_message
         message = Hash.new
         message['UUID'] = self.uuid

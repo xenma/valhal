@@ -6,5 +6,9 @@ module Administration
     include Concerns::Preservation
 
     validates :activity, presence: true
+
+    def can_perform_cascading
+      false
+    end
   end
 end
