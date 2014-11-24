@@ -1,3 +1,4 @@
+include 'resque'
 # -*- encoding : utf-8 -*-
 module Concerns
   # The preservation definition which is to be used by all elements.
@@ -18,6 +19,14 @@ module Concerns
 
       before_validation :update_preservation_profile
 
+      def is_preservable
+        true
+      end
+
+      # Creates a job on the send_to_reservation queue
+      def send_to_preservation
+        Resque.enqueue(SendToPreservationJob,self.pid)
+      end
 
 
       def update_preservation_profile
@@ -38,7 +47,6 @@ module Concerns
         end
       end
 
-
       # Check whether it should be cascading, and also perform the cascading.
       # @param params The parameter from the controller. Contains the parameter for whether the preservation
       # should be cascaded.
@@ -54,7 +62,6 @@ module Concerns
         end
       end
 
-
       # Initiates the preservation. If the profile is set to long-term preservation, then a message is created and sent.
       # @param element The element to perform the preservation upon.
       def initiate_preservation
@@ -68,15 +75,12 @@ module Concerns
           self.preservation_state = Constants::PRESERVATION_STATE_INITIATED.keys.first
           self.preservation_details = 'The preservation button has been pushed.'
           message = create_preservation_message
-          self.save && send_message_to_preservation(message)
-        end
-
-        if self.can_perform_cascading?
-          self.cascading_elements.each do |pib|
-            pib.initiate_preservation
+          if self.save
+            send_message_to_preservation(message)
+          else
+            raise "Initate_Preservation: Failed to update preservation data"
           end
         end
-
       end
 
       private
