@@ -31,6 +31,8 @@ module MqListenerHelper
         return ContentFile.find(id)
       when 'instance'
         return Instance.find(id)
+      when 'trygforlaeg'
+        return Trykforlaeg.find(id)
       else
         raise 'Unknown element type'
     end

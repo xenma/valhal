@@ -23,13 +23,10 @@ class Ability
       test_read(cf.pid)
     end
 
-    can [:update_preservation_profile, :update_adminstration], Instance do |obj|
+    can [:send_to_preservation, :update_adminstration], Instance do |obj|
       test_edit(obj.pid)
     end
 
-    can [:preservation], Instance do |obj|
-      test_read(obj.pid)
-    end
 
     if user_groups.include?('Chronos-Alle')
       can [:aleph], Work

@@ -1,10 +1,10 @@
 # Perform actions on Instances
 class InstancesController < ApplicationController
   include PreservationHelper
-  before_action :set_work, only: [:create]
+  before_action :set_work, only: [:create, :send_to_preservation]
   before_action :set_klazz, only: [:index, :new, :create, :update]
   before_action :set_instance, only: [:show, :edit, :update, :destroy,
-  :update_preservation_profile, :update_administration]
+  :send_to_preservation, :update_administration]
 
   authorize_resource :work
   authorize_resource :instance, :through => :work
@@ -33,7 +33,7 @@ class InstancesController < ApplicationController
   def new
     @instance = @klazz.new
     @work = Work.find(params[:work_id])
-    @instance.work = @work
+    @instance.work << @work
   end
 
   # GET /instances/1/edit
@@ -46,8 +46,9 @@ class InstancesController < ApplicationController
       @instance = @klazz.new(instance_params)
       if @instance.save
         flash[:notice] = "#{@klazz} was successfully saved"
+        @instance.cascade_preservation
       else
-        @instance.work = @work
+        @instance.work << @work
       end
       respond_with(@work, @instance)
   end
@@ -55,28 +56,20 @@ class InstancesController < ApplicationController
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
-    flash[:notice] = "#{@klazz} was successfully updated." if @instance.update(instance_params)
-    respond_with(@instance.work, @instance)
-  end
-
-  # Updates the preservation profile metadata.
-  def update_preservation_profile
-    begin
-      notice = update_preservation_profile_from_controller(params, @instance)
-      redirect_to @instance, notice: notice
-    rescue => error
-      error_msg = "Could not update preservation profile: #{error.inspect}"
-      error.backtrace.each do |l|
-        error_msg += "\n#{l}"
-      end
-      logger.error error_msg
-      @instance.errors[:preservation] << error.inspect.to_s
-      render action: 'preservation'
+    if @instance.update(instance_params)
+      flash[:notice] = "#{@klazz} was successfully updated."
+      @instance.cascade_preservation
     end
+    respond_with(@instance.work.first, @instance)
   end
 
-  def preservation
-    @instance = Instance.find(params[:id])
+  def send_to_preservation
+    if @instance.initiate_preservation
+      flash[:notice] = 'Instance and content files send for preservation'
+    else
+      flash[:notice] = 'Failed sending instance to preservation'
+    end
+    redirect_to work_instance_path(@instance.work.first,@instance)
   end
 
   # DELETE /instances/1

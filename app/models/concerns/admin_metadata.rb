@@ -34,9 +34,9 @@ module Concerns
         permissions['instance'] = {}
         permissions['instance']['group'] = {}
 
-        permissions['instance']['group']['discover'] = permissionMetadata.get_file_groups('discover','group')
-        permissions['instance']['group']['read'] = permissionMetadata.get_file_groups('read','group')
-        permissions['instance']['group']['edit'] = permissionMetadata.get_file_groups('edit','group')
+        permissions['instance']['group']['discover'] = permissionMetadata.get_instance_groups('discover','group')
+        permissions['instance']['group']['read'] = permissionMetadata.get_instance_groups('read','group')
+        permissions['instance']['group']['edit'] = permissionMetadata.get_instance_groups('edit','group')
 
         permissions
       end

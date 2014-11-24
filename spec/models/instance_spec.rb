@@ -29,12 +29,13 @@ describe Instance do
         @i = Instance.create(instance_params)
         @w = Work.create(work_attributes)
         @i.set_work = @w
+        @i.save
         @i.reload
         @w.reload
       end
 
       it 'can be an instance of a work' do
-        expect(@i.work.pid).to eql @w.pid
+        expect(@i.work.first.pid).to eql @w.pid
       end
 
       it 'is a symmetrical relationship' do

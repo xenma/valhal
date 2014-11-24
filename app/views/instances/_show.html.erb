@@ -5,8 +5,8 @@
         <small><%= @klazz %></small>
       </h1>
       <div class="btn-group pull-right">
-
-        <%= link_to 'Edit', edit_work_trykforlaeg_url(@work,@instance), class: 'btn btn-primary' %>
+        <%= link_to 'Send til Bevaring', send_to_preservation_work_instance_url(@work,@instance), class: 'btn btn-primary' %>
+        <%= link_to 'Rediger', edit_work_trykforlaeg_url(@work,@instance), class: 'btn btn-primary' %>
       </div>
     </div>
   </div>

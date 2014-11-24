@@ -11,7 +11,7 @@ class Work < ActiveFedora::Base
   include Concerns::Renderers
   include Datastreams::TransWalker
 
-  has_and_belongs_to_many :instances, property: :has_instance, inverse_of: :instance_of
+  has_and_belongs_to_many :instances, class_name: 'Instance', property: :has_instance, inverse_of: :instance_of
   has_and_belongs_to_many :related_works, class_name: 'Work', property: :related_work, inverse_of: :related_work
   has_and_belongs_to_many :preceding_works, class_name: 'Work', property: :preceded_by, inverse_of: :succeeded_by
   has_and_belongs_to_many :succeeding_works, class_name: 'Work', property: :succeeded_by, inverse_of: :preceded_by
@@ -33,35 +33,32 @@ class Work < ActiveFedora::Base
   # Note also that these methods will automatically
   # save the object, as AF does this for the related
   # object when creating a relation.
+  # DGJ: If inverse_of i set correctly, then we do not need
+  # to save the symetrical relation.
+  # 'inverse_of' is only a property for has_and_belongs_to_many
 
   def add_instance(instance)
     work.instances << instance
-    instance.work = self
   end
 
   def add_related(work)
     related_works << work
-    work.related_works << self
   end
 
   def add_preceding(work)
     preceding_works << work
-    work.succeeding_works << self
   end
 
   def add_succeeding(work)
     succeeding_works << work
-    work.preceding_works << self
   end
 
   def add_author(agent)
     authors << agent
-    agent.authored_works << self
   end
 
   def add_recipient(agent)
     recipients << agent
-    agent.received_works << self
   end
 
   def titles=(val)
@@ -128,12 +125,9 @@ class Work < ActiveFedora::Base
     end
   end
 
-
   # Static methods
-
   def self.get_title_typeahead_objs
     ActiveFedora::SolrService.query("title_tesim:* && active_fedora_model_ssi:Work",
                                     {:rows => ActiveFedora::SolrService.count("title_tesim:* && active_fedora_model_ssi:Work")})
   end
-
 end
