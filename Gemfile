@@ -53,6 +53,8 @@ gem 'devise_ldap_authenticatable'
 gem 'ohm'
 gem 'httparty'
 
+gem 'resque'
+
 group :development, :test do
   gem 'simplecov'
   gem 'rspec-rails'
