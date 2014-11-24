@@ -11,6 +11,7 @@ class Instance < ActiveFedora::Base
   include Concerns::UUIDGenerator
   include Concerns::Preservation
   include Concerns::Renderers
+  include Datastreams::TransWalker
 
   has_and_belongs_to_many :work, class_name: 'Work', property: :instance_of, inverse_of: :has_instance
   has_many :content_files, property: :content_for

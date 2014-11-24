@@ -80,6 +80,17 @@
 
   </xsl:template>
 
+  <xsl:template match="varfield[@id='021']">
+    <xsl:if test="subfield[@label='e']">
+      <marc:datafield tag='020'>
+	<xsl:attribute name="ind1">0</xsl:attribute><xsl:attribute name="ind2">0</xsl:attribute>
+	<marc:subfield code="a"> 
+	  <xsl:value-of select="subfield[@label='e']"/>
+	</marc:subfield>
+      </marc:datafield>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template match="varfield[@id='100']">
 
     <xsl:element name="marc:datafield">
@@ -116,9 +127,25 @@
 
   </xsl:template>
 
+  <xsl:template match="varfield[@id='241']"> 
+    <xsl:if test="subfield[@label='a']" >
+      <xsl:element name="marc:datafield">
+	<xsl:attribute name="tag">765</xsl:attribute>
+	<xsl:attribute name="ind1">
+	  <xsl:value-of select="@i1"/>
+	</xsl:attribute>
+	<xsl:attribute name="ind2">
+	  <xsl:value-of select="@i2"/>
+	</xsl:attribute>
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">t</xsl:attribute>
+	  <xsl:value-of select="subfield[@label='a']" />
+	</xsl:element>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="varfield[@id='245']">
-
     <xsl:variable name="ind2">
       <xsl:choose>
 	<xsl:when test="starts-with(subfield[@label = 'a'],'&lt;&lt;') and
@@ -325,6 +352,28 @@
       </xsl:for-each>
     </xsl:element>
   </xsl:template>
+
+  
+  <xsl:template match="varfield[@id='720']">
+    <xsl:element name="marc:datafield">
+      <xsl:attribute name="tag">
+	<xsl:value-of select="@id"/>
+      </xsl:attribute>
+      <xsl:if test="subfield[@label = 'o']">
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">a</xsl:attribute>
+	  <xsl:value-of select="subfield[@label = 'o']"/>
+	</xsl:element>
+      </xsl:if>
+      <xsl:if test="subfield[@label = '4']">
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">4</xsl:attribute>
+	  <xsl:value-of select="subfield[@label = '4']"/>
+	</xsl:element>
+      </xsl:if>
+    </xsl:element>
+  </xsl:template>
+
 
   <xsl:template match="varfield">
     <xsl:element name="marc:datafield">

@@ -45,7 +45,8 @@ class WorksController < ApplicationController
 
 
   def aleph
-    render text: aleph_params
+#    render text: aleph_params
+    render text: aleph_params["value"]
   end
 
   # PATCH/PUT /works/1

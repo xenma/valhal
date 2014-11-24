@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<marc:record xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <marc:datafield ind1="0" ind2="0" tag="001">
+    <marc:subfield code="a">x929529833</marc:subfield>
+    <marc:subfield code="f">a</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="002">
+    <marc:subfield code="a">2 952 983 3</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="004">
+    <marc:subfield code="r">n</marc:subfield>
+    <marc:subfield code="a">e</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="#" ind2="#" tag="041"><marc:subfield code="a">dan</marc:subfield></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="009">
+    <marc:subfield code="a">a</marc:subfield>
+    <marc:subfield code="g">xx</marc:subfield>
+  </marc:datafield>
+  <marc:datafield tag="020" ind1="0" ind2="0">
+    <marc:subfield label="a">9788711396322</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="032">
+    <marc:subfield code="a">DBF201240</marc:subfield>
+    <marc:subfield code="x">BKM201240</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="041">
+    <marc:subfield code="a">dan</marc:subfield>
+    <marc:subfield code="c">nor</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="080">
+    <marc:subfield code="a">8</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="852"><marc:subfield code="a"/></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="100"><marc:subfield code="a">Knausgård, Karl Ove</marc:subfield></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="241">
+    <marc:subfield code="a">Min kamp</marc:subfield>
+    <marc:subfield code="r">norsk</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="245"><marc:subfield code="a">Min kamp</marc:subfield><marc:subfield code="b"> roman</marc:subfield><marc:subfield code="c"/></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="248">
+    <marc:subfield code="a">2. [bog]</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="250">
+    <marc:subfield code="a">2. udgave</marc:subfield>
+    <marc:subfield code="x">1. oplag</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="260"><marc:subfield code="a">Kbh</marc:subfield><marc:subfield code="c">2012</marc:subfield><marc:subfield code="b"><marc:subfield code="b">Lindhardt og Ringhof</marc:subfield></marc:subfield></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="300">
+    <marc:subfield code="a">651 sider</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="520">
+    <marc:subfield code="a">Tidligere: 1. udgave. 2010</marc:subfield>
+    <marc:subfield code="n">2 848 600 6</marc:subfield>
+    <marc:subfield code="r">9788711412572</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="595">
+    <marc:subfield code="a">InT2012</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="599">
+    <marc:subfield code="b">bkpl201242</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="652">
+    <marc:subfield code="n">85</marc:subfield>
+    <marc:subfield code="z">26</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="652">
+    <marc:subfield code="o">sk</marc:subfield>
+  </marc:datafield>
+  <marc:datafield tag="720"><marc:subfield code="a">Sara Koch</marc:subfield><marc:subfield code="4">trl</marc:subfield></marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="B01">
+    <marc:subfield code="a">KBD</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="CAT">
+    <marc:subfield code="a">PLGDBC</marc:subfield>
+    <marc:subfield code="b"/>
+    <marc:subfield code="c">20121017</marc:subfield>
+    <marc:subfield code="l">KGL01</marc:subfield>
+    <marc:subfield code="h">1006</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="CAT">
+    <marc:subfield code="a">BATCH-UPD</marc:subfield>
+    <marc:subfield code="b">00</marc:subfield>
+    <marc:subfield code="c">20121017</marc:subfield>
+    <marc:subfield code="l">KGL01</marc:subfield>
+    <marc:subfield code="h">1007</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="UID">
+    <marc:subfield code="a">x929529833kbd</marc:subfield>
+  </marc:datafield>
+  008482259
+  <marc:datafield ind1=" " ind2=" " tag="PST">
+    <marc:subfield code="d">26</marc:subfield>
+    <marc:subfield code="h">DA8-AB6948</marc:subfield>
+    <marc:subfield code="3">BOG</marc:subfield>
+    <marc:subfield code="4">Closed stack</marc:subfield>
+    <marc:subfield code="5">Danish coll. remote stack</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="SBL">
+    <marc:subfield code="a">KLDA</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="LOC">
+    <marc:subfield code="b">KLDA</marc:subfield>
+    <marc:subfield code="c">DAKAB</marc:subfield>
+    <marc:subfield code="h">DA8-AB6948</marc:subfield>
+    <marc:subfield code="o">BOOK</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="STS">
+    <marc:subfield code="a">26</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K15">
+    <marc:subfield code="a">Enkeltstående post</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K01">
+    <marc:subfield code="a">Danmark</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K05">
+    <marc:subfield code="a">Skønlitteratur</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K12">
+    <marc:subfield code="a">Roman</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K02">
+    <marc:subfield code="a">Dansk</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K13">
+    <marc:subfield code="a">Bog; Mono</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K16">
+    <marc:subfield code="a">Katalogisering, selvsyn</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1="0" ind2="0" tag="K24">
+    <marc:subfield code="a">Læsesalsbrug</marc:subfield>
+  </marc:datafield>
+  <marc:datafield ind1=" " ind2=" " tag="AVA">
+    <marc:subfield code="a">KGL50</marc:subfield>
+    <marc:subfield code="b">KLDA</marc:subfield>
+    <marc:subfield code="c">Danish coll. remote stack</marc:subfield>
+    <marc:subfield code="d">DA8-AB6948</marc:subfield>
+    <marc:subfield code="e">available</marc:subfield>
+    <marc:subfield code="t">Available</marc:subfield>
+    <marc:subfield code="f">1</marc:subfield>
+    <marc:subfield code="g">0</marc:subfield>
+    <marc:subfield code="h">N</marc:subfield>
+    <marc:subfield code="i">0</marc:subfield>
+    <marc:subfield code="j">DAKAB</marc:subfield>
+  </marc:datafield>
+</marc:record>
