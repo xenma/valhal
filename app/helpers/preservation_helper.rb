@@ -5,23 +5,6 @@
 module PreservationHelper
   include MqHelper # methods: send_message_to_preservation
 
-  # Updates the preservation profile metadata from the controller.
-  # If it is the 'perform preservation' button which has been pushed, then it should send a message, and set the state
-  # to 'PRESERVATION INITIATED'.
-  # @param params The parameters from the controller.
-  # @param element The element to have its preservation settings updated.
-  def update_preservation_profile_from_controller(params, element)
-    logger.info "Update preservation profile for #{element.class} - #{element.id}"
-    cascade_preservation(params, element)
-    set_preservation_profile(params[:preservation][:preservation_profile], params[:preservation][:preservation_comment],
-                             element)
-    if(params[:commit] && params[:commit] == Constants::PERFORM_PRESERVATION_BUTTON)
-      initiate_preservation(element)
-      return "Preservation profile for the #{element.class} successfully updated and the preservation has begun."
-    else
-      return "Preservation profile for the #{element.class} successfully updated"
-    end
-  end
 
   # Updates the preservation state metadata from the controller.
   # Expected to receive parameters:
@@ -53,83 +36,7 @@ module PreservationHelper
   end
 
   private
-  # Initiates the preservation. If the profile is set to long-term preservation, then a message is created and sent.
-  # @param element The element to perform the preservation upon.
-  def initiate_preservation(element)
-    profile = PRESERVATION_CONFIG['preservation_profile'][element.preservation_profile]
 
-    if profile['yggdrasil'].blank? || profile['yggdrasil'] == 'false'
-      set_preservation_metadata({'preservation_state' => Constants::PRESERVATION_STATE_NOT_LONGTERM.keys.first,
-                                 'preservation_details' => 'Not longterm preservation.'}, element)
-    else
-      set_preservation_metadata({'preservation_state' => Constants::PRESERVATION_STATE_INITIATED.keys.first,
-                                 'preservation_details' => 'The preservation button has been pushed.'}, element)
-      message = create_preservation_message(element)
-      send_message_to_preservation(message)
-    end
-  end
-
-  # Creates a JSON message based in the defined format:
-  # - UUID
-  # - Preservation_profile
-  # - Valhal_ID
-  # - File_UUID
-  # - Content_URI
-  #
-  # Extra for ContentFile:
-  # - File_UUID
-  # - Content_URI
-  #
-  # @param element The element to be preserved.
-  # @return The preservation message in JSON format.
-  def create_preservation_message(element)
-    message = Hash.new
-    message['UUID'] = element.uuid
-    message['Preservation_profile'] = element.preservationMetadata.preservation_profile.first
-    message['Valhal_ID'] = element.pid
-    message['Model'] = element.class.name
-
-    if element.kind_of?(ContentFile)
-      message['File_UUID'] = element.file_uuid
-      message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid => element.pid)
-    end
-
-    metadata = create_message_metadata(element)
-    message['metadata'] = metadata
-
-    message.to_json
-  end
-
-  # Creates the metadata part of the message.
-  # @param element The element with the metadata.
-  # @return The metadata for the element.
-  def create_message_metadata(element)
-    res = '<metadata>'
-    element.datastreams.each do |key, content|
-      if Constants::NON_RETRIEVABLE_DATASTREAM_NAMES.include?(key)
-        next
-      end
-      # Do not retrieve the descMetadata directly, instead transform it to MODS before adding it.
-      # Todo: transform bibframe to mods or create bibframe-xml ??
-=begin
-      if key == 'descMetadata' && !element.kind_of?(BasicFile)
-        res += TransformationService.transform_to_mods(element).root.to_s
-        next
-      end
-=end
-      res += "<#{key}>"
-      if content.content.to_s.start_with?('<?xml') #hack to remove XML document header from any XML content
-        res += Nokogiri::XML.parse(content.content).root.to_s
-      else
-        res += content.respond_to?(:to_xml) ? content.to_xml.to_s : content.content.to_s
-      end
-      res += "</#{key}>\n"
-    end
-    if element.respond_to? 'get_specific_metadata_for_preservation'
-      res += element.get_specific_metadata_for_preservation
-    end
-    res + '</metadata>'
-  end
 
   # Updates the preservation state and details for a given element (e.g. a basic_files, a instance, a work, etc.)
   # The preservation state is expected to be among the Constants::PRESERVATION_STATES, a warning will be issued if not.
@@ -204,16 +111,5 @@ module PreservationHelper
     end
   end
 
-  # Check whether it should be cascading, and also perform the cascading.
-  # @param params The parameter from the controller. Contains the parameter for whether the preservation
-  # should be cascaded.
-  # @param element The element to have stuff cascaded.
-  def cascade_preservation(params, element)
-    if element.can_perform_cascading? && params['preservation']['cascade_preservation'] == Constants::CASCADING_EFFECT_TRUE
-      element.cascading_elements.each do |pib|
-        logger.debug("#{pib.class}")
-        update_preservation_profile_from_controller(params, pib)
-      end
-    end
-  end
+
 end
