@@ -27,7 +27,7 @@ module Datastreams
         xml.title do
           xml.Title do
             lang_attr = lang.present? ? { 'xml:lang' => lang } : {}
-            xml.titleType { xml.text(type) }
+            xml.titleType { xml.text(type) } unless type.blank?
             xml.titleValue(lang_attr) { xml.text(value) }
             xml.subtitle(lang_attr)  { xml.text(subtitle) } unless subtitle.blank?
           end

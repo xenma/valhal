@@ -4,9 +4,10 @@ module Datastreams
 
     def from_mods(mods)
       @mods = mods
-      if(self.class.name =~ /Instance/) then
+
+      if(self.is_a? Instance) then
         self.to_instance(@mods)
-      elsif(self.class.name =~ /Work/) then
+      elsif(self.is_a? Work) then
         self.to_work(@mods)
       else
         fail "Neither Work nor Instance"
@@ -14,10 +15,12 @@ module Datastreams
     end
 
     def to_work(mods)
-      tit = {value: mods.title.first,
-          subtitle: mods.subTitle.first,
-              type: 'KB',
-              lang: 'da'}
+      tit = {
+        value: mods.title.first,
+        subtitle: mods.subTitle.first,
+        lang: ''
+      }
+      
       self.add_title(tit)
       mods.person.each { |p|
         p = p.chomp ? p : p.strip

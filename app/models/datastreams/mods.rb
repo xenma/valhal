@@ -18,6 +18,23 @@ module Datastreams
         t.title()
         t.subTitle()
       end
+      t.abbreviated(:path=>"title", attributes: {type: 'abbreviated'}) do
+        t.title()
+        t.subTitle()
+      end
+      t.translated(:path=>"title", attributes: {type: 'translated'}) do
+        t.title()
+        t.subTitle()
+      end
+      t.alternative(:path=>"title", attributes: {type: 'alternative'}) do
+        t.title()
+        t.subTitle()
+      end
+      t.uniform(:path=>"title", attributes: {type: 'uniform'}) do
+        t.title()
+        t.subTitle()
+      end
+
       t.originInfo do
         t.publisher()
         t.place do

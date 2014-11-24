@@ -127,9 +127,25 @@
 
   </xsl:template>
 
+  <xsl:template match="varfield[@id='241']"> 
+    <xsl:if test="subfield[@label='a']" >
+      <xsl:element name="marc:datafield">
+	<xsl:attribute name="tag">765</xsl:attribute>
+	<xsl:attribute name="ind1">
+	  <xsl:value-of select="@i1"/>
+	</xsl:attribute>
+	<xsl:attribute name="ind2">
+	  <xsl:value-of select="@i2"/>
+	</xsl:attribute>
+	<xsl:element name="marc:subfield">
+	  <xsl:attribute name="code">t</xsl:attribute>
+	  <xsl:value-of select="subfield[@label='a']" />
+	</xsl:element>
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="varfield[@id='245']">
-
     <xsl:variable name="ind2">
       <xsl:choose>
 	<xsl:when test="starts-with(subfield[@label = 'a'],'&lt;&lt;') and
