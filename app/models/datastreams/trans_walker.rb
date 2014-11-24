@@ -54,7 +54,9 @@ module Datastreams
       self.isbn13=mods.isbn.first
 
       # self.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
-      # self.published_date(proxy: [:publication, :Provider, :providerDate])
+      self.published_date={:providerDate => mods.dateIssued.first}
+      self.publisher_name={:providerName => mods.publisher.first}
+      self.published_place={:providerPlace => mods.originPlace.first}
     end
 
     
