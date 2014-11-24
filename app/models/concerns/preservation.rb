@@ -28,6 +28,7 @@ module Concerns
         Resque.enqueue(SendToPreservationJob,self.pid)
       end
 
+
       def update_preservation_profile
         self.preservation_profile = 'Undefined' if self.preservation_profile.blank?
         self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
@@ -46,6 +47,7 @@ module Concerns
         end
       end
 
+
       # Check whether it should be cascading, and also perform the cascading.
       # @param params The parameter from the controller. Contains the parameter for whether the preservation
       # should be cascaded.
@@ -60,6 +62,7 @@ module Concerns
           end
         end
       end
+
 
       # Initiates the preservation. If the profile is set to long-term preservation, then a message is created and sent.
       # @param element The element to perform the preservation upon.
@@ -78,7 +81,7 @@ module Concerns
             send_message_to_preservation(message)
           else
             raise "Initate_Preservation: Failed to update preservation data"
-          end
+
         end
 
       end
