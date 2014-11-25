@@ -215,6 +215,36 @@
     </xsl:element>
   </xsl:template>
 
+  <xsl:template match="varfield[@id='247' or @id='248']">
+    <xsl:if test="subfield[@label='a']">
+      <xsl:element name="marc:datafield">
+	<xsl:attribute name="ind1">
+	  <xsl:value-of select="@i1"/>
+	</xsl:attribute>
+	<xsl:attribute name="ind2">
+	  <xsl:value-of select="@i1"/>
+	</xsl:attribute>
+	<xsl:attribute name="tag">505</xsl:attribute>
+
+	<xsl:for-each select="subfield[@label='a' or @label='g']">
+	  <xsl:element name="marc:subfield">
+	    <xsl:choose>
+	      <xsl:when test="@label='a'">
+		<xsl:attribute name="code">t</xsl:attribute>
+	      </xsl:when>
+	      <xsl:when test="@label='g'">
+		<xsl:attribute name="code">t</xsl:attribute>
+	      </xsl:when>
+	    </xsl:choose>
+	    <xsl:value-of select="translate(.,'[].:;','')"/>
+	    <xsl:if test="position() = last"><xsl:text> -- </xsl:text></xsl:if>
+	  </xsl:element>
+	</xsl:for-each>
+
+      </xsl:element>
+    </xsl:if>
+  </xsl:template>
+
 
   <xsl:template match="varfield[@id='260']">
     <xsl:element name="marc:datafield">
@@ -285,6 +315,46 @@
 	  <xsl:if test="position()=last()">)</xsl:if>
 	</xsl:element>
       </xsl:for-each>
+    </xsl:element>
+  </xsl:template>
+
+  <xsl:template match="varfield[@id='520']">
+    <xsl:element name="marc:datafield">
+      <xsl:choose>
+	<xsl:when test="contains('itedxb',subfield/@label)"> 
+	  <xsl:attribute name="ind1"> </xsl:attribute>
+	  <xsl:attribute name="ind2"> </xsl:attribute>
+	  <xsl:attribute name="tag">534</xsl:attribute>
+	  <xsl:for-each select="subfield">
+	    <xsl:element name="marc:subfield">
+	      <xsl:choose>
+		<xsl:when test="@label='a'">
+		  <xsl:attribute name="code">p</xsl:attribute>
+		</xsl:when>
+		<xsl:when test="@label='i'">
+		  <xsl:attribute name="code">p</xsl:attribute>
+		</xsl:when>
+		<xsl:when test="@label='t'">
+		  <xsl:attribute name="code">t</xsl:attribute>
+		</xsl:when>
+		<xsl:when test="@label='d'">
+		  <xsl:attribute name="code">a</xsl:attribute>
+		</xsl:when>
+	      </xsl:choose>
+	      <xsl:apply-templates/>
+	    </xsl:element>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:when test="not(contains('itedxb',subfield/@label)) and contains('a',subfield/@label)">
+	  <xsl:attribute name="ind1"> </xsl:attribute>
+	  <xsl:attribute name="ind2"> </xsl:attribute>
+	  <xsl:attribute name="tag">500</xsl:attribute>
+	  <xsl:element name="marc:subfield">
+	    <xsl:attribute name="code">a</xsl:attribute>
+	    <xsl:apply-templates/>
+	  </xsl:element>
+	</xsl:when>
+      </xsl:choose>
     </xsl:element>
   </xsl:template>
 
