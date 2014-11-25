@@ -97,9 +97,12 @@ class Instance < ActiveFedora::Base
   # @return the objects, which cascading operations can be performed upon (e.g. updating administrative or preservation metadata)
   def cascading_elements
     res = []
+    puts "looking for cascading elements"
     content_files.each do |f|
+      puts "adding a content file"
       res << ContentFile.find(f.pid)
     end
+    puts "Found following inheiritable objects: #{res}"
     logger.debug "Found following inheiritable objects: #{res}"
     res
   end
@@ -111,7 +114,7 @@ class Instance < ActiveFedora::Base
     res += self.preservationMetadata.content
     res +="</preservationMetadata>"
 
-    # res += self.to_mods
+    res += self.to_mods
 
     #TODO: Update this to handle multiple file instances with structmaps
     if (self.content_files.size == 1)
