@@ -109,7 +109,7 @@ class Instance < ActiveFedora::Base
 
   def create_preservation_message_metadata
 
-    res = "<provenanceMetadata><fields><uuid>#{self.uuid}</uuid></fields><provenanceMetadata"
+    res = "<provenanceMetadata><fields><uuid>#{self.uuid}</uuid></fields></provenanceMetadata>"
     res +="<preservationMetadata>"
     res += self.preservationMetadata.content
     res +="</preservationMetadata>"
@@ -120,7 +120,7 @@ class Instance < ActiveFedora::Base
     if (self.content_files.size == 1)
       cf = content_files.first
       res+="<file><name>#{cf.original_filename}</name>"
-      res+="<uuid>#{cf.uuid}</uuid></name>"
+      res+="<uuid>#{cf.uuid}</uuid></file>"
     end
   end
 end
