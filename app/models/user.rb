@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
     name
   end
 
+  def admin?
+    self.member_of.include? 'CN=Chronos-Admin,OU=SIFD,OU=Adgangsstyring,DC=kb,DC=dk'
+  end
+
 
   #TODO: group names should be loaded from a config file
   def groups
