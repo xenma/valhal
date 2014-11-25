@@ -32,7 +32,6 @@ module Datastreams
 
     def to_instance(mods)
 
-
       self.note=mods.note
 
       # self.note
