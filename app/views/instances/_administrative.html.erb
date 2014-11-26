@@ -17,13 +17,13 @@
     <hr>
   </div>
 
+  <fieldset class="row">
+    <legend class="col-sm-12">
+      <h4>Tilgængelighed</h4>
+    </legend>
 
-    <div class="col-sm-12">
-      Tilgængelighed
-    </div>
 
-    <div class="col-sm-12">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <%= builder.input :embargo, as: :boolean, boolean_style: :inline,
                       label_html: { class: 'checkbox-inline' }, wrapper_html: { class: ''  },
                       input_html: { class: '', data: { toggle: 'embargo_detailed' } } %>
@@ -35,20 +35,28 @@
       <div class="col-sm-5">
         <%= builder.input :embargo_condition, input_html: { data: { hook: 'embargo_detailed' }} %>
       </div>
-    </div>
 
-  <div class="col-sm-12">
-    <div class="col-sm-4">
+
+
+    <div class="col-sm-3">
       <%= builder.input :access_condition, collection: get_controlled_vocab('Access types'),  prompt: 'Klausuleringstype' %>
     </div>
 
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <%= builder.input :copyright, collection: get_controlled_vocab('Copyright Licenses'),  prompt: 'Vælg licens' %>
       </div>
-  </div>
+    </fieldset>
+
+  <fieldset class="row">
+  <legend class="col-sm-12">
+    <h4>Bevaring</h4>
+  </legend>
+
 
     <div class="col-sm-4">
       <%= builder.input :preservation_profile, collection: get_controlled_vocab('Preservation Profiles'),  prompt: 'Bevaringsprofil' %>
     </div>
+  </fieldset>
+
 
 </fieldset>

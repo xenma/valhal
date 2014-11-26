@@ -19,35 +19,26 @@
 
 
     <h4>Titler</h4>
-    <table class="table table-striped"><tbody>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Titel</th>
+          <th>Undertitel</th>
+          <th>Sprog</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
       <% @work.titles.each do |title| %>
       <tr>
         <td>
-          <strong>Titel</strong>
-        </td>
-        <td>
-          <span><%= title.value%></span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong>Undertitle</strong>
+          <strong><%= title.value%></strong>
         </td>
         <td>
           <span><%= title.subtitle%></span>
         </td>
-      </tr>
-        <tr>
-          <td>
-            <strong>Sprog</strong>
-          </td>
           <td>
             <span><%= title.lang %></span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <strong>Type</strong>
           </td>
           <td>
             <span><%= title.type%></span>
@@ -57,24 +48,23 @@
       </tbody>
     </table>
     <h4>Ophav</h4>
-    <table class="table table-striped"><tbody>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Rolle</th>
+        </tr>
+      </thead>
+      <tbody>
     <% @work.creators.each do |creator| %>
       <tr>
         <td>
-          <strong>Navn</strong>
+          <strong><span><%= creator['display_value'] %></span></strong>
         </td>
         <td>
-          <span><%= creator['display_value'] %></span>
+          <span><%= creator['type'] %></span>
         </td>
       </tr>
-        <tr>
-          <td>
-            <strong>Type</strong>
-          </td>
-          <td>
-            <span><%= creator['type'] %></span>
-          </td>
-        </tr>
     <% end %>
     </tbody></table>
     <div class="row">
