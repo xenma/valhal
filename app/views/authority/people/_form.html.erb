@@ -13,12 +13,12 @@
     </div>
   <% end %>
 
-    <h2>Authorised Personal Names</h2>
+    <h2>Person</h2>
     <% @authority_object.authorized_personal_names.each do |scheme, name| %>
         <%= render partial: 'authority/people/name', locals: { scheme: scheme, name: name } %>
         <br/>
     <% end %>
-    <h3>New name</h3>
+
     <div data-hook="empty-names">
         <%= render partial: 'authority/people/name',  locals: { scheme: '', name: { given: '', family: '', date: '' }} %>
     </div>

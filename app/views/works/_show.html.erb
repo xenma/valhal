@@ -85,15 +85,17 @@
           </button>
           <ul class="dropdown-menu" role="menu">
             <% @work.instances.each do |instance| %>
-                <li><a href="<%= url_for([@work, instance]) %>">
-                  <%= instance.class %>
-                </a></li>
+                    <li><a href="<%= url_for([@work, instance]) %>">
+                      <%= instance.class %>
+                    </a></li>
             <% end %>
-            <li>
-              <a href="<%= new_work_trykforlaeg_path(@work) %>">
-                Nyt Trykforlæg
-              </a>
-            </li>
+            <% if can?(:create, Trykforlaeg) %>
+                <li>
+                  <a href="<%= new_work_trykforlaeg_path(@work) %>">
+                    Nyt Trykforlæg
+                  </a>
+                </li>
+            <% end %>
           </ul>
         </div>
       </div>

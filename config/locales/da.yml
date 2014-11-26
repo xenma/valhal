@@ -59,3 +59,9 @@ da:
     errors:
       messages:
         record_invalid: 'Ugyldig data'
+  person:
+    scheme: Skema
+    given: Fornavn
+    family: Efternavn
+    date: Fødsels-Dødsår
+
