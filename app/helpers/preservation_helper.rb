@@ -54,9 +54,9 @@ module PreservationHelper
 
     unless (metadata['preservation_state'].blank? || metadata['preservation_state'] == element.preservationMetadata.preservation_state.first)
       updated = true
-      unless Constants::PRESERVATION_STATES.keys.include? metadata['preservation_state']
+      unless PRESERVATION_STATES.keys.include? metadata['preservation_state']
         logger.warn("Undefined preservation state #{metadata['preservation_state']} not among the defined ones:" +
-                        "#{Constants::PRESERVATION_STATES.keys.to_s}")
+                        "#{PRESERVATION_STATES.keys.to_s}")
       end
       element.preservationMetadata.preservation_state = metadata['preservation_state']
     end
@@ -106,7 +106,7 @@ module PreservationHelper
   # Checks whether the preservation state is set to not stated.
   # @param state The state to validate.
   def ensure_preservation_state_allows_update_from_controller(state)
-    if !state.blank? && state == Constants::PRESERVATION_STATE_NOT_STARTED.keys.first
+    if !state.blank? && state == PRESERVATION_STATE_NOT_STARTED.keys.first
       raise ValhalErrors::InvalidStateError, 'Cannot update preservation state, when preservation has not yet started.'
     end
   end

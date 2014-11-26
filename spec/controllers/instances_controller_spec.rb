@@ -286,11 +286,11 @@ describe InstancesController, type: :controller do
       ch = conn.create_channel
       q = ch.queue(destination, :durable => true)
 
-      put :update_preservation_profile, {:id => @ins.pid, :commit => Constants::PERFORM_PRESERVATION_BUTTON, :preservation => {:preservation_profile => profile, :preservation_comment => comment }}
+      put :update_preservation_profile, {:id => @ins.pid, :commit => PERFORM_PRESERVATION_BUTTON, :preservation => {:preservation_profile => profile, :preservation_comment => comment }}
       response.should redirect_to(@ins)
 
       q.subscribe do |delivery_info, metadata, payload|
-        metadata[:type].should == Constants::MQ_MESSAGE_TYPE_PRESERVATION_REQUEST
+        metadata[:type].should == MQ_MESSAGE_TYPE_PRESERVATION_REQUEST
         payload.should include @ins.pid
         json = JSON.parse(payload)
         json.keys.should include ('UUID')
@@ -302,12 +302,12 @@ describe InstancesController, type: :controller do
        # json.keys.should include ('metadata')
         json['metadata'].keys.each do |k|
           @ins.datastreams.keys.should include k
-          Constants::NON_RETRIEVABLE_DATASTREAM_NAMES.should_not include k
+          NON_RETRIEVABLE_DATASTREAM_NAMES.should_not include k
         end
       end
 
       ins = Instance.find(@ins.pid)
-      ins.preservation_state.should == Constants::PRESERVATION_STATE_INITIATED.keys.first
+      ins.preservation_state.should == PRESERVATION_STATE_INITIATED.keys.first
       ins.preservation_comment.should == comment
       sleep 1.second
       conn.close
@@ -320,13 +320,13 @@ describe InstancesController, type: :controller do
       PRESERVATION_CONFIG['preservation_profile'][profile]['yggdrasil'].should == 'false'
       comment = 'This is the preservation comment'
 
-      put :update_preservation_profile, {:id => @ins.pid, :commit => Constants::PERFORM_PRESERVATION_BUTTON,
+      put :update_preservation_profile, {:id => @ins.pid, :commit => PERFORM_PRESERVATION_BUTTON,
                                          :preservation => {:preservation_profile => profile,
                                                            :preservation_comment => comment }}
       response.should redirect_to(@ins)
 
       ins = Instance.find(@ins.pid)
-      ins.preservation_state.should == Constants::PRESERVATION_STATE_NOT_LONGTERM.keys.first
+      ins.preservation_state.should == PRESERVATION_STATE_NOT_LONGTERM.keys.first
       ins.preservation_comment.should == comment
     end
 
@@ -341,7 +341,7 @@ describe InstancesController, type: :controller do
       profile = PRESERVATION_CONFIG["preservation_profile"].keys.last
       comment = "This is the preservation comment-#{Time.now.to_s}"
 
-      put :update_preservation_profile, {:id => @ins.pid, :commit => Constants::PERFORM_PRESERVATION_BUTTON, :preservation =>
+      put :update_preservation_profile, {:id => @ins.pid, :commit => PERFORM_PRESERVATION_BUTTON, :preservation =>
           {:preservation_profile => profile, :preservation_comment => comment, :cascade_preservation => '1'}}
 
       file = ContentFile.find(file.pid)

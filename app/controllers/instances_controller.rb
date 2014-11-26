@@ -64,7 +64,7 @@ class InstancesController < ApplicationController
   end
 
   def send_to_preservation
-    if @instance.initiate_preservation
+    if @instance.send_to_preservation
       flash[:notice] = 'Instance and content files send for preservation'
     else
       flash[:notice] = 'Failed sending instance to preservation'

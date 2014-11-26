@@ -12,7 +12,7 @@ module Mq
 
       send_on_rabbitmq(message, destination, {
           'content_type' => 'application/json',
-          'type' => Constants::MQ_MESSAGE_TYPE_PRESERVATION_REQUEST
+          'type' => MQ_MESSAGE_TYPE_PRESERVATION_REQUEST
       })
     end
 
