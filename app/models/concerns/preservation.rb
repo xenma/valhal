@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require 'resque'
 module Concerns
   # The preservation definition which is to be used by all elements.
   # Adds the preservation metadata datastream, and sets up default values.
@@ -16,33 +17,36 @@ module Concerns
 
       validate :validate_preservation
 
-      before_save do
-        logger.debug("now saving #{self.class.name} - #{self.pid}")
-      end
-
       before_validation :update_preservation_profile
 
+      def is_preservable
+        true
+      end
+
+      # Creates a job on the send_to_reservation queue
+      def send_to_preservation
+        self.preservation_state = PRESERVATION_STATE_INITIATED.keys.first
+        self.preservation_details = 'The preservation button has been pushed.'
+        self.save
+        Resque.enqueue(SendToPreservationJob,self.pid)
+      end
+
+
       def update_preservation_profile
-        logger.debug("update preservation profile")
-        logger.debug("update preservation file for #{self.class.name} - #{self.pid} - #{self.preservation_profile}")
         self.preservation_profile = 'Undefined' if self.preservation_profile.blank?
-        self.preservation_state = Constants::PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
+        self.preservation_state = PRESERVATION_STATE_NOT_STARTED.keys.first if preservation_state.blank?
         self.preservation_details = 'N/A' if preservation_details.blank?
-        if Constants::PRESERVATION_CONFIG['preservation_profile'].keys.include? self.preservation_profile
-          self.preservation_bitsafety = Constants::PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]['bit_safety']
-          self.preservation_confidentiality = Constants::PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]['confidentiality']
+        if PRESERVATION_CONFIG['preservation_profile'].keys.include? self.preservation_profile
+          self.preservation_bitsafety = PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]['bit_safety']
+          self.preservation_confidentiality = PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]['confidentiality']
         end
         set_preservation_modified_time
-        logger.debug("update preservation profile END")
       end
 
       def validate_preservation
-        logger.debug("validate preservation")
-        if (self.preservation_profile != 'Undefined' && (!Constants::PRESERVATION_CONFIG['preservation_profile'].include? self.preservation_profile))
+        if (self.preservation_profile != 'Undefined' && (!PRESERVATION_CONFIG['preservation_profile'].include? self.preservation_profile))
           errors.add(:preservation_profile,'Ugyldig Bevaringsprofil')
-          logger.debug("is invalid")
         end
-        logger.debug("validate preservation END")
       end
 
 
@@ -52,42 +56,34 @@ module Concerns
       # @param element The element to have stuff cascaded.
       def cascade_preservation
         self.reload
-        logger.debug("cascade preservation#{self.class.name} - #{self.pid} ")
         if self.can_perform_cascading?
           self.cascading_elements.each do |pib|
-            logger.debug("#{pib.class}")
             pib.preservation_profile = self.preservation_profile
             pib.save
           end
         end
-        logger.debug("cascade preservation END #{self.class.name} - #{self.pid}")
       end
 
 
       # Initiates the preservation. If the profile is set to long-term preservation, then a message is created and sent.
       # @param element The element to perform the preservation upon.
-      def initiate_preservation
-        logger.debug("initiating preservation")
-        profile = Constants::PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]
+      def initiate_preservation(cascade = true)
+        profile = PRESERVATION_CONFIG['preservation_profile'][self.preservation_profile]
 
         if profile['yggdrasil'].blank? || profile['yggdrasil'] == 'false'
-          self.preservation_state = Constants::PRESERVATION_STATE_NOT_LONGTERM.keys.first
+          self.preservation_state = PRESERVATION_STATE_NOT_LONGTERM.keys.first
           self.preservation_details = 'Not longterm preservation.'
           self.save
         else
-          self.preservation_state = Constants::PRESERVATION_STATE_INITIATED.keys.first
-          self.preservation_details = 'The preservation button has been pushed.'
+          self.preservation_state = PRESERVATION_REQUEST_SEND.keys.first
           message = create_preservation_message
-          self.save && send_message_to_preservation(message)
-        end
-
-        if self.can_perform_cascading?
-          self.cascading_elements.each do |pib|
-            pib.initiate_preservation
+          puts "saving object #{self.preservation_state}"
+          if self.save
+            send_message_to_preservation(message)
+          else
+            raise "Initate_Preservation: Failed to update preservation data"
           end
         end
-
-        logger.debug("initiating preservation END")
       end
 
       private
@@ -112,9 +108,8 @@ module Concerns
       # Creates the metadata part of the message.
       # @return The metadata for the element.
       def create_message_metadata
-        res = '<metadata>'
-        res = self.create_preservation_message_metadata
-        res + '</metadata>'
+        content = self.create_preservation_message_metadata
+        "<metadata>#{content}</metadata>"
       end
 
       def set_preservation_modified_time
