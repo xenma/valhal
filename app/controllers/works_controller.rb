@@ -61,9 +61,11 @@ class WorksController < ApplicationController
     @work.from_mods(mods)
 
     if @work.save 
+      flash[:notice] = 'The work was successfully initilized with data from Aleph'
       redirect_to new_work_trykforlaeg_path :work_id=>@work.pid, :query=>query
     else
-      puts "shit"
+      flash[:error] = 'It was impossible to get data from Aleph'
+      redirect_to new_work_trykforlaeg_path 
     end
 
   end
