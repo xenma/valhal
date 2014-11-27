@@ -32,7 +32,7 @@ class CatalogController < ApplicationController
     end
 
     def unwanted_models
-      [Instance, Trykforlaeg, ContentFile]
+      [Instance, Trykforlaeg, ContentFile, Administration::Activity]
     end
 
     # solr field configuration for search results/index views
