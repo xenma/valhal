@@ -8,6 +8,10 @@ class Ability
       can [:create], Work
     end
 
+    if user_groups.include?('Chronos-Admin')
+      can [:create], Administration::Activity
+    end
+
     if (user_groups & ['Chronos-Pligtaflevering','Chronos-Admin']).present?
       can [:create], Instance
       can [:create], Trykforlaeg

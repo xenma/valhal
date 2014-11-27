@@ -7,6 +7,12 @@ module Administration
 
     validates :activity, presence: true
 
+    before_save do
+      self.edit_groups = ['Chronos-Admin']
+      self.read_groups = ['Chronos-Admin']
+      self.discover_groups = ['Chronos-Admin']
+    end
+
     def can_perform_cascading
       false
     end

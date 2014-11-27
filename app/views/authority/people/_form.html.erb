@@ -13,22 +13,22 @@
     </div>
   <% end %>
 
-    <h2>Authorised Personal Names</h2>
+    <h2>Person</h2>
     <% @authority_object.authorized_personal_names.each do |scheme, name| %>
         <%= render partial: 'authority/people/name', locals: { scheme: scheme, name: name } %>
         <br/>
     <% end %>
-    <h3>New name</h3>
+
     <div data-hook="empty-names">
         <%= render partial: 'authority/people/name',  locals: { scheme: '', name: { given: '', family: '', date: '' }} %>
     </div>
-    <a class="btn btn-sm btn-primary col-sm-offset-10" href="#" data-function="new-authorized-personal-name">
+    <!-- a class="btn btn-sm btn-primary col-sm-offset-10" href="#" data-function="new-authorized-personal-name">
       <span class="glyphicon glyphicon-plus"></span>
       Add new
-    </a>
+    </a -->
 
 
   <div class="actions">
-    <%= f.submit 'Save', class: 'btn btn-lg btn-primary' %>
+    <%= f.submit 'Gem Person', class: 'btn btn-lg btn-success' %>
   </div>
 <% end %>

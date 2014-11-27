@@ -70,6 +70,7 @@ class InstancesController < ApplicationController
   # PATCH/PUT /instances/1
   # PATCH/PUT /instances/1.json
   def update
+    instance_params['activity'] = @instance.activity unless current_user.admin?
     if @instance.update(instance_params)
       flash[:notice] = "#{@klazz} was successfully updated."
       @instance.cascade_preservation

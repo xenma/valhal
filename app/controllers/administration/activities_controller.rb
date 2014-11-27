@@ -1,5 +1,6 @@
 module Administration
   class ActivitiesController < ApplicationController
+    authorize_resource
     before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
     def index

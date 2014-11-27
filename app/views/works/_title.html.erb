@@ -2,13 +2,7 @@
 
     <% if title.blank? %>
         <div class="<%= hidden ? 'hidden-' : '' %>title">
-          <div class='col-sm-12'>
-            <a class="btn btn-sm btn-error col-sm-offset-11" href="#" data-function="delete-title">
-              <span class="glyphicon glyphicon-minus"></span>
-              Slet
-            </a>
-          </div>
-          <div class='col-sm-8'>
+          <div class='col-sm-6'>
             <div class='form-group'>
               <%= title_fields.label :value, 'Titel' %>
               <%= title_fields.text_field :value, :placeholder => 'Titel', :class => 'title-value form-control' %>
@@ -17,14 +11,20 @@
           <div class='col-sm-2'>
             <div class="form-group">
               <%= title_fields.label :lang, 'Sprog' %>
-              <%= title_fields.select :lang, get_controlled_vocab('Languages'), {}, {:class => 'title-lang form-control'+(hidden ? '': ' combobox')} %>
+              <%= title_fields.select :lang, get_controlled_vocab('Languages'), {include_blank: true}, {:class => 'title-lang form-control'+(hidden ? '': ' combobox')} %>
             </div>
           </div>
           <div class='col-sm-2'>
             <div class="form-group">
               <%= title_fields.label :type, 'Type' %>
-              <%= title_fields.select :type, get_controlled_vocab('Title types'), {}, {:class => 'title-type form-control'+(hidden ? '': ' combobox')} %>
+              <%= title_fields.select :type, get_controlled_vocab('Title types'), {include_blank: true}, {:class => 'title-type form-control'+(hidden ? '': ' combobox')} %>
             </div>
+          </div>
+          <div class='col-sm-1'>
+            <a class="btn btn-sm btn-error col-sm-offset-11" href="#" data-function="delete-title">
+              <span class="glyphicon glyphicon-minus"></span>
+              Slet titel
+            </a>
           </div>
           <div class='col-sm-12'>
             <div class="form-group">
@@ -38,7 +38,7 @@
           <div class='col-sm-12'>
             <a class="btn btn-sm btn-error col-sm-offset-11" href="#" data-function="delete-title">
               <span class="glyphicon glyphicon-minus"></span>
-              Slet
+              Slet titel
             </a>
           </div>
           <div class='col-sm-8'>
