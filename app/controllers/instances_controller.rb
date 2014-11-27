@@ -33,6 +33,20 @@ class InstancesController < ApplicationController
   def new
     @instance = @klazz.new
     @work = Work.find(params[:work_id])
+    if params[:query] 
+      service = AlephService.new
+      query = params[:query] 
+      set=service.find_set(query) 
+      rec=service.get_record(set[:set_num],set[:num_entries])
+      converter=ConversionService.new(rec)
+      doc = converter.to_mods("")
+      mods = Datastreams::Mods.from_xml(doc) 
+      if @instance.from_mods(mods)
+        flash[:notice] = "Successfully retrieved instance data"
+      else
+        flash[:error]  = "Failed to retrieved instance data"
+      end
+    end
     @instance.work << @work
   end
 

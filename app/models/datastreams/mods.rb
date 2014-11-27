@@ -10,6 +10,7 @@ module Datastreams
       t.uuid(:path=>"identifier[@type='uri']")
       t.isbn(:path=>"identifier[@type='isbn']")
       t.genre()
+      t.note()
       t.typeOfResource()
       t.location do
         t.shelfLocator()

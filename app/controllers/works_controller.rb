@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Handle actions on Works
 class WorksController < ApplicationController
   before_action :set_work, only: [:show, :edit, :update, :destroy]
@@ -43,10 +44,30 @@ class WorksController < ApplicationController
     end
   end
 
-
   def aleph
-#    render text: aleph_params
-    render text: aleph_params["value"]
+    service = AlephService.new
+    # :field, :value read as aleph_params["field"] and aleph_params["value"],
+    # respectively. 
+    # For testing: knausgård is isbn=9788711396322
+
+    query = aleph_params["field"] + "=" + aleph_params["value"]
+    set=service.find_set(query) 
+    rec=service.get_record(set[:set_num],set[:num_entries])
+    converter=ConversionService.new(rec)
+    doc = converter.to_mods("")
+    mods = Datastreams::Mods.from_xml(doc) 
+
+    @work=Work.new
+    @work.from_mods(mods)
+
+    if @work.save 
+      flash[:notice] = 'The work was successfully initilized with data from Aleph'
+      redirect_to new_work_trykforlaeg_path :work_id=>@work.pid, :query=>query
+    else
+      flash[:error] = 'It was impossible to get data from Aleph'
+      redirect_to new_work_trykforlaeg_path 
+    end
+
   end
 
   # PATCH/PUT /works/1

@@ -31,15 +31,12 @@ module Datastreams
     end
 
     def to_instance(mods)
+
+      self.note=mods.note
+
       # self.note
       # self.identifier 
       # self.Identifier
-
-      # self.publication 
-      # self.Provider 
-      # self.copyrightDate
-      # self.providerDate
-
 
       # self.language
       # self.mode_of_issuance(path: 'modeOfIssuance')
@@ -53,8 +50,22 @@ module Datastreams
 
       self.isbn13=mods.isbn.first
 
+      #
+      # self.publication 
+      # self.Provider 
+      # self.copyrightDate
+      # self.providerDate
+
+      # publication There is hardly any way we can distinguish between a
+      # copyright date and a date of issuance, or is there?
+
       # self.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
-      # self.published_date(proxy: [:publication, :Provider, :providerDate])
+
+      # Don't know what happens if these are repeated.
+
+      self.published_date  = mods.dateIssued.first
+      self.publisher_name  = mods.publisher.first
+      self.published_place = mods.originPlace.first
     end
 
     
