@@ -41,7 +41,11 @@ class InstancesController < ApplicationController
       converter=ConversionService.new(rec)
       doc = converter.to_mods("")
       mods = Datastreams::Mods.from_xml(doc) 
-      @instance.from_mods(mods)
+      if @instance.from_mods(mods)
+        flash[:notice] = "Successfully retrieved instance data"
+      else
+        flash[:error]  = "Failed to retrieved instance data"
+      end
     end
     @instance.work << @work
   end
