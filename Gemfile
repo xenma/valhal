@@ -50,6 +50,7 @@ gem 'devise'
 gem 'devise-guests', "~> 0.3"
 gem 'devise_ldap_authenticatable'
 
+
 gem 'ohm'
 gem 'httparty'
 
@@ -66,6 +67,9 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'rack-mini-profiler'
+  gem 'flamegraph'
+  gem 'stackprof'
 end
 
 group :test do
