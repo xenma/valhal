@@ -50,22 +50,22 @@ class WorksController < ApplicationController
     # respectively. 
     # For testing: knausgård is isbn=9788711396322
 
-    query = aleph_params["field"] + "=" + aleph_params["value"]
-    set=service.find_set(query) 
-    rec=service.get_record(set[:set_num],set[:num_entries])
-    converter=ConversionService.new(rec)
-    doc = converter.to_mods("")
+    query = "#{aleph_params['field']}=#{aleph_params['value']}"
+    set = service.find_set(query)
+    rec = service.get_record(set[:set_num],set[:num_entries])
+    converter = ConversionService.new(rec)
+    doc = converter.to_mods('')
     mods = Datastreams::Mods.from_xml(doc) 
 
     @work=Work.new
     @work.from_mods(mods)
 
     if @work.save 
-      flash[:notice] = 'The work was successfully initilized with data from Aleph'
-      redirect_to new_work_trykforlaeg_path :work_id=>@work.pid, :query=>query
+      flash[:notice] = 'The work was successfully initialized with data from Aleph'
+      redirect_to new_work_trykforlaeg_path work_id: @work.pid, query: query
     else
       flash[:error] = 'It was impossible to get data from Aleph'
-      redirect_to new_work_trykforlaeg_path 
+      redirect_to new_work_path
     end
 
   end
