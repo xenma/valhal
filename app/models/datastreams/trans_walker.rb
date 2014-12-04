@@ -15,8 +15,11 @@ module Datastreams
     end
 
     def to_work(mods)
+
+      s = mods.nonSort.first ?  mods.nonSort.first + " " : ""
+      t = s + mods.title.first
       tit = {
-        value: mods.title.first,
+        value: t,
         subtitle: mods.subTitle.first,
         lang: ''
       }

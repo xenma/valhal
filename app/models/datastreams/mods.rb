@@ -16,22 +16,27 @@ module Datastreams
         t.shelfLocator()
       end
       t.titleInfo do
+        t.nonSort()
         t.title()
         t.subTitle()
       end
       t.abbreviated(:path=>"title", attributes: {type: 'abbreviated'}) do
+        t.nonSort()
         t.title()
         t.subTitle()
       end
       t.translated(:path=>"title", attributes: {type: 'translated'}) do
+        t.nonSort()
         t.title()
         t.subTitle()
       end
       t.alternative(:path=>"title", attributes: {type: 'alternative'}) do
+        t.nonSort()
         t.title()
         t.subTitle()
       end
       t.uniform(:path=>"title", attributes: {type: 'uniform'}) do
+        t.nonSort()
         t.title()
         t.subTitle()
       end
@@ -79,6 +84,7 @@ module Datastreams
       end
 
       t.shelfLocator(:proxy => [:location, :shelfLocator])
+      t.nonSort(:proxy => [:titleInfo, :nonSort])
       t.title(:proxy => [:titleInfo, :title])
       t.subTitle(:proxy => [:titleInfo, :subTitle])
       t.publisher(:proxy => [:originInfo, :publisher])
