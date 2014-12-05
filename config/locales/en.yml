@@ -36,3 +36,6 @@ en:
     fi: Finnish
   blacklight:
     application_name: 'Blacklight'
+  works:
+    work_form:
+      cancel: "Cancel"
