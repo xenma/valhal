@@ -108,9 +108,8 @@
       <xsl:if test="subfield[@label = 'a']">
 	<xsl:element name="marc:subfield">
 	  <xsl:attribute name="code">a</xsl:attribute>
-	  <xsl:for-each select="subfield[@label = 'a'] | subfield[@label = 'h']">
-	    <xsl:if test="position() &gt; 1"><xsl:text>, </xsl:text></xsl:if><xsl:apply-templates/>
-	  </xsl:for-each>
+	  <xsl:value-of select="subfield[@label = 'a']"/><xsl:text>,
+	  </xsl:text><xsl:value-of select="subfield[@label = 'h']"/>
 	</xsl:element>
       </xsl:if>
 
@@ -385,41 +384,55 @@
     </xsl:element>
   </xsl:template>
 
+  <xsl:template name="name-content">
+    <xsl:if test="subfield[@label = 'a'] |
+		  subfield[@label = 'h']">
+
+      <xsl:processing-instruction name="family"><xsl:value-of select="subfield[@label = 'a']"/></xsl:processing-instruction>
+      
+      <xsl:processing-instruction name="given"><xsl:value-of select="subfield[@label = 'h']"/></xsl:processing-instruction>
+
+      <xsl:element name="marc:subfield">
+	<xsl:attribute name="code">a</xsl:attribute>
+	<xsl:value-of select="subfield[@label = 'a']"/>,
+	<xsl:value-of select="subfield[@label = 'h']"/>
+      </xsl:element>
+    </xsl:if>
+
+    <xsl:for-each select="subfield[not(contains('ah',@label))]">
+      <xsl:element name="marc:subfield">
+	<xsl:attribute name="code">
+	  <xsl:value-of select="translate(@label,'ecfkb','bdcqe')"/>
+	</xsl:attribute>
+	<xsl:apply-templates/>
+      </xsl:element>
+    </xsl:for-each>
+  </xsl:template>
+
+  <xsl:template match="varfield[@id='600']">
+    <xsl:element name="marc:datafield">
+      <xsl:call-template name="indicators"/>
+      <xsl:call-template name="name-content" />
+    </xsl:element>
+  </xsl:template>
 
   <xsl:template match="varfield[@id='700']">
     <xsl:element name="marc:datafield">
       <xsl:choose>
-	<xsl:when test="subfield[@label]">
+	<xsl:when test="subfield/@label='h'">
 	  <xsl:attribute name="ind1">1</xsl:attribute>
-	  <xsl:attribute name="ind2"> </xsl:attribute>
+	  <xsl:attribute name="ind2"><xsl:text>#</xsl:text></xsl:attribute>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:attribute name="ind1">0</xsl:attribute>
-	  <xsl:attribute name="ind2"> </xsl:attribute>
+	  <xsl:attribute name="ind2"><xsl:text>#</xsl:text></xsl:attribute>
 	</xsl:otherwise>
       </xsl:choose>
 
       <xsl:attribute name="tag">700</xsl:attribute>
 
-      <xsl:if test="subfield[@label = 'a'] |
-		    subfield[@label = 'h']">
-	<xsl:element name="marc:subfield">
-	  <xsl:attribute name="code">a</xsl:attribute>
-	  <xsl:for-each select="subfield[@label = 'a'] |
-				subfield[@label = 'h']">
-	    <xsl:if test="position()&gt;1"><xsl:text>, </xsl:text></xsl:if><xsl:apply-templates/>
-	  </xsl:for-each>
-	</xsl:element>
-      </xsl:if>
+      <xsl:call-template name="name-content" />
 
-      <xsl:for-each select="subfield[not(contains('ah',@label))]">
-	<xsl:element name="marc:subfield">
-	  <xsl:attribute name="code">
-	    <xsl:value-of select="translate(.,'ecfkb','bdcqe')"/>
-	  </xsl:attribute>
-	  <xsl:apply-templates/>
-	</xsl:element>
-      </xsl:for-each>
     </xsl:element>
   </xsl:template>
 
@@ -447,18 +460,22 @@
 
   <xsl:template match="varfield">
     <xsl:element name="marc:datafield">
-      <xsl:attribute name="ind1">
-	<xsl:value-of select="@i1"/>
-      </xsl:attribute>
-      <xsl:attribute name="ind2">
-	<xsl:value-of select="@i1"/>
-      </xsl:attribute>
-      <xsl:attribute name="tag">
-	<xsl:value-of select="@id"/>
-      </xsl:attribute>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
+
+  <xsl:template name="indicators">
+    <xsl:attribute name="ind1">
+      <xsl:value-of select="@i1"/>
+    </xsl:attribute>
+    <xsl:attribute name="ind2">
+      <xsl:value-of select="@i1"/>
+    </xsl:attribute>
+    <xsl:attribute name="tag">
+      <xsl:value-of select="@id"/>
+    </xsl:attribute>
+  </xsl:template>
+
 
   <xsl:template match="subfield">
     <xsl:element name="marc:subfield">

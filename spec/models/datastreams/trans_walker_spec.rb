@@ -5,8 +5,8 @@ describe 'trans walker' do
   
   before do
     @service = AlephService.new
-    #set = @service.find_set("isbn=9788711396322") 
-    set = @service.find_set("isbn=9780691129785")
+    #set = @service.find_set("isbn=9788711396322") Min kamp
+    set = @service.find_set("isbn=9780691129785") # The origin
     rec = @service.get_record(set[:set_num],set[:num_entries])
     @converter = ConversionService.new(rec)
     doc = @converter.to_mods("")
