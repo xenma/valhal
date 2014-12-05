@@ -72,3 +72,6 @@ da:
     people:
       form:
         cancel: "Fortryd"
+  instances:
+    form:
+      cancel: "Fortryd"

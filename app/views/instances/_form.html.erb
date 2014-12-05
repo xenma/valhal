@@ -32,7 +32,8 @@
 
     </div>
 
-      <div class="btn-group pull-right">
+      <div class="btn-group pull-right col-sm-offset-9">
+        <%= link_to t('.cancel'), :back, class: 'btn btn-warning'%>
         <%= f.button :button, 'Gem', class: 'btn btn-success' do %>
             <span class="glyphicon glyphicon-save"></span>
             Gem

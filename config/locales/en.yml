@@ -43,3 +43,6 @@ en:
     people:
       form:
         cancel: "Cancel"
+  instances:
+    form:
+      cancel: "Cancel"
