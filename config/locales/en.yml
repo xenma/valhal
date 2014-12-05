@@ -39,3 +39,7 @@ en:
   works:
     work_form:
       cancel: "Cancel"
+  authority:
+    people:
+      form:
+        cancel: "Cancel"

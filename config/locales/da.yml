@@ -68,3 +68,7 @@ da:
   works:
     work_form:
       cancel: "Fortryd"
+  authority:
+    people:
+      form:
+        cancel: "Fortryd"
