@@ -14,24 +14,16 @@
   <% end %>
 
     <h2>Person</h2>
-    <% @authority_object.authorized_personal_names.each do |scheme, name| %>
-        <%= render partial: 'authority/people/name', locals: { scheme: scheme, name: name } %>
-        <br/>
+    <% if @authority_object.new? %>
+        <%= render partial: 'authority/people/name',  locals: { scheme: '', name: { given: '', family: '', date: '' }} %>
+    <% else %>
+        <% @authority_object.authorized_personal_names.each do |scheme, name| %>
+            <%= render partial: 'authority/people/name', locals: { scheme: scheme, name: name } %>
+            <br/>
+        <% end %>
     <% end %>
 
-    <div data-hook="empty-names">
-        <%= render partial: 'authority/people/name',  locals: { scheme: '', name: { given: '', family: '', date: '' }} %>
-    </div>
-    <!-- Commented because at present no desire to implement multiple names
-    <a class="btn btn-sm btn-primary col-sm-offset-10" href="#" data-function="new-authorized-personal-name">
-      <span class="glyphicon glyphicon-plus"></span>
-      Add new
-    </a
-    -->
-
-
-  <div class="actions col-sm-offset-7">
-    <%= button_tag t('.cancel'), type: 'button', data: { dismiss: 'modal' }, class: 'btn btn-lg btn-warning' %>
+  <div class="actions">
     <%= f.submit 'Gem Person', class: 'btn btn-lg btn-success' %>
   </div>
 <% end %>
