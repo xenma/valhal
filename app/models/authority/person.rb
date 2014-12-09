@@ -32,7 +32,6 @@ module Authority
     def initialize(*args)
       super
       return if args.empty? || args.first.nil?
-      # self.authorized_personal_name = args
     end
 
     # All authorized personal names

@@ -18,5 +18,3 @@
 //= require bootstrap-combobox
 //= require_tree .
 //= require jquery.are-you-sure
-//= require jquery.validate
-//= require jquery.validate.additional-methods
