@@ -65,3 +65,13 @@ da:
     family: Efternavn
     date: Fødsels-Dødsår
 
+  works:
+    work_form:
+      cancel: "Fortryd"
+  authority:
+    people:
+      form:
+        cancel: "Fortryd"
+  instances:
+    form:
+      cancel: "Fortryd"

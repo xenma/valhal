@@ -29,11 +29,15 @@ class User < ActiveRecord::Base
   def get_ldap_name
     names = Devise::LDAP::Adapter.get_ldap_param(self.username, 'cn')
     self.name = names.first.to_s.force_encoding('utf-8') unless names.blank?
+  rescue => e
+    logger.error "User: error getting name #{e}"
   end
 
   def get_ldap_member_of
     groups = Devise::LDAP::Adapter.get_ldap_param(self.username, 'memberOf')
     self.member_of=groups.join(';').force_encoding('utf-8') unless groups.blank?
+  rescue => e
+    logger.error "User: error getting member of #{e}"
   end
 
   # Method added by Blacklight; Blacklight uses #to_s on your

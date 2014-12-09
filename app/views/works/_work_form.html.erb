@@ -68,8 +68,9 @@
         <div class='col-sm-12'>
         </div>
 
-        <div class="actions">
-          <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-success col-sm-offset-11'%>
+        <div class="actions col-sm-offset-9">
+          <%= link_to t('.cancel'), :back, class: 'btn btn-lg btn-warning'%>
+          <%= f.submit 'Gem værk',  class: 'btn btn-lg btn-success'%>
         </div>
     <% end %>
   </div>
