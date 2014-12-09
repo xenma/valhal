@@ -77,7 +77,7 @@ module Concerns
         else
           self.preservation_state = PRESERVATION_REQUEST_SEND.keys.first
           message = create_preservation_message
-          puts "saving object #{self.preservation_state}"
+          logger.debug "saving object #{self.preservation_state}"
           if self.save
             send_message_to_preservation(message)
           else
@@ -96,7 +96,9 @@ module Concerns
 
         if self.kind_of?(ContentFile)
           message['File_UUID'] = self.file_uuid
-          message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid, :only_path => true)
+          app_url = CONFIG[Rails.env.to_sym][:application_url]
+          path = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid, :only_path => true)
+          message['Content_URI'] = "#{app_url}#{path}"
         end
 
         metadata = create_message_metadata
