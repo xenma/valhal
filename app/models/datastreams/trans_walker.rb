@@ -25,7 +25,7 @@ module Datastreams
       }
       
       self.add_title(tit)
-      mods.person.each { |p|
+      mods.agentPerson.each { |p|
         p = p.chomp ? p : p.strip
         name={authorized_personal_name: { full: p, scheme: 'KB' }}
         mads=Authority::Person.create(name)

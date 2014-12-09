@@ -55,6 +55,7 @@ module Datastreams
           t.text(:path=>"roleTerm")
         }
       }
+      
       t.primary(path: 'name', attributes: {type: 'personal', usage: 'primary'}) do
         t.name(path: 'namePart')
       end
@@ -88,6 +89,7 @@ module Datastreams
       t.title(:proxy => [:titleInfo, :title])
       t.subTitle(:proxy => [:titleInfo, :subTitle])
       t.publisher(:proxy => [:originInfo, :publisher])
+      t.agentPerson(:proxy => [:mods,:person])
       t.originPlace(:proxy => [:originInfo, :place, :placeTerm])
       t.dateIssued(:proxy => [:originInfo, :dateIssued])
       t.languageISO(:proxy => [:language, :languageISO])

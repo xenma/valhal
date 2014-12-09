@@ -19,6 +19,8 @@ describe 'trans walker' do
     w.title_values.first.should == 'The  origin then and now'
   end
 
+
+
   it 'should initialize an instance from mods ' do
     i=Instance.new
     i.from_mods(@mods)
