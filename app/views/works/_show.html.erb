@@ -10,7 +10,6 @@
       </div>
       <% if @work.titles.size > 0 %>
       <h1>
-        <span class="label label-success fa fa-files-o"> </span>
         <%= @work.titles.first.value %><br>
         <small><%= @work.titles.first.subtitle %></small>
       </h1>
@@ -69,9 +68,6 @@
     </tbody></table>
     <div class="row">
 
-
-      <div class="col-sm-offset-4">
-
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <%= "#{@work.instances.size} instanser" %> <span class="caret"></span>
@@ -101,7 +97,6 @@
           </ul>
         </div>
       </div>
-    </div>
 
   </div>
 

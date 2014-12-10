@@ -1,5 +1,5 @@
 <div class="navbar navbar-inverse" role="navigation">
-  <div class="container">
+  <div class="container-fluid">
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -8,15 +8,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="brand" href="<%=root_path%>">
-        <%= image_tag 'logo.png' %>
-        <span>Valhal</span>
+      <a class="navbar-brand" href="<%=root_path%>">
+        <%# image_tag 'logo.png' %> Valhal
       </a>
     </div>
     <div class="navbar-collapse collapse">
+    <%= render partial: '/shared/user_dropdown' %>
     <%= render partial: '/shared/create_dropdown' %>
     <%= render partial: '/shared/administration_dropdown' if current_user && current_user.admin? %>
-    <%= render partial: '/shared/user_dropdown' %>
     </div>
   </div>
 </div>
