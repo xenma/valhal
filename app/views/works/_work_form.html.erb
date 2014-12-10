@@ -2,12 +2,12 @@
 
   <div class="page-header">
     <div class="container">
+      <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+        <span class="glyphicon glyphicon-import"></span>
+        Importer fra Aleph
+      </button>
       <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
 
-        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-          <span class="glyphicon glyphicon-import"></span>
-          Importer fra Aleph
-        </button>
     </div>
   </div>
 
@@ -43,7 +43,7 @@
             </div>
         </fieldset>
         <fieldset class="row">
-          <legend class="col-sm-12">
+          <legend class="col-sm-11">
             Ophav
             <a class="btn btn-sm btn-primary pull-right" data-toggle="modal" href="#new_agent_modal">
               <span class="glyphicon glyphicon-plus"></span>
