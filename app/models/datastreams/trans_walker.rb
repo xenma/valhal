@@ -16,7 +16,7 @@ module Datastreams
 
     def to_work(mods)
 
-      s = mods.nonSort.first ?  mods.nonSort.first + " " : ""
+      s = mods.nonSort.first.present? ?  mods.nonSort.first + " " : ""
       t = s + mods.title.first
       tit = {
         value: t,
@@ -31,6 +31,7 @@ module Datastreams
         mads=Authority::Person.create(name)
         self.add_author(mads)
       }
+
     end
 
     def to_instance(mods)
