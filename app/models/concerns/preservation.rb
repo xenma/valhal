@@ -86,7 +86,7 @@ module Concerns
         end
       end
 
-      private
+      #private
       def create_preservation_message
         message = Hash.new
         message['UUID'] = self.uuid
@@ -103,7 +103,6 @@ module Concerns
 
         metadata = create_message_metadata
         message['metadata'] = metadata
-
         message.to_json
       end
 
@@ -111,7 +110,8 @@ module Concerns
       # @return The metadata for the element.
       def create_message_metadata
         content = self.create_preservation_message_metadata
-        "<metadata>#{content}</metadata>"
+        metadata = "<metadata>#{content}</metadata>"
+        metadata
       end
 
       def set_preservation_modified_time

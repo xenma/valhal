@@ -97,13 +97,10 @@ class Instance < ActiveFedora::Base
   # @return the objects, which cascading operations can be performed upon (e.g. updating administrative or preservation metadata)
   def cascading_elements
     res = []
-    puts "looking for cascading elements"
     content_files.each do |f|
-      puts "adding a content file"
       res << ContentFile.find(f.pid)
     end
-    puts "Found following inheiritable objects: #{res}"
-    logger.debug "Found following inheiritable objects: #{res}"
+    logger.debug "Found following inheritable objects: #{res}"
     res
   end
 
@@ -116,7 +113,6 @@ class Instance < ActiveFedora::Base
 
     mods = self.to_mods
     if mods.to_s.start_with?('<?xml') #hack to remove XML document header from any XML content
-      logger.debug("removing xml header")
       mods = Nokogiri::XML.parse(mods).root.to_s
     end
     res += mods
@@ -127,5 +123,6 @@ class Instance < ActiveFedora::Base
       res+="<file><name>#{cf.original_filename}</name>"
       res+="<uuid>#{cf.uuid}</uuid></file>"
     end
+    res
   end
 end
