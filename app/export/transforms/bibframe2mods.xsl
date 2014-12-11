@@ -10,8 +10,8 @@
     xmlns:t="http://www.tei-c.org/ns/1.0" 
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    exclude-result-prefixes="rdf xsl mads rdfs bf mads t mix relators"
-    xmlns="http://www.loc.gov/mods/v3" 
+    exclude-result-prefixes="rdf xsl mods rdfs bf mads t mix relators"
+    xmlns:mods="http://www.loc.gov/mods/v3"
     version="1.0">
 
   <xsl:output method="xml"
