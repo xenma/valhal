@@ -1,6 +1,6 @@
 module Administration
   class ControlledListsController < ApplicationController
-    before_action :authenticate_user!
+    before_action :ensure_admin!, only: [:edit, :update, :destroy, :new]
     before_action :set_controlled_list, only: [:show, :edit, :update, :destroy]
 
     # GET /controlled_lists
@@ -57,6 +57,13 @@ module Administration
     def controlled_list_params
       puts params
       params.require(:administration_controlled_list).permit(:name, elements: [:id, :name])
+    end
+
+    def ensure_admin!
+      unless user_signed_in? && current_user.admin?
+        flash[:alert] = 'Du skal være administrator for at kunne opdatere'
+        redirect_to root_path
+      end
     end
   end
 end

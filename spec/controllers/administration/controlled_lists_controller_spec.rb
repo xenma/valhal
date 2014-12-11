@@ -35,6 +35,7 @@ describe Administration::ControlledListsController, type: :controller do
     @user = double('user', groups: ['admin'])
     request.env['warden'].stub :authenticate! => @user
     allow(controller).to receive(:current_user) { @user }
+    login_admin
   end
 
   describe 'GET index' do

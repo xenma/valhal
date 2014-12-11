@@ -10,7 +10,7 @@
           <div class='col-sm-2'>
             <div class="form-group">
               <%= creator_fields.label 'type', 'Type' %>
-              <%= select_tag "work[creators][#{index}][type]", options_for_select(['aut']),  {include_blank: false, class:'form-control input-large creator-type'}  %>
+              <%= select_tag "work[creators][#{index}][type]", options_for_select([['forfatter','aut']]),  {include_blank: false, class:'form-control input-large creator-type'}  %>
             </div>
           </div>
           <div class='col-sm-1'>
@@ -31,7 +31,7 @@
           <div class='col-sm-2'>
             <div class="form-group">
               <%= creator_fields.label :type, 'Type' %>
-              <%= select_tag "work[creators][#{index}][type]", options_for_select(['aut'],creator['type']),  {include_blank: false, class: 'form-control input-large creator-type'} %>
+              <%= select_tag "work[creators][#{index}][type]", options_for_select([['forfatter','aut']],creator['type']),  {include_blank: false, class: 'form-control input-large creator-type'} %>
             </div>
           </div>
           <div class='col-sm-1'>

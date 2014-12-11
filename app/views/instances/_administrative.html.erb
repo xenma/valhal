@@ -1,5 +1,6 @@
 
 <!--Administrative metadata -->
+<a id="administrative"></a>
 <fieldset class="row" id="administrative">
   <legend class="col-sm-12">
     Administrative metadata
@@ -55,7 +56,8 @@
 
     <div class="col-sm-4">
       <%= builder.label :preservation_profile, 'Preservation profile' %>
-      <%= builder.select :preservation_profile, options_for_select(get_preservation_profiles_for_select,@instance.preservation_profile)%>
+      <%= builder.select :preservation_profile, options_for_select(get_preservation_profiles_for_select,
+          @instance.blank? ? '' :  @instance.preservation_profile)%>
     </div>
   </fieldset>
 

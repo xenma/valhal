@@ -2,12 +2,12 @@
 
   <div class="page-header">
     <div class="container">
+      <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
+        <span class="glyphicon glyphicon-import"></span>
+        Importer fra Aleph
+      </button>
       <h1>Værk <small id="headerTitle"><%= @work.title_values.first%></small></h1>
 
-        <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">
-          <span class="glyphicon glyphicon-import"></span>
-          Importer fra Aleph
-        </button>
     </div>
   </div>
 
@@ -30,10 +30,11 @@
                 <% @work.titles.each_with_index do |title,index| %>
                     <%= render  partial: 'works/title',  locals: {title: title , index: index, hidden:false} %>
                 <% end%>
+              <%= render partial: 'works/title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length+1, hidden:true} %>
+            <% else %>
+             <%= render partial: 'works/title', locals: {title: Datastreams::Bibframe::Title.new, index: 0, hidden:false} %>
+             <%= render partial: 'works/title', locals: {title: Datastreams::Bibframe::Title.new, index: 1, hidden:true} %>
             <% end %>
-
-          <%= render partial: 'works/title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length, hidden:false} %>
-          <%= render partial: 'works/title', locals: {title: Datastreams::Bibframe::Title.new, index: @work.titles.length+1, hidden:true} %>
 
             <div class='col-sm-12'>
                 <a class="btn btn-sm btn-success" href="#" data-function="new-title">
@@ -54,9 +55,12 @@
               <% @work.creators.each_with_index do |creator,index| %>
                 <%= render partial: 'works/creator', locals: {creator: creator, index: index, hidden:false} %>
               <% end %>
+              <%= render partial: 'works/creator', locals: {creator: {},index: @work.creators.length, hidden: true}%>
+          <% else %>
+            <%= render partial: 'works/creator', locals: {creator: {},index: 0, hidden: false}%>
+            <%= render partial: 'works/creator', locals: {creator: {},index: 1, hidden: true}%>
           <% end %>
-          <%= render partial: 'works/creator', locals: {creator: {},index: @work.creators.length, hidden: false}%>
-          <%= render partial: 'works/creator', locals: {creator: {},index: @work.creators.length+1, hidden: true}%>
+
 
           <div class='col-sm-12'>
             <a class="btn btn-sm btn-success" href="#" data-function="new-creator">

@@ -42,7 +42,7 @@ module Datastreams
           # get authority value from scheme key and remove from hash
           xml.name(type: 'personal', authority: name_hash.delete('scheme')) do
             name_hash.each do |key, val|
-              if key == :full
+              if key == 'full'
                 xml.namePart { xml.text(val) }
               else
                 xml.namePart(type: key.to_s) { xml.text(val) }
