@@ -10,7 +10,6 @@
       </div>
       <% if @work.titles.size > 0 %>
       <h1>
-        <span class="label label-success fa fa-files-o"> </span>
         <%= @work.titles.first.value %><br>
         <small><%= @work.titles.first.subtitle %></small>
       </h1>
@@ -68,7 +67,7 @@
     <% end %>
     </tbody></table>
     <div class="row">
-      <div class="col-sm-offset-4">
+
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
             <%= "#{@work.instances.size} instanser" %> <span class="caret"></span>
@@ -79,6 +78,15 @@
                       <%= instance.class %>
                     </a></li>
             <% end %>
+
+          </ul>
+        </div>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <%= "Opret Instans" %> <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
             <% if can?(:create, Trykforlaeg) %>
                 <li>
                   <a href="<%= new_work_trykforlaeg_path(@work) %>">
@@ -89,10 +97,9 @@
           </ul>
         </div>
       </div>
-    </div>
 
   </div>
-  <div class="dot"></div>
+
 </div>
 <!-- Work end -->
 

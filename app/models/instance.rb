@@ -53,21 +53,16 @@ class Instance < ActiveFedora::Base
     work.first.id
   end
 
-  # very simple method to enable
-  # single file uploads
-  # will need to be expanded to handle
-  # multiple files
-  def content_files=(file)
+  def content_files=(files)
     #remove old file
-    content_files.each do |cf|
-      cf.delete
+    content_files.delete_all
+    files.each do |f|
+      cf = ContentFile.new
+      cf.add_file(f)
+      set_rights_metadata_on_file(cf)
+      cf.save
+      content_files << cf
     end
-
-    cf = ContentFile.new
-    cf.add_file(file)
-    set_rights_metadata_on_file(cf)
-    cf.save
-    content_files << cf
   end
 
   # method to set the rights metadata stream based on activity
@@ -97,13 +92,10 @@ class Instance < ActiveFedora::Base
   # @return the objects, which cascading operations can be performed upon (e.g. updating administrative or preservation metadata)
   def cascading_elements
     res = []
-    puts "looking for cascading elements"
     content_files.each do |f|
-      puts "adding a content file"
       res << ContentFile.find(f.pid)
     end
-    puts "Found following inheiritable objects: #{res}"
-    logger.debug "Found following inheiritable objects: #{res}"
+    logger.debug "Found following inheritable objects: #{res}"
     res
   end
 
@@ -114,7 +106,11 @@ class Instance < ActiveFedora::Base
     res += self.preservationMetadata.content
     res +="</preservationMetadata>"
 
-    res += self.to_mods
+    mods = self.to_mods
+    if mods.to_s.start_with?('<?xml') #hack to remove XML document header from any XML content
+      mods = Nokogiri::XML.parse(mods).root.to_s
+    end
+    res += mods
 
     #TODO: Update this to handle multiple file instances with structmaps
     if (self.content_files.size == 1)
@@ -122,5 +118,6 @@ class Instance < ActiveFedora::Base
       res+="<file><name>#{cf.original_filename}</name>"
       res+="<uuid>#{cf.uuid}</uuid></file>"
     end
+    res
   end
 end

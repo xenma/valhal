@@ -15,14 +15,14 @@ module PreservationHelper
   # @param element The element to have its preservation settings updated.
   # @return The http response code.
   def update_preservation_metadata_for_element(params, element)
-    logger.debug "Updating preservation metadata for element #{element} with parameters #{params}"
+    puts "Updating preservation metadata for element #{element} with parameters #{params}"
     ensure_preservation_state_allows_update_from_controller(element.preservation_state)
 
     if set_preservation_metadata(params['preservation'], element)
-      logger.info "Preservation metadata updated successfully for #{element}"
+      puts "Preservation metadata updated successfully for #{element}"
       true
     else
-      logger.warn "Failed to update preservation metadata for #{element}"
+      puts "Failed to update preservation metadata for #{element}"
       false
     end
   end
@@ -45,17 +45,17 @@ module PreservationHelper
   # @return Whether the update was successful. Or just false, if no metadata is provided.
   def set_preservation_metadata(metadata, element)
     unless metadata && !metadata.empty?
-      logger.warn "No metadata for updating element with: #{metadata}"
+      puts "No metadata for updating element with: #{metadata}"
       return false
     end
 
-    logger.debug "Updating '#{element.to_s}' with preservation metadata '#{metadata}'"
+    puts "Updating '#{element.to_s}' with preservation metadata '#{metadata}'"
     updated = false
 
     unless (metadata['preservation_state'].blank? || metadata['preservation_state'] == element.preservationMetadata.preservation_state.first)
       updated = true
       unless PRESERVATION_STATES.keys.include? metadata['preservation_state']
-        logger.warn("Undefined preservation state #{metadata['preservation_state']} not among the defined ones:" +
+        puts("Undefined preservation state #{metadata['preservation_state']} not among the defined ones:" +
                         "#{PRESERVATION_STATES.keys.to_s}")
       end
       element.preservationMetadata.preservation_state = metadata['preservation_state']
@@ -83,9 +83,9 @@ module PreservationHelper
   # @param comment The comment attached to the preservation
   # @param element The element to have its preservation profile changed.
   def set_preservation_profile(profile, comment, element)
-    logger.debug "Updating '#{element.to_s}' with profile '#{profile}' and comment '#{comment}'"
+    puts "Updating '#{element.to_s}' with profile '#{profile}' and comment '#{comment}'"
     if (profile.blank? || element.preservationMetadata.preservation_profile.first == profile) && (comment.blank? || element.preservationMetadata.preservation_comment.first == comment)
-      logger.debug 'Nothing to change for the preservation update'
+      puts 'Nothing to change for the preservation update'
       return
     end
 

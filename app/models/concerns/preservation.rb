@@ -77,7 +77,7 @@ module Concerns
         else
           self.preservation_state = PRESERVATION_REQUEST_SEND.keys.first
           message = create_preservation_message
-          puts "saving object #{self.preservation_state}"
+          logger.debug "saving object #{self.preservation_state}"
           if self.save
             send_message_to_preservation(message)
           else
@@ -86,7 +86,7 @@ module Concerns
         end
       end
 
-      private
+      #private
       def create_preservation_message
         message = Hash.new
         message['UUID'] = self.uuid
@@ -96,12 +96,13 @@ module Concerns
 
         if self.kind_of?(ContentFile)
           message['File_UUID'] = self.file_uuid
-          message['Content_URI'] = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid, :only_path => true)
+          app_url = CONFIG[Rails.env.to_sym][:application_url]
+          path = url_for(:controller => 'view_file', :action => 'show', :pid =>self.pid, :only_path => true)
+          message['Content_URI'] = "#{app_url}#{path}"
         end
 
         metadata = create_message_metadata
         message['metadata'] = metadata
-
         message.to_json
       end
 
@@ -109,7 +110,8 @@ module Concerns
       # @return The metadata for the element.
       def create_message_metadata
         content = self.create_preservation_message_metadata
-        "<metadata>#{content}</metadata>"
+        metadata = "<metadata>#{content}</metadata>"
+        metadata
       end
 
       def set_preservation_modified_time

@@ -9,8 +9,7 @@ module Administration
 
     before_save do
       self.edit_groups = ['Chronos-Admin']
-      self.read_groups = ['Chronos-Admin']
-      self.discover_groups = ['Chronos-Admin']
+      self.read_groups = ['Chronos-Alle']
     end
 
     def can_perform_cascading

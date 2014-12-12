@@ -1,7 +1,9 @@
 <% @page_title="Rediger person: " + @authority_object.authorized_personal_names  %>
+<div class="container">
 <h1>Editing person</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', @authority_object %> |
 <%= link_to 'Back', authority_people_path %>
+</div>

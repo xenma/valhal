@@ -50,6 +50,8 @@ class ContentFile < ActiveFedora::Base
         'image/tiff'
       when '.jpg', '.jpeg'
         'image/jpeg'
+      when '.txt'
+        'text/plain'
       else
         raise "no mimetype found for extension #{ext}!"
     end
@@ -67,7 +69,7 @@ class ContentFile < ActiveFedora::Base
   ## Model specific preservation functionallity
   def create_preservation_message_metadata
 
-    res = "<provenanceMetadata><fields><uuid>#{self.uuid}</uuid></fields><provenanceMetadata"
+    res = "<provenanceMetadata><fields><uuid>#{self.uuid}</uuid></fields></provenanceMetadata>"
     res +="<preservationMetadata>"
     res += self.preservationMetadata.content
     res +="</preservationMetadata>"

@@ -20,7 +20,6 @@ class SendToPreservationJob
 
     if cascade && obj.respond_to?('can_perform_cascading?') && obj.can_perform_cascading?
       obj.cascading_elements.each do |pib|
-        puts("element #{pib}")
         Resque.enqueue(SendToPreservationJob,pib.pid,cascade)
       end
     end

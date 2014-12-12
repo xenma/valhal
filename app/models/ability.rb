@@ -10,6 +10,7 @@ class Ability
 
     if user_groups.include?('Chronos-Admin')
       can [:create], Administration::Activity
+      can [:create], Administration::ControlledList
     end
 
     if (user_groups & ['Chronos-Pligtaflevering','Chronos-Admin']).present?
@@ -32,7 +33,7 @@ class Ability
     end
 
 
-    if user_groups.include?('Chronos-Alle')
+    if (user_groups & ['Chronos-Pligtaflevering','Chronos-Admin']).present?
       can [:aleph], Work
     end
   end
