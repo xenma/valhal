@@ -48,13 +48,16 @@ module Datastreams
         end
         t.dateIssued()
       end
-      t.person(:path=>"name", attributes: {type: 'personal'}) {
-        t.name(:path=>"namePart")
-        t.family(:path=>"namePart", :attributes=>{:type=>"family"})
-        t.role {
+
+      t.person(  :path=>"name[local-name(..)='mods']",  attributes: {type: 'personal'}) do
+        t.family(:path=>"namePart",     attributes: {:type=>"family"})
+        t.given( :path=>"namePart",     attributes: {:type=>"given"} )
+        t.date(  :path=>"namePart",     attributes: {:type=>"date"} )
+        t.fullName(  :path=>"namePart", attributes: {:type=>:none})
+        t.role do
           t.text(:path=>"roleTerm")
-        }
-      }
+        end
+      end
       
       t.primary(path: 'name', attributes: {type: 'personal', usage: 'primary'}) do
         t.name(path: 'namePart')
@@ -89,7 +92,11 @@ module Datastreams
       t.title(:proxy => [:titleInfo, :title])
       t.subTitle(:proxy => [:titleInfo, :subTitle])
       t.publisher(:proxy => [:originInfo, :publisher])
-      t.agentPerson(:proxy => [:mods,:person])
+      t.agentPerson(:proxy => [:mods, :person])
+#      t.agentPersonFamily(:proxy => [:mods,:person,:family])
+#      t.agentPersonGiven(:proxy => [:mods,:person,:given])
+#      t.agentPersonDate(:proxy => [:mods,:person,:date])
+#      t.agentPersonFull(:proxy => [:mods,:person,:full])
       t.originPlace(:proxy => [:originInfo, :place, :placeTerm])
       t.dateIssued(:proxy => [:originInfo, :dateIssued])
       t.languageISO(:proxy => [:language, :languageISO])

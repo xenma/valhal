@@ -25,9 +25,20 @@ module Datastreams
       }
       
       self.add_title(tit)
-      mods.agentPerson.each { |p|
-        p = p.chomp ? p : p.strip
-        name={authorized_personal_name: { full: p, scheme: 'KB' }}
+
+      mods.person.nodeset.each { |p|
+        ns = p.namespace.href
+        family = p.xpath('car:namePart[@type="family"]','car'=>ns).text
+        given  = p.xpath('car:namePart[@type="given"]','car'=>ns).text
+        date   = p.xpath('car:namePart[@type="date"]','car'=>ns).text
+
+        if(family and given) then 
+          nhash = {scheme: 'KB', family: family, given: given, date: date}
+        else
+          full  = p.xpath('car:namePart','car'=>ns).text
+          nhash = {scheme: 'KB', full: n, date: date}
+        end
+        name={authorized_personal_name: nhash }
         mads=Authority::Person.create(name)
         self.add_author(mads)
       }
