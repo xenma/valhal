@@ -13,7 +13,8 @@ module Authority
     #       authorized_personal_name: { given: 'Myles', family: 'Na Gopaleen', scheme: 'nli' }
     #     )
 
-    validate :has_a_name, :dates_are_valid
+    validate :has_a_name
+    # Temporarily removed :dates_are_valid until we deside what to do with non EDTF-date from Aleph
 
     def has_a_name
       if self.authorized_personal_names.blank?
@@ -46,6 +47,7 @@ module Authority
 
 
     def authorized_personal_name=(args)
+      mads.remove_authorized_personal_names
       if args.is_a? Array
         args.each { |h| add_authorized_personal_name(h) }
       elsif args.is_a? Hash

@@ -1,3 +1,6 @@
+<% @page_title="Vis Person: " + @authority_object.display_value  %>
+
+<div class="container">
 <h1><%= @authority_object.display_value %></h1>
 <h2><%= t '.authorized_names' %></h2>
 
@@ -9,4 +12,4 @@
 <% end %>
 
 <%= link_to 'Edit', edit_authority_person_path(@authority_object) %>
-
+</div>

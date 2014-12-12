@@ -32,11 +32,11 @@ module Datastreams
         given  = p.xpath('car:namePart[@type="given"]','car'=>ns).text
         date   = p.xpath('car:namePart[@type="date"]','car'=>ns).text
 
-        if(family and given) then 
-          nhash = {scheme: 'KB', family: family, given: given, date: date}
+        if(!family.blank? or !given.blank?) then
+          nhash = {'scheme' => 'KB', 'family' => family, 'given' => given, 'date' => date}
         else
           full  = p.xpath('car:namePart','car'=>ns).text
-          nhash = {scheme: 'KB', full: n, date: date}
+          nhash = {'scheme' => 'KB', 'full' => full, 'date' => date}
         end
         name={authorized_personal_name: nhash }
         mads=Authority::Person.create(name)

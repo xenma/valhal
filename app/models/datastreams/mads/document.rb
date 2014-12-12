@@ -78,6 +78,12 @@ module Datastreams
         end
       end
 
+
+      def remove_authorized_personal_names
+        authority.name.nodeset.each {|n| n.remove}
+        content_will_change!
+      end
+
       # Return a hash of hashes
       # whereby each hash contains the
       # components of a name element
