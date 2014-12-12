@@ -68,10 +68,65 @@ da:
   works:
     work_form:
       cancel: "Fortryd"
+    show:
+      edit: "Rediger"
   authority:
     people:
       form:
         cancel: "Fortryd"
+      show:
+        authorized_names: "Autoriserede navne"
   instances:
     form:
       cancel: "Fortryd"
+    show_bibliograph:
+      copyright_date: "Dato for ophavsret"
+      published_date: "Udgivelsedato"
+      mode_of_issuance: "Udgivelseform"
+      extent: "Omfang"
+      language: "Sprog"
+    bibliographic:
+      language: "Sprog"
+    sidebar:
+      go_to: "Gå Til:"
+    show_administrative:
+      activity: "Aktivitet"
+      collection: "Samling"
+      copyright: "Licens"
+      embargo_condition: "Klausulering betingelser"
+      preservation_profile: "Bevaring Profil"
+      preservation_state: "Bevaring Status"
+      preservaton_details: "Bevaring detaljer"
+  simple_form:
+    labels:
+      defaults:
+        copyright_date: Dato for ophavsret
+        published_date: Udgivelsedato
+        mode_of_issuance: Udgivelseform
+        extent: Omfang
+        language-value: Sprog
+        activity: Aktivitet
+        collection: Samling
+        embargo: Klausulering
+        embargo_date: Klausulering dato
+        embargo_condition: Klausulering betingelser
+        access_condition: Adgang betingelser
+        copyright: Licens
+
+  trykforlaegs:
+    bibliographic:
+      language: "Sprog"
+  embargo_date: "Klausulering dato"
+
+  Title types:
+      Uniform: 'Uniform'
+      Abbreviated: 'Forkortet'
+      Translated: 'Oversat'
+      Alternative: 'Alternativ'
+
+  models:
+    work: 'Værk'
+    authority_person: 'Person'
+
+  roles:
+    aut: 'Forfatter'

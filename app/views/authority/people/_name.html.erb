@@ -29,6 +29,17 @@
     </div>
     <span class="help-block"></span>
   </div>
+  <% unless name[:full].blank? %>
+  <div class='form-group'>
+    <div class='col-sm-4'>
+      <label><%= t('person.full') %></label>
+    </div>
+    <div class='col-sm-4'>
+      <input class="form-control" value="<%= name[:full] %>" name="authority_person[authorized_personal_name][][full]"/>
+    </div>
+    <span class="help-block"></span>
+  </div>
+  <% end %>
   <div class='form-group' data-hook="dates">
     <div class='col-sm-2'>
       <label>Født</label>

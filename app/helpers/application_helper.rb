@@ -25,6 +25,10 @@ module ApplicationHelper
     profiles
   end
 
+  def translate_model_names(name)
+    I18n.t("models.#{name.parameterize('_')}")
+  end
+
   # Renders a title type ahead field
   def render_title_typeahead_field
     results = Work.get_title_typeahead_objs

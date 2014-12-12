@@ -59,8 +59,8 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
-    config.add_facet_field solr_name('author', :facetable), :label => 'Author'
-    config.add_facet_field 'active_fedora_model_ssi', :label => 'Model'
+    config.add_facet_field solr_name('author', :facetable), :label => 'Forfatter'
+    config.add_facet_field 'active_fedora_model_ssi', :label => 'Indhold', helper_method: :translate_model_names
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -78,7 +78,7 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
-    config.add_show_field solr_name('title', :stored_searchable, type: :string), :label => 'Title'
+    config.add_show_field solr_name('title', :stored_searchable, type: :string), :label => 'Titel'
     config.add_show_field solr_name('author', :stored_searchable, type: :string), :label => 'Author'
     config.add_show_field solr_name('person_name', :stored_searchable, type: :string), :label => 'Name'
 
@@ -101,14 +101,14 @@ class CatalogController < ApplicationController
     # solr request handler? The one set in config[:default_solr_parameters][:qt],
     # since we aren't specifying it otherwise.
 
-    config.add_search_field 'all_fields', :label => 'All Fields'
+    config.add_search_field 'all_fields', :label => 'Alle Felter'
 
 
     # Now we see how to over-ride Solr request handler defaults, in this
     # case for a BL "search field", which is really a dismax aggregate
     # of Solr search fields.
 
-    config.add_search_field('title') do |field|
+    config.add_search_field('titel') do |field|
       # :solr_local_parameters will be sent using Solr LocalParams
       # syntax, as eg {! qf=$title_qf }. This is neccesary to use
       # Solr parameter de-referencing like $title_qf.
@@ -119,7 +119,7 @@ class CatalogController < ApplicationController
       }
     end
 
-    config.add_search_field('author') do |field|
+    config.add_search_field('forfatter') do |field|
       field.solr_local_parameters = {
         :qf => '$author_qf',
         :pf => '$author_pf'
@@ -129,7 +129,7 @@ class CatalogController < ApplicationController
     # Specifying a :qt only to show it's possible, and so our internal automated
     # tests can test it. In this case it's the same as
     # config[:default_solr_parameters][:qt], so isn't actually neccesary.
-    config.add_search_field('Persons') do |field|
+    config.add_search_field('Personer') do |field|
       field.qt = 'search'
       field.solr_local_parameters = {
         :qf => '$subject_qf',
@@ -141,8 +141,8 @@ class CatalogController < ApplicationController
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
-    config.add_sort_field 'score desc, pub_date_dtsi desc, title_tesi asc', :label => 'relevance'
-    config.add_sort_field 'author_tesi asc, title_tesi asc', :label => 'author'
+    config.add_sort_field 'score desc, pub_date_dtsi desc, title_tesi asc', :label => 'relevans'
+    config.add_sort_field 'author_tesi asc, title_tesi asc', :label => 'forfatter'
     config.add_sort_field 'title_tesi asc, pub_date_dtsi desc', :label => 'title'
 
     # If there are more than this many search results, no spelling ("did you
