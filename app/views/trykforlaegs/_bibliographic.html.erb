@@ -44,12 +44,12 @@
   <% if @instance.note.present? %>
   <% @instance.note.each do |n| %>
       <div class="col-sm-6">
-        <%= builder.input :note, input_html: { value: n, name: 'instance[note][]' } %>
+        <%= builder.input :note, input_html: { value: n, name: 'trykforlaeg[note][]' } %>
       </div>
   <% end %>
 <% end %>
   <div class="col-sm-6">
-    <%= builder.input :note , input_html: { value: '', name: 'instance[note][]'} %>
+    <%= builder.input :note , input_html: { value: '', name: 'trykforlaeg[note][]'} %>
   </div>
 
 </fieldset>

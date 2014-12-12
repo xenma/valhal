@@ -7,7 +7,8 @@ require 'spec_helper'
   end
 
   it "returns an aleph rec given an isbn" do
-    set = @service.find_set("isbn=9788711396322") 
+#    set = @service.find_set("isbn=9788711396322") 
+    set = @service.find_set("isbn=9780691129785")
     rec = @service.get_record(set[:set_num],set[:num_entries])
     puts rec
   end

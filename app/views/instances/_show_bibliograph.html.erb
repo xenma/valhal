@@ -54,7 +54,11 @@
     <strong>Note </strong>
   </td>
   <td>
-    <span><%= @instance.contents_note %></span>
+    <% @instance.note.each do |n| %>
+    <span>
+      <%= n %>
+    </span>
+    <% end %>
   </td>
 </tr>
 

@@ -108,6 +108,6 @@ class WorksController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def work_params
-    params[:work].permit(titles: [[:value, :subtitle, :lang, :type]], creators: [[:id, :type]])
+    params[:work].permit(titles: [[:value, :subtitle, :lang, :type]], creators: [[:id, :type]],note:[])
   end
 end

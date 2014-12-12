@@ -9,6 +9,13 @@ describe 'personal name' do
     expect(mods.person.name).to eql ['Klee, Frederik', 'Laudrup, Henrik']
   end
 
+  it 'should not mistake subject persons as author ones ' do
+    f = File.new(Rails.root.join('spec', 'fixtures', 'mods_with_subject_person.xml'))
+    mods = Datastreams::Mods.from_xml(f)
+    expect(mods.agentPerson).not_to include ['Darwin, Charles']
+    puts mods.agentPerson
+  end
+
   it 'should retrieve the corporate names ' do
     f = File.new(Rails.root.join('spec', 'fixtures', 'mods_digitised_corp_author.xml'))
     mods = Datastreams::Mods.from_xml(f)
