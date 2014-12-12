@@ -39,10 +39,38 @@ en:
   works:
     work_form:
       cancel: "Cancel"
+    show:
+      edit: "Edit"
   authority:
     people:
       form:
         cancel: "Cancel"
+      show:
+        authorized_names: "Authorized names"
   instances:
     form:
       cancel: "Cancel"
+      go_to: "Go to:"
+    show_bibliograph:
+      copyright_date: "Copyright Date"
+      published_date: "Date published"
+      mode_of_issuance: "Mode of issuance"
+      extent: "Extent"
+      language: "Language"
+    bibliographic:
+      Language: "Language"
+      language: "Language"
+    sidebar:
+      go_to: "Go to:"
+    show_administrative:
+      activity: "Activity"
+      collection: "Collection"
+      copyright: "Copyright"
+      embargo_condition: "Embargo condition"
+      preservation_profile: "Preservation Profile"
+      preservation_state: "Preservation State"
+      preservaton_details: "Preservation details"
+  trykforlaegs:
+    bibliographic:
+      language: "Language"
+  embargo_date: "Embargo date"

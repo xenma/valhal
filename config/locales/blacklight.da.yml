@@ -169,7 +169,7 @@ da:
         title: 'Number of results to display per page'
         submit: 'Update'
       sort:
-        label: 'Sort by %{field}'
+        label: 'Sorter efter %{field}'
         submit: 'sort results'
       form:
         search_field:
@@ -192,7 +192,7 @@ da:
       documents:
         counter: '%{counter}. '
       facets:
-        title: 'Limit your search'
+        title: 'Afgræns din søgning'
         sort:
           count: 'Numerical Sort'
           index: 'A-Z Sort'
@@ -200,8 +200,9 @@ da:
         more: 'more »'
         selected:
           remove: '[remove]'
+
       filters:
-        title: 'You searched for:'
+        title: 'Du søgte efter:'
         label: '%{label}:'
         remove:
           value: 'Remove constraint %{value}'
@@ -219,8 +220,12 @@ da:
       atom_feed: 'Atom for results'
       fields:
         default: 'Keyword'
+      zero_results:
+        modify_search: 'Tilpas søgning'
+
 
     entry_name:
       default: 'entry'
 
     did_you_mean: 'Did you mean to type: %{options}?'
+

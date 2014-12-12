@@ -6,7 +6,7 @@
     <div class="page-header">
       <div class="btn-group pull-right">
 
-        <%= link_to 'Edit', edit_work_path(@work), class: 'btn btn-primary' %>
+        <%= link_to t('.edit'), edit_work_path(@work), class: 'btn btn-primary' %>
       </div>
       <% if @work.titles.size > 0 %>
       <h1>
@@ -62,7 +62,7 @@
           <strong><span><%= creator['display_value'] %></span></strong>
         </td>
         <td>
-          <span><%= creator['type'] %></span>
+          <span><%= t("roles.#{creator['type']}") %></span>
         </td>
       </tr>
     <% end %>
