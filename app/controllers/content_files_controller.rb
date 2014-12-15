@@ -3,7 +3,7 @@ require 'blacklight/catalog'
 
 class ContentFilesController < ApplicationController
 
-  before_action :set_file, only: [:download]
+  before_action :set_file, only: [:download,:fits]
 
 
   # Retrieve the content file for a given ContentFile.
@@ -22,6 +22,12 @@ class ContentFilesController < ApplicationController
       flash[:error] = 'An error has occurred. Please contact your system administrator'
       logger.error standard_error.to_s
       render text: standard_error.to_s, status: 500
+    end
+  end
+
+  def fits
+    begin
+      
     end
   end
 

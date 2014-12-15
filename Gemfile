@@ -56,6 +56,9 @@ gem 'httparty'
 
 gem 'resque'
 
+gem 'hydra-file_characterization'
+
+
 group :development, :test do
   gem 'simplecov'
   gem 'rspec-rails'
