@@ -88,14 +88,15 @@ describe InstancesController, type: :controller do
 
       it "saves the Instance's title" do
         w = Work.create valid_work_attributes
+        puts valid_attributes.merge(title_statement: 'War and Peace',set_work: w.id)
         post :create, { instance: valid_attributes.merge(title_statement: 'War and Peace',set_work: w.id), work_id: w.id }, valid_session
-        expect(Instance.last.title_statement).to eql 'War and Peace'
+        expect(assigns(:instance).title_statement).to eql 'War and Peace'
       end
 
       it "saves the Instance's language" do
         w = Work.create valid_work_attributes
         post :create, { instance: valid_attributes.merge(language: [ {value: 'Latin' }],set_work: w.id), work_id: w.id }, valid_session
-        expect(Instance.last.language_values).to include 'Latin'
+        expect(assigns(:instance).language_values).to include 'Latin'
       end
 
       it 'assigns a newly created instance as @instance' do
