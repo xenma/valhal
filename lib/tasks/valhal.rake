@@ -23,6 +23,11 @@ namespace :valhal do
     end
   end
 
+  desc 'Reindex all activefedora objects'
+  task reindex: :environment do
+    ActiveFedora::Base.all.each {|obj| obj.update_index}
+  end
+
   private
 
   def add_default_rights(obj)
