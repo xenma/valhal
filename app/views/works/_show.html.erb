@@ -58,7 +58,8 @@
     <% @work.creators.each do |creator| %>
       <tr>
         <td>
-          <strong><span><%= creator['display_value'] %></span></strong>
+          <%# TODO  make this more general for other types of agents %>
+          <strong><%= link_to creator['display_value'], authority_person_path(creator['id']) %></strong>
         </td>
         <td>
           <span><%= t("roles.#{creator['type']}") %></span>
