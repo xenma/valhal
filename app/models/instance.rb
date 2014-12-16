@@ -113,10 +113,11 @@ class Instance < ActiveFedora::Base
     res += mods
 
     #TODO: Update this to handle multiple file instances with structmaps
-    if (self.content_files.size == 1)
-      cf = content_files.first
-      res+="<file><name>#{cf.original_filename}</name>"
-      res+="<uuid>#{cf.uuid}</uuid></file>"
+    if (self.content_files.size  > 0 )
+      cf = content_files.each do |cf|
+        res+="<file><name>#{cf.original_filename}</name>"
+        res+="<uuid>#{cf.uuid}</uuid></file>"
+      end
     end
     res
   end

@@ -50,13 +50,13 @@
           <div class='col-sm-2'>
             <div class="form-group">
               <%= title_fields.label :lang, 'Sprog' %>
-              <%= title_fields.select :lang, get_controlled_vocab('Language'), {}, {:class => 'form-control'+(hidden ? '': ' combobox')} %>
+              <%= title_fields.select :lang, get_translated_list('Languages'), {include_blank: true}, {:class => 'form-control'+(hidden ? '': ' combobox')} %>
             </div>
           </div>
           <div class='col-sm-2'>
             <div class="form-group">
               <%= title_fields.label :type, 'Type' %>
-              <%= title_fields.select :type, get_controlled_vocab('Title types'), {}, {:class => 'form-control'+(hidden ? '': ' combobox')} %>
+              <%= title_fields.select :type, get_controlled_vocab('Title types'), {include_blank: true}, {:class => 'form-control'+(hidden ? '': ' combobox')} %>
             </div>
           </div>
           <div class='col-sm-12'>
