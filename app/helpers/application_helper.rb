@@ -39,7 +39,8 @@ module ApplicationHelper
     #Renders a list of Agents for a typeahead field
     def get_agent_list
       results = Authority::Agent.get_typeahead_objs
-      results.nil? ? [] : results.collect{|result| [result['display_value_ssm'].first,result['id']]}
+      agents = results.nil? ? [] : results.collect{|result| [result['display_value_ssm'].first,result['id']]}
+      agents.sort {|a,b| a.first.downcase <=> b.first.downcase }
     end
 
     private
