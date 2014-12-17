@@ -130,6 +130,12 @@ da:
 
   roles:
     aut: 'Forfatter'
+  devise:
+    sessions:
+      new:
+        username: "Brugernavn"
+        password: "Adgangkode"
+        remember_me: "Husk mig"
   work:
     aleph:
       error_message: "Ingen data fundet i aleph for %{field} %{value}"

@@ -74,6 +74,12 @@ en:
     bibliographic:
       language: "Language"
   embargo_date: "Embargo date"
+  devise:
+    sessions:
+      new:
+        username: "Username"
+        password: "Password"
+        remember_me: "Remember me"  embargo_date: "Embargo date"
   work:
     aleph:
       error_message: "No data found in Aleph for %{field} %{value}"
