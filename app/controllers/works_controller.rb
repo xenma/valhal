@@ -49,25 +49,27 @@ class WorksController < ApplicationController
     # :field, :value read as aleph_params["field"] and aleph_params["value"],
     # respectively. 
     # For testing: knausgård is isbn=9788711396322
+    rec = service.find_first(aleph_params['field'], aleph_params['value'])
+    if rec.present?
+      converter = ConversionService.new(rec)
+      doc = converter.to_mods
+      mods = Datastreams::Mods.from_xml(doc)
 
-    query = "#{aleph_params['field']}=#{aleph_params['value']}"
-    set = service.find_set(query)
-    rec = service.get_record(set[:set_num],set[:num_entries])
-    converter = ConversionService.new(rec)
-    doc = converter.to_mods('')
-    mods = Datastreams::Mods.from_xml(doc) 
+      @work = Work.new
+      @work.from_mods(mods)
 
-    @work=Work.new
-    @work.from_mods(mods)
-
-    if @work.save 
-      flash[:notice] = 'The work was successfully initialized with data from Aleph'
-      redirect_to new_work_trykforlaeg_path work_id: @work.pid, query: query
+      if @work.save
+        flash[:notice] = I18n.t('work.aleph.success_message')
+        query =  "#{aleph_params[:field]}=#{aleph_params[:value]}"
+        redirect_to new_work_trykforlaeg_path work_id: @work.pid, query: query and return
+      else
+        error = I18n.t('work.save_error')
+      end
     else
-      flash[:error] = 'It was impossible to get data from Aleph'
-      redirect_to new_work_path
+      error = I18n.t('work.aleph.error_message', field: aleph_params['field'], value: aleph_params['value'])
     end
-
+    flash[:error] = error
+    redirect_to new_work_path
   end
 
   # PATCH/PUT /works/1

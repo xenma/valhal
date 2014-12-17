@@ -15,7 +15,7 @@ class ConversionService
   end
 
   # Given a standard marc xml file transform to mods using LOC stylesheet
-  def to_mods(pdf_uri)
+  def to_mods(pdf_uri = '')
     marc2mods = Nokogiri::XSLT(File.read("#{Rails.root}/app/services/xslt/marcToMODS.xsl"))
     marc2mods.transform(self.to_marc21(pdf_uri))
   end

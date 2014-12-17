@@ -130,3 +130,8 @@ da:
 
   roles:
     aut: 'Forfatter'
+  work:
+    aleph:
+      error_message: "Ingen data fundet i aleph for %{field} %{value}"
+      success_message: "Værk oprettet med data fra Aleph"
+    save_error: "Værk kunne ikke gemmes"
