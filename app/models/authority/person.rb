@@ -114,7 +114,7 @@ module Authority
         name += name_hash[:full]
       else
         name += name_hash[:family] if name_hash[:family]
-        name += ', '
+        name += ', ' if name_hash[:given] && name_hash[:family]
         name += name_hash[:given] if name_hash[:given]
       end
       name.strip
