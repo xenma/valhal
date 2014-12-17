@@ -54,6 +54,8 @@ class Instance < ActiveFedora::Base
   end
 
   def content_files=(files)
+    # ensure instance is valid before saving files
+    return unless self.valid?
     #remove old file
     content_files.delete_all
     files.each do |f|
@@ -113,10 +115,11 @@ class Instance < ActiveFedora::Base
     res += mods
 
     #TODO: Update this to handle multiple file instances with structmaps
-    if (self.content_files.size == 1)
-      cf = content_files.first
-      res+="<file><name>#{cf.original_filename}</name>"
-      res+="<uuid>#{cf.uuid}</uuid></file>"
+    if (self.content_files.size  > 0 )
+      cf = content_files.each do |cf|
+        res+="<file><name>#{cf.original_filename}</name>"
+        res+="<uuid>#{cf.uuid}</uuid></file>"
+      end
     end
     res
   end

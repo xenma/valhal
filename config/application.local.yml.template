@@ -11,6 +11,16 @@ ldap:
 test:
   application_url: test
 development:
-  application_url: http://localhost:3000
+    application_url: WRITE_YOUR_APPLICATION_URL_HERE
+    fedora_url: WRITE_YOUR_FEDORA_URL_HERE
+    fedora_user: WRITE_YOUR_FEDORA_USER_HERE
+    fedora_passwd: WRITE_YOUR_FEDORA_PASSWORD_HERE
+    solr_url: WRITE_YOUR_SOLR_URL_HERE
+    secret_key_base: WRITE_YOUR_SECRET_KEY_HERE
 production:
-  application_url: http://valhal.kb.dk
+    application_url: WRITE_YOUR_APPLICATION_URL_HERE
+    fedora_url: WRITE_YOUR_FEDORA_URL_HERE
+    fedora_user: WRITE_YOUR_FEDORA_USER_HERE
+    fedora_passwd: WRITE_YOUR_FEDORA_PASSWORD_HERE
+    solr_url: WRITE_YOUR_SOLR_URL_HERE
+    secret_key_base: WRITE_YOUR_SECRET_KEY_HERE

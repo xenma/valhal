@@ -79,4 +79,8 @@ en:
       new:
         username: "Username"
         password: "Password"
-        remember_me: "Remember me"
+        remember_me: "Remember me"  embargo_date: "Embargo date"
+  work:
+    aleph:
+      error_message: "No data found in Aleph for %{field} %{value}"
+    save_error: "Work could not be saved correctly"

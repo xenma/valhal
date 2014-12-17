@@ -4,12 +4,14 @@ require 'blacklight/catalog'
 class ContentFilesController < ApplicationController
 
   before_action :set_file, only: [:download]
-  authorize_resource
+
 
   # Retrieve the content file for a given ContentFile.
   # If a wrong BasicFile-id, then a 404 is returned.
   # If something goes wrong server-side, then a 500 is returned.
   def download
+    # TODO: Find out why this is needed, should be handeled in ability.rb
+    authorize! :read, params[:id]
     begin
       send_data @file.datastreams['content'].content, {:filename => @file.original_filename, :type => @file.mime_type}
     rescue ActiveFedora::ObjectNotFoundError => obj_not_found

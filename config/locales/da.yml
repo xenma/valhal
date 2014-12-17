@@ -113,7 +113,6 @@ da:
         access_condition: Adgang betingelser
         copyright: Licens
 
-
   trykforlaegs:
     bibliographic:
       language: "Sprog"
@@ -137,3 +136,8 @@ da:
         username: "Brugernavn"
         password: "Adgangkode"
         remember_me: "Husk mig"
+  work:
+    aleph:
+      error_message: "Ingen data fundet i aleph for %{field} %{value}"
+      success_message: "Værk oprettet med data fra Aleph"
+    save_error: "Værk kunne ikke gemmes"
