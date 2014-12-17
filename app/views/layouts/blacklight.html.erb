@@ -22,16 +22,19 @@
 
 </head>
 <body class="<%= render_body_class %>">
-
-<%= render :partial => 'shared/navbar' %>
-<div class="row">
-  <div class="span12">
-    <div id="main-flashes">
-      <%= render :partial=>'/flash_msg' %>
+  <%= render :partial => 'shared/navbar' %>
+  <div class="container">
+    <div class="row">
+      <div class="span12">
+        <div id="main-flashes">
+          <%= render :partial=>'/flash_msg' %>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <%= yield %>
+    </div>
+    <%= render :partial => 'shared/footer' %>
   </div>
-</div>
-<%= yield %>
-<%= render :partial => 'shared/footer' %>
 </body>
 </html>

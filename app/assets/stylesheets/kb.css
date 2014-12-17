@@ -26,11 +26,20 @@
      z-index: 2;
  }
 
+
+
+.navbar-brand {
+     height: 75px;
+}
+
+.navbar-brand img{
+     height:100%;
+}
+
+
  table{
      table-layout: fixed;
  }
-
-
 
 
  .page-header{
