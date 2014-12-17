@@ -65,13 +65,22 @@ describe Work do
           'authorized_personal_name' => { 'given'=> 'Fornavn', 'family' => 'Efternavn', 'scheme' => 'KB', 'date' => '1932/2009' }
       )
       @work.add_author(a)
+      @work.save
+      @work.reload
+      a.reload
       expect(@work.authors).to include a
       expect(a.authored_works).to include @work
     end
 
     it 'can have a recipient' do
-      a = Authority::Agent.new
+      a = Authority::Person.create(
+          'authorized_personal_name' => { 'given'=> 'Fornavn', 'family' => 'Efternavn', 'scheme' => 'KB', 'date' => '1932/2009' }
+      )
       @work.add_recipient(a)
+      @work.add_author(a)
+      @work.save
+      @work.reload
+      a.reload
       expect(@work.recipients).to include a
       expect(a.received_works).to include @work
     end
@@ -130,7 +139,7 @@ describe Work do
       @work.add_author(aut)
       puts("creators #{@work.creators}")
       vals = @work.to_solr.values.flatten
-      expect(vals).to include 'James Joyce'
+      expect(vals).to include 'Joyce, James'
     end
 
     it 'should be able to add a list of title hash' do

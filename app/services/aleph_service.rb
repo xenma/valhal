@@ -22,12 +22,19 @@ class AlephService
       response    = search_aleph(search_string)
       set_num     = Nokogiri::XML.parse(response).xpath('/find/set_number/text()').to_s
       num_entries = Nokogiri::XML.parse(response).xpath('/find/no_entries/text()').to_s
-      {set_num: set_num, num_entries: num_entries}
+      { set_num: set_num, num_entries: num_entries }
     rescue => e
       puts "find_set filed #{search_string}"
       puts e.backtrace.join("\n")
       nil
     end
+  end
+
+  # Find the first record matching the query
+  def find_first(field, value)
+    set = find_set("#{field}=#{value}")
+    return nil unless set[:set_num].present? && set[:num_entries].present?
+    get_record(set[:set_num], '1')
   end
 
 
@@ -39,14 +46,13 @@ class AlephService
 
   def get_record(set_number, entry_num)
     begin
-      #logger.debug "getting record entry_num #{entry_num} set_number #{set_number}"
       @http_service.do_post(@aleph_url, params = {
           :op        => "present",
           :set_no    => set_number,
           :set_entry => entry_num,
           :format    => "marc"})
     rescue => e
-     
+      logger.error e
     end
   end
 

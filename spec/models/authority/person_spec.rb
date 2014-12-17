@@ -10,13 +10,13 @@ describe Authority::Person do
       p = Authority::Person.new(
         'authorized_personal_name' => { 'scheme' => 'viaf', 'family' => 'Joyce', 'given' => 'James', 'date' => '1932/2009' })
       expect(p).to be_an Authority::Person
-      expect(p.all_names).to include 'James Joyce'
+      expect(p.all_names).to include 'Joyce, James'
     end
     it 'should be possible to initialize with an array of name hashes' do
       p = Authority::Person.new(
           authorized_personal_name: { 'given' => 'Myles', 'family' => 'Na Gopaleen', 'scheme' => 'nli' }
       )
-      expect(p.all_names).to include 'Myles Na Gopaleen'
+      expect(p.all_names).to include 'Na Gopaleen, Myles'
     end
   end
 
@@ -52,14 +52,14 @@ describe Authority::Person do
   describe 'all names' do
     it 'returns an array of structured names' do
       @p.authorized_personal_name = {'given' => 'Myles', 'family' => 'Na Gopaleen', 'scheme' => 'nli' }
-      expect(@p.all_names).to include('Myles Na Gopaleen')
+      expect(@p.all_names).to include('Na Gopaleen, Myles')
     end
   end
 
   describe 'to_solr' do
     it 'adds all authorized names to the solr doc' do
       @p.authorized_personal_name = { 'given' => 'Myles', 'family' => 'Na Gopaleen', 'scheme' => 'nli' }
-      expect(@p.to_solr.values.flatten).to include('Myles Na Gopaleen')
+      expect(@p.to_solr.values.flatten).to include('Na Gopaleen, Myles')
     end
   end
 end

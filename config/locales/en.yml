@@ -74,3 +74,23 @@ en:
     bibliographic:
       language: "Language"
   embargo_date: "Embargo date"
+  devise:
+    sessions:
+      new:
+        username: "Username"
+        password: "Password"
+        remember_me: "Remember me"
+        embargo_date: "Embargo date"
+  work:
+    aleph:
+      error_message: "No data found in Aleph for %{field} %{value}"
+    save_error: "Work could not be saved correctly"
+  administration:
+    activities:
+      index:
+        header: "Activities"
+        name: "Name"
+        edit: "Edit"
+        destroy: "Delete"
+        confirm_delete: "Are you sure you will delete this activity"
+        create: "Create activity"
