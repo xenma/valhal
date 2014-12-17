@@ -77,6 +77,8 @@ da:
       show:
         authorized_names: "Autoriserede navne"
   instances:
+    types:
+      trykforlaeg: Trykforlæg
     form:
       cancel: "Fortryd"
     show_bibliograph:

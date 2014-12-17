@@ -71,12 +71,12 @@
 
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <%= "#{@work.instances.size} instanser" %> <span class="caret"></span>
+            <%= "#{@work.instances.size} instans(er)" %> <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
             <% @work.instances.each do |instance| %>
                     <li><a href="<%= url_for([@work, instance]) %>">
-                      <%= instance.class %>
+                      <%= t("instances.types.#{@klazz.to_s.downcase}") %>
                     </a></li>
             <% end %>
 
