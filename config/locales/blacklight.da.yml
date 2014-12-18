@@ -9,15 +9,15 @@ da:
         message: 'Your Message'
   views:
     pagination:
-      first: '&laquo; First'
-      last: 'Last &raquo;'
-      previous: '&laquo; Previous'
-      next: 'Next &raquo;'
+      first: '&laquo; Første'
+      last: 'Sidste &raquo;'
+      previous: '&laquo; Forrige'
+      next: 'Næste &raquo;'
       truncate: '…'
 
     pagination_compact:
-      previous: '&laquo; Previous'
-      next: 'Next &raquo;'
+      previous: '&laquo; Forrige'
+      next: 'Næste &raquo;'
 
   blacklight:
     application_name: 'Valhal'
@@ -160,9 +160,9 @@ da:
     back_to_bookmarks: 'Back to Bookmarks'
 
     search:
-      title: '%{application_name} Search Results'
-      search_results_header: 'Search'
-      search_results: 'Search Results'
+      title: '%{application_name} søgeresultater'
+      search_results_header: 'Søg'
+      search_results: 'Søgeresultater'
       errors:
         request_error: "Sorry, I don't understand your search."
         invalid_solr_id: "Sorry, you have requested a record that doesn't exist."
@@ -179,19 +179,19 @@ da:
           label: 'Search in'
           title: 'Targeted search options'
           post_label: 'for'
-        q: 'Search...'
+        q: 'Søg...'
         submit: 'Søg'
       pagination:
         title: 'Results navigation'
       pagination_info:
         no_items_found: 'Ingen %{entry_name} fundet'
-        single_item_found: '<strong>1</strong> to <strong>1</strong> of <strong>1</strong>'
+        single_item_found: '<strong>1</strong> to <strong>1</strong> af <strong>1</strong>'
         pages:
-          one: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> of <strong>%{total_num}</strong>'
-          other: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> of <strong>%{total_num}</strong>'
+          one: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> af <strong>%{total_num}</strong>'
+          other: '<strong>%{start_num}</strong> - <strong>%{end_num}</strong> af <strong>%{total_num}</strong>'
       entry_pagination_info:
-        one: '<strong>1 of 1</strong>'
-        other: '<strong>%{current}</strong> of <strong>%{total}</strong>'
+        one: '<strong>1 af 1</strong>'
+        other: '<strong>%{current}</strong> af <strong>%{total}</strong>'
       documents:
         counter: '%{counter}. '
       facets:
