@@ -11,7 +11,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     exclude-result-prefixes="rdf xsl mods rdfs bf mads t mix relators"
-    xmlns:mods="http://www.loc.gov/mods/v3"
+    xmlns="http://www.loc.gov/mods/v3"
     version="1.0">
 
   <xsl:output method="xml"
@@ -66,9 +66,11 @@
 	  <xsl:apply-templates 
 	      select="document(@rdf:resource)/mads:mads/mads:authority[1]"/>
 	</xsl:if>
-	<roleTerm>
-	  <xsl:value-of select="local-name(.)"/>
-	</roleTerm>
+	<role>
+	  <roleTerm>
+	    <xsl:value-of select="local-name(.)"/>
+	  </roleTerm>
+	</role>
       </name>
     </xsl:for-each>
 
@@ -78,8 +80,8 @@
 
     <xsl:if test="bf:identifier[bf:Identifier/bf:identifierValue]">
       <xsl:element name="relatedItem">
-	<xsl:attribute name="type">work</xsl:attribute>
-	<xsl:attribute name="displayLabel">The intellectual content, bummer</xsl:attribute>
+	<xsl:attribute name="type">references</xsl:attribute>
+	<xsl:attribute name="displayLabel">Work</xsl:attribute>
 	<xsl:call-template name="encode_identifiers"/>        
       </xsl:element>
     </xsl:if>
@@ -157,9 +159,11 @@
 
   <xsl:template match="bf:title">
     <titleInfo>
-      <xsl:attribute name="type">
-	<xsl:value-of select="bf:Title/bf:titleType"/>
-      </xsl:attribute>
+      <xsl:if test="bf:Title/bf:titleType">
+	<xsl:attribute name="type">
+	  <xsl:value-of select="bf:Title/bf:titleType"/>
+	</xsl:attribute>
+      </xsl:if>
       <xsl:apply-templates select="bf:Title"/>
     </titleInfo>
   </xsl:template>
