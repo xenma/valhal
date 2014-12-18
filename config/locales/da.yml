@@ -181,3 +181,6 @@ da:
   show: "Vis"
   edit: "Rediger"
   error: "Fejl"
+  unauthorized:
+      manage:
+        all: "Du har ikke adgang til denne side."
