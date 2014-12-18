@@ -2,11 +2,11 @@
         wrapper_html: { class: 'form-group' }, input_html: { class: 'form-control' } }) do |f| %>
   <% if @instance.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@instance.errors.count, "error") %> prohibited this instance from being saved:</h2>
+      <h2><%= "#{t('.could_not_be_saved')}" %>:</h2>
 
       <ul>
-      <% @instance.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+      <% @instance.errors.messages.each do |field, message| %>
+        <li><%= "#{t('instances.show_administrative.' + field.to_s, default: field.to_s)} #{message.join(', ')}" %></li>
       <% end %>
       </ul>
     </div>

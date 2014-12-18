@@ -81,6 +81,7 @@ da:
       trykforlaeg: Trykforlæg
     form:
       cancel: "Fortryd"
+      could_not_be_saved: "Instansen kunne ikke gemmes"
     show_bibliograph:
       copyright_date: "Dato for ophavsret"
       published_date: "Udgivelsedato"
@@ -179,3 +180,4 @@ da:
   back: "Tilbage"
   show: "Vis"
   edit: "Rediger"
+  error: "Fejl"
