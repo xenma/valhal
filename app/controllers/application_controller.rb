@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   # redirect to some sane access denied page
   # Todo: create that page
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    begin
+      redirect_to :back, alert:  exception.message and return
+    rescue ActionController::RedirectBackError
+      redirect_to root_path, alert:  exception.message and return
+    end
   end
 end
