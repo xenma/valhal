@@ -97,3 +97,4 @@ en:
     controlled_lists:
       element:
         label: "Label"
+        entry: "Entry"
