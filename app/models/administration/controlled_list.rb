@@ -9,13 +9,14 @@ module Administration
     def elements=(elements)
       self.save unless self.persisted?
       elements.each do |new|
-        hash = params_to_hash(new)
-        if hash.key?(:id) && hash[:id].present?
-          entry = Administration::ListEntry[hash[:id]]
-          hash.merge!(controlled_list_id: self.id)
-          entry.update(hash)
-        elsif hash.key?(:name) && hash[:name].present?
-          entry = Administration::ListEntry.new(name: hash[:name], controlled_list_id: self.id)
+        values = params_to_hash(new)
+        if values.key?(:id) && values[:id].present?
+          entry = Administration::ListEntry[values[:id]]
+          values.merge!(controlled_list_id: self.id)
+          entry.update(values)
+        elsif values.key?(:name) && values[:name].present?
+          values[:controlled_list_id] = self.id
+          entry = Administration::ListEntry.new(values)
         end
         entry.save if defined?(entry) and entry
       end

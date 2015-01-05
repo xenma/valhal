@@ -56,7 +56,7 @@ module Administration
     # Only allow a trusted parameter "white list" through.
     def controlled_list_params
       puts params
-      params.require(:administration_controlled_list).permit(:name, elements: [:id, :name])
+      params.require(:administration_controlled_list).permit(:name, elements: [:id, :name, :label])
     end
 
     def ensure_admin!
