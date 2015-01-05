@@ -3,7 +3,7 @@
       <div class="form-group">
         <div class="col-sm-8 ">
           <div class="form-inline">
-            <%= fields.hidden_field :id %>
+            <%= fields.hidden_field :id if element.id.present? %>
             <div class="form-group">
               <div class="col-sm-4">
                 <%= fields.text_field :name, class: 'form-control', placeholder: t('.entry')
