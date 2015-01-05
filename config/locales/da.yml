@@ -174,7 +174,8 @@ da:
         new_field: "Tilføj flere"
         save: "Gem"
       element:
-        entry: "Post"
+        entry: "Værdi"
+        label: "Label"
       edit:
         header: "Redigerer %{name}"
   back: "Tilbage"
