@@ -19,6 +19,10 @@ module ApplicationHelper
     elements.sort { |x,y| x.first <=> y.first }
   end
 
+  def get_entry_label(list_name, entry_name)
+    Administration::ControlledList.with(:name, list_name).elements.find(name: entry_name).first.label
+  end
+
   def get_preservation_profiles_for_select
     profiles = []
     PRESERVATION_CONFIG['preservation_profile'].each do |key,value|

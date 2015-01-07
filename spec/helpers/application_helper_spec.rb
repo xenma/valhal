@@ -50,4 +50,10 @@ describe 'ControlledList helpers' do
       expect(labels).to include 'tubs'
     end
   end
+
+  describe 'get entry label' do
+    it "gets the label for an element when supplied it's name and the collection's name" do
+      expect(@dummy.get_entry_label('sample list', 'jum')).to eql 'spy'
+    end
+  end
 end

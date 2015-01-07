@@ -3,6 +3,7 @@ module Administration
   class ListEntry < OhmModelWrapper
     attribute :name
     attribute :label
+    index :name
     reference :controlled_list, Administration::ControlledList
   end
 end
