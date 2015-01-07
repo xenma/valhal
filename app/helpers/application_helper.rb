@@ -17,6 +17,13 @@ module ApplicationHelper
     list.sort { |x,y| x.first <=> y.first }
   end
 
+  def get_list_with_labels(list_name)
+    list = Administration::ControlledList.with(:name, list_name)
+    elements = list.elements.to_a
+    elements.map!{ |e| [e.label, e.name] }
+    elements.sort { |x,y| x.first <=> y.first }
+  end
+
   def get_preservation_profiles_for_select
     profiles = []
     PRESERVATION_CONFIG['preservation_profile'].each do |key,value|
