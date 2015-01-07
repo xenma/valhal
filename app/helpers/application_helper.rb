@@ -8,13 +8,14 @@ module ApplicationHelper
   end
 
   # Given a list name, return a list of arrays
-  # suitable for dropdowns, whereby the display
-  # string value is translated via i18n
-  # sorted by the value of the first element
+  # suitable for dropdowns, whereby the string
+  # displayed is either the element's label if present
+  # or the element's name if not.
+  # The list is sorted by the value of the labels ascending
   def get_list_with_labels(list_name)
     list = Administration::ControlledList.with(:name, list_name)
     elements = list.elements.to_a
-    elements.map!{ |e| [e.label, e.name] }
+    elements.map!{ |e| [ (e.label.present? ? e.label : e.name), e.name] }
     elements.sort { |x,y| x.first <=> y.first }
   end
 

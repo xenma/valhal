@@ -10,6 +10,7 @@ describe 'ControlledList helpers' do
     Administration::ListEntry.create(name: 'jam', label: 'tailor', controlled_list_id: @cl.id)
     Administration::ListEntry.create(name: 'jon', label: 'soldier', controlled_list_id: @cl.id)
     Administration::ListEntry.create(name: 'jum', label: 'spy', controlled_list_id: @cl.id)
+    Administration::ListEntry.create(name: 'tubs', controlled_list_id: @cl.id)
     @dummy = Dummy.new
   end
 
@@ -42,6 +43,11 @@ describe 'ControlledList helpers' do
 
     it 'sorts the list by the labels ascending' do
       expect(@vals.first.first).to be < @vals.last.first
+    end
+
+    it 'uses the name as the label if no label is present' do
+      labels = @vals.map(&:first)
+      expect(labels).to include 'tubs'
     end
   end
 end
