@@ -25,14 +25,6 @@ describe 'ControlledList helpers' do
     end
   end
 
-  describe 'get_translated_list' do
-    it 'should return an array of arrays' do
-      vals = @dummy.get_translated_list('sample list')
-      expect(vals).to be_an Array
-      expect(vals.first).to be_an Array
-    end
-  end
-
   describe 'get labelled list' do
     before :all do
       @vals = @dummy.get_list_with_labels('sample list')

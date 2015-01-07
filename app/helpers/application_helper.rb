@@ -11,12 +11,6 @@ module ApplicationHelper
   # suitable for dropdowns, whereby the display
   # string value is translated via i18n
   # sorted by the value of the first element
-  def get_translated_list(list_name)
-    list = get_controlled_vocab(list_name)
-    list.map!{ |e| [I18n.t("#{list_name}.#{e}".to_sym), e]}
-    list.sort { |x,y| x.first <=> y.first }
-  end
-
   def get_list_with_labels(list_name)
     list = Administration::ControlledList.with(:name, list_name)
     elements = list.elements.to_a
