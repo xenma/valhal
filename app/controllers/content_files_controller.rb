@@ -25,12 +25,6 @@ class ContentFilesController < ApplicationController
     end
   end
 
-  def fits
-    begin
-      
-    end
-  end
-
   def set_file
     @file = ContentFile.find(params[:id])
   end
