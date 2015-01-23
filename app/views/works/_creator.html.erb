@@ -4,7 +4,7 @@
           <div class='col-sm-8'>
             <div class='form-group'>
               <%= creator_fields.label 'id', 'Agent' %>
-              <%= select_tag "work[creators][#{index}][id]", options_for_select(get_agent_list),  {include_blank: true, class:'form-control input-large creator-id'} %>
+              <%= select_tag "work[creators][#{index}][id]", options_for_select(get_agent_list),  {include_blank: true, class:'form-control input-large creator-id', required: !hidden} %>
             </div>
           </div>
           <div class='col-sm-2'>

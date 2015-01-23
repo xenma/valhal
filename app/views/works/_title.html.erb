@@ -5,7 +5,8 @@
           <div class='col-sm-6'>
             <div class='form-group'>
               <%= title_fields.label :value, 'Titel' %>
-              <%= title_fields.text_field :value, :placeholder => 'Titel', :class => 'title-value form-control' %>
+              <%# Note that required is set to not hidden so that hidden fields don't cause validation errors %>
+              <%= title_fields.text_field :value, :placeholder => 'Titel', :class => 'title-value form-control', required: !hidden %>
             </div>
           </div>
           <div class='col-sm-2'>
