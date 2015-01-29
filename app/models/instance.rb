@@ -16,6 +16,7 @@ class Instance < ActiveFedora::Base
   has_and_belongs_to_many :work, class_name: 'Work', property: :instance_of, inverse_of: :has_instance
   has_many :content_files, property: :content_for
   has_and_belongs_to_many :parts, class_name: 'Work', property: :has_part, inverse_of: :is_part_of
+  has_and_belongs_to_many :other_physical_formats, class_name: 'Instance', property: :other_physical_format
 
   validates :activity, :collection, :copyright, presence: true
 
