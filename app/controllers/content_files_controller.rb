@@ -3,7 +3,7 @@ require 'blacklight/catalog'
 
 class ContentFilesController < ApplicationController
 
-  before_action :set_file, only: [:download,:fits]
+  before_action :set_file, only: [:download]
 
 
   # Retrieve the content file for a given ContentFile.
