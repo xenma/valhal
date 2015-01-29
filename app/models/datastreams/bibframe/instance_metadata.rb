@@ -39,7 +39,7 @@ module Datastreams
         end
         t.sysno(path: 'systemNumber') do
           t.Identifier do
-            t.label
+            t.identifierValue
           end
         end
 
@@ -52,7 +52,7 @@ module Datastreams
         t.dimensions
         t.contents_note(path: 'contentsNote')
         t.isbn13(proxy: [:isbn_13, :Identifier, :label])
-        t.system_number(proxy: [:sysno, :Identifier, :label])
+        t.system_number(proxy: [:sysno, :Identifier, :identifierValue])
         t.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
         t.published_date(proxy: [:publication, :Provider, :providerDate])
         t.publisher_name(proxy: [:publication, :Provider, :providerName, :Organization, :label])
@@ -70,7 +70,7 @@ module Datastreams
       define_template :system_number do |xml, value|
         xml.systemNumber do
           xml.Identifier do
-            xml.label { xml.text(value) }
+            xml.identifierValue { xml.text(value) }
           end
         end
       end

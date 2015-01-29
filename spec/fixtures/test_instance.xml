@@ -35,7 +35,7 @@
     </bf:isbn13>
     <bf:systemNumber>
       <bf:Identifier>
-        <bf:label>0123456789</bf:label>
+        <bf:identifierValue>0123456789</bf:identifierValue>
       </bf:Identifier>
     </bf:systemNumber>
   </bf:Instance>
