@@ -1,7 +1,9 @@
 <a id="upload"></a><h4>Files</h4>
 <% @instance.content_files.each do |f| %>
-    <strong><%= f.original_filename %></strong>
-    <table class="table table-striped"><tbody>
+    <%# Note we need to get rid of colons in the ids here to prevent errors with the js collapse
+     (colons cause problems with CSS selectors)  %>
+    <a data-toggle="collapse" href="#<%= f.id.gsub(':','_') %>"><%= f.file_label %></a>
+    <table class="table table-striped collapse" id="<%= f.id.gsub(':','_') %>"><tbody>
     <tr>
       <td> <strong>Filnavn</strong></td>
       <td>
