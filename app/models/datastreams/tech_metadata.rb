@@ -21,6 +21,7 @@ module Datastreams
       t.created
       t.last_accessed
       t.file_uuid
+      t.file_label
       t.editable
     end
 

@@ -36,6 +36,7 @@ class ContentFile < ActiveFedora::Base
     self.mime_type = mime_type
     self.size = file.size.to_s
     self.file_uuid = UUID.new.generate
+    self.file_label = self.file_name unless file_label.present?
     true
   end
 
