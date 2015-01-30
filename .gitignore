@@ -18,9 +18,10 @@
 .keep
 /.idea
 *~
-
+*.swp
 # Ignore local configuration
 config/application.local.yml
 
 # Ignore code coverage report
 coverage
+.agignore
