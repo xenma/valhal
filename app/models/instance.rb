@@ -59,12 +59,16 @@ class Instance < ActiveFedora::Base
     #remove old file
     content_files.delete_all
     files.each do |f|
-      cf = ContentFile.new
-      cf.add_file(f)
-      set_rights_metadata_on_file(cf)
-      cf.save
-      content_files << cf
+      self.add_file(f)
     end
+  end
+
+  def add_file(file)
+    cf = ContentFile.new
+    cf.add_file(file)
+    set_rights_metadata_on_file(cf)
+    cf.save
+    content_files << cf
   end
 
   # method to set the rights metadata stream based on activity
