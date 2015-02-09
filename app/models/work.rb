@@ -17,6 +17,7 @@ class Work < ActiveFedora::Base
   has_and_belongs_to_many :succeeding_works, class_name: 'Work', property: :succeeded_by, inverse_of: :preceded_by
   has_and_belongs_to_many :authors, class_name: 'Authority::Agent',  property: :author, inverse_of: :author_of
   has_and_belongs_to_many :recipients, class_name: 'Authority::Agent', property: :recipient, inverse_of: :recipient_of
+  has_and_belongs_to_many :subjects, class_name: 'ActiveFedora::Base', property: :subject
 
   before_save :set_rights_metadata
   validate :has_a_title,:has_a_creator
