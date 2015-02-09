@@ -65,7 +65,12 @@ class Instance < ActiveFedora::Base
 
   def add_file(file)
     cf = ContentFile.new
-    cf.add_file(file)
+    if (file.is_a? File) || (file.is_a? ActionDispatch::Http::UploadedFile)
+      cf.add__file(file)
+    else if (file.is_a? String)
+           cf.add_external_file(file)
+         end
+    end
     set_rights_metadata_on_file(cf)
     cf.save
     content_files << cf

@@ -15,14 +15,21 @@ class ContentFile < ActiveFedora::Base
 
   def add_external_file(path)
     file_name = Pathname.new(path).basename.to_s
+    logger.debug("filename #{file_name}")
     mime_type = mime_type_from_ext(file_name)
+    logger.debug("mime_type #{mime_type}")
 
-    attrs = {:dsLocation => path, :controlGroup => 'E', :mimeType => mime_type}
-    ds = ActiveFedora::Datastream.new(inner_object,'content',:prefix => '')
+    attrs = {:dsLocation => "file://#{path}", :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
 
-    [:mimeType, :controlGroup, :dsLabel, :dsLocation, :checksumType, :versionable].each do |key|
-      ds.send("#{key}=".to_sym, opts[key]) unless opts[key].nil?
-    end
+    file_object = File.new(path)
+    set_file_timestamps(file_object)
+    self.checksum = generate_checksum(file_object)
+    self.original_filename = file_name
+    self.mime_type = mime_type
+    self.size = file_object.size.to_s
+    self.file_uuid = UUID.new.generate
+
     datastreams['content'] = ds
   end
 
