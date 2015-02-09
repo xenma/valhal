@@ -7,24 +7,29 @@ namespace :adl do
       raise "Directory #{args.path} does not exists"
     end
 
-    adl_activity = Administration::Activity.find('changeme:69')
+    adl_activity = Administration::Activity.find('changeme:1')
 
-    Dir.glob("#{args.path}/texts/*.xml").each do |fname|
+    Dir.glob("#{args.path}/*/*.xml").each do |fname|
       puts "file #{fname}"
       doc = Nokogiri::XML(File.open(fname))
 
-      id = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:publicationStmt/xmlns:idno").text
-      unless id.blank?
+      if (doc.xpath("//xmlns:teiHeader/xmlns:fileDesc").size > 0)
+        id = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:publicationStmt/xmlns:idno").text
         puts ("  ID is #{id}")
+        sysno = nil
+        volno = nil
+        unless id.blank?
+          puts ("  ID is #{id}")
 
-        sysno = id.split(":")[0]
-        volno = id.split(":")[1]
-        puts (" sysno #{sysno} vol #{volno}")
+          sysno = id.split(":")[0]
+          volno = id.split(":")[1]
+          puts (" sysno #{sysno} vol #{volno}")
+        end
 
         i = nil
-        i = find_instance(sysno) unless sysno == '000000000'
+        i = find_instance(sysno) unless sysno.blank? || sysno == '000000000'
         i = create_new_work_and_instance(sysno,doc,adl_activity) if i.nil?
-        add_contentfile_to_instance(fname,i)
+        add_contentfile_to_instance(fname,i) unless i.nil?
       end
     end
   end
@@ -33,6 +38,7 @@ namespace :adl do
   private
 
   def find_instance(sysno)
+    puts "searching for instances"
     result = ActiveFedora::SolrService.query('system_number_tesim:"'+sysno+'" && active_fedora_model_ssi:Instance')
     if (result.size > 0)
       puts "  found instance #{result[0]['id']}"
@@ -45,15 +51,22 @@ namespace :adl do
 
   def create_new_work_and_instance(sysno,doc,adl_activity)
     w = Work.new
-    doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:sourceDesc/xmlns:bibl/xmlns:title").each do |n|
+    doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:title").each do |n|
       w.add_title(value: n.text)
     end
 
-    doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:sourceDesc/xmlns:bibl/xmlns:author").each do |n|
-      p = find_or_create_person(n.xpath("//xmlns:forename").text,n.xpath("//xmlns:surname").text)
-      w.add_author(p)
+    doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").each do |n|
+      unless doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").text.blank?
+        names = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").text.split(' ')
+        surname = names.pop
+        forename = names.join(' ')
+        p = find_or_create_person(forename,surname)
+        w.add_author(p)
+      end
     end
-    w.save
+    unless w.save
+      raise "unable to create new work"
+    end
 
     i = Instance.new
     i.set_work=w
@@ -63,13 +76,21 @@ namespace :adl do
     i.copyright = adl_activity.copyright
     i.collection = adl_activity.collection
     i.preservation_profile = adl_activity.preservation_profile
-    i.save
+
+    result = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:publicationStmt/xmlns:publisher")
+    i.publisher_name = result[0].text unless result.size == 0
+
+    unless i.save
+      raise "unable to create instance"
+    end
     i
+  rescue Exception => e
+    puts "unable to create work or instance #{e.inspect}"
+    nil
   end
 
   def add_contentfile_to_instance(fname,i)
-    file = File.open(fname)
-    i.add_file(file)
+    i.add_file(fname)
     i.save
   end
 
