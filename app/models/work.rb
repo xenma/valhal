@@ -96,7 +96,7 @@ class Work < ActiveFedora::Base
 
   def to_solr(solr_doc = {})
     super
-    Solrizer.insert_field(solr_doc, 'display_value',title_values.first, :displayable)
+    Solrizer.insert_field(solr_doc, 'display_value', display_value, :displayable)
     titles.each do |title|
       Solrizer.insert_field(solr_doc, 'title', title.value, :stored_searchable, :displayable)
       Solrizer.insert_field(solr_doc, 'subtitle', title.subtitle, :stored_searchable, :displayable)
@@ -115,6 +115,9 @@ class Work < ActiveFedora::Base
     self.edit_groups = ['Chronos-Alle']
   end
 
+  def display_value
+    title_values.first
+  end
 
   # Validation methods
   def has_a_title
