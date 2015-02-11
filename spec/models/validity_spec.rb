@@ -16,7 +16,7 @@ describe 'content' do
     expect(isOK).to be true
   end
 
- it 'should allow to test the validity of files' do
+  it 'should allow to test the validity of files' do
     c = ContentFile.new
     v = Validity.new
     doc = 'holb06invalid.xml'
@@ -30,7 +30,7 @@ describe 'content' do
     expect(isOK).to be false
   end
 
- it 'should also capture files that are not wellformed' do
+  it 'should also capture files that are not wellformed' do
     c = ContentFile.new
     v = Validity.new
     doc = 'holb06notwellformed.xml'
