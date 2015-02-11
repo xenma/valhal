@@ -1,9 +1,34 @@
-class validity < ActiveModel::Validator
+class Validity < ActiveModel::Validator
   def validate(record)
     if record.mime_type != "text/xml"
       record.errors[:base] << "This object is not XML"
     else
-      record.errors[:base] << "This object is XML"
+      schema = File.new(Rails.root.join('spec', 'fixtures', 'tei_all.rng'))
+      xval = Nokogiri::XML::RelaxNG(open(schema).read)
+      msg = ""
+      begin
+
+        xdoc = Nokogiri::XML.parse(record.datastreams['content'].content) { |config| config.strict }
+
+        xval.validate(xdoc).each do |error|
+          msg = msg + "\n" + error.message
+        end
+
+        record.errors[:base] = msg
+        if msg.blank?
+          return true
+        else
+          return false
+        end
+
+      rescue Exception => wellformedness
+        msg = wellformedness
+        record.errors[:base] = msg
+        return false
+      end
+
+
+
     end
   end
 end
