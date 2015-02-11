@@ -10,6 +10,8 @@ describe 'personal name' do
   end
 
   it 'should not mistake subject persons as author ones ' do
+     #xsd = Nokogiri::XML::Schema(open('http://www.loc.gov/standards/mods/v3/mods-3-5.xsd').read)
+    #  xsd.validate(Nokogiri::XML.parse(
     f = File.new(Rails.root.join('spec', 'fixtures', 'mods_with_subject_person.xml'))
     mods = Datastreams::Mods.from_xml(f)
     expect(mods.agentPerson).not_to include ['Darwin, Charles']
