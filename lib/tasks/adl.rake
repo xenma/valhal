@@ -7,7 +7,8 @@ namespace :adl do
       raise "Directory #{args.path} does not exists"
     end
 
-    adl_activity = Administration::Activity.find('changeme:1')
+    adl_activity = find_or_create_adl_activity
+    raise 'ADL Activity not found - exiting...' unless adl_activity.present?
 
     Dir.glob("#{args.path}/*/*.xml").each do |fname|
       puts "file #{fname}"
@@ -37,6 +38,16 @@ namespace :adl do
 
   private
 
+  def find_or_create_adl_activity
+    adl_params = {
+        activity: 'ADL',
+        collection: 'dasam3',
+        copyright: 'Attribution-NonCommercial-ShareAlike CC BY-NC-SA'
+    }
+    Administration::Activity.find(activity: 'ADL').first ||
+        Administration::Activity.create(adl_params)
+  end
+
   def find_instance(sysno)
     puts "searching for instances"
     result = ActiveFedora::SolrService.query('system_number_tesim:"'+sysno+'" && active_fedora_model_ssi:Instance')
@@ -57,9 +68,12 @@ namespace :adl do
 
     doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").each do |n|
       unless doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").text.blank?
-        names = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").text.split(' ')
-        surname = names.pop
-        forename = names.join(' ')
+        names = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:titleStmt/xmlns:author").text
+        # Convert the names to title case in an encoding safe manner
+        # e.g. JEPPE AAKJÆR becomes Jeppe Aakjær
+        titleized_names = names.mb_chars.titleize.wrapped_string.split(' ')
+        surname = titleized_names.pop
+        forename = titleized_names.join(' ')
         p = find_or_create_person(forename,surname)
         w.add_author(p)
       end
@@ -86,6 +100,8 @@ namespace :adl do
     i
   rescue Exception => e
     puts "unable to create work or instance #{e.inspect}"
+    pp i.errors
+    pp w.errors
     nil
   end
 
