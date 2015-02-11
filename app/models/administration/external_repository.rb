@@ -12,6 +12,7 @@ module Administration
 
     def clear_sync_messages
       self.sync_message.each do |msg|
+        self.sync_message.delete(msg)
         msg.delete
       end
     end
