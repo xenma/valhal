@@ -24,6 +24,14 @@ describe Instance do
       expect(@instance.content_files.size).to eql 0
     end
 
+    it 'can have an other physical format' do
+      i = Instance.new(instance_params)
+      @instance.other_physical_formats << i
+      @instance.save
+      expect(@instance.other_physical_formats).to include i
+      expect(i.other_physical_formats).to include @instance
+    end
+
     describe 'to work' do
       before :each do
         @i = Instance.create(instance_params)
