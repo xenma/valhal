@@ -5,6 +5,8 @@ describe 'content' do
   it 'should not complain about valid files' do
     c = ContentFile.new
     v = Validator::Xml.new
+    schema = Rails.root.join('spec', 'fixtures', 'tei_all.rng')
+    v.set_schema(schema)
     doc = 'holb06valid.xml'
     f = File.new(Pathname.new(Rails.root).join('spec', 'fixtures',doc))
     c.add_file(f)
@@ -19,6 +21,8 @@ describe 'content' do
   it 'should allow to test the validity of files' do
     c = ContentFile.new
     v = Validator::Xml.new
+    schema = Rails.root.join('spec', 'fixtures', 'tei_all.rng')
+    v.set_schema(schema)
     doc = 'holb06invalid.xml'
     f = File.new(Pathname.new(Rails.root).join('spec', 'fixtures',doc))
     c.add_file(f)
