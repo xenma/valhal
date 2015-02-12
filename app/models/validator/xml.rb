@@ -1,8 +1,12 @@
-module validator
+module Validator
 
-  class xml < ActiveModel::Validator
- 
-   def is_valid(record)
+  class Xml < ActiveModel::Validator
+    
+    def validate(record) 
+      return is_valid record
+    end
+    
+    def is_valid(record)
       if record.mime_type != "text/xml"
         record.errors[:base] << "This object is not XML"
       else
@@ -30,9 +34,8 @@ module validator
           return false
         end
 
-
-
       end
+
     end
   end
 end
