@@ -52,7 +52,7 @@ module Datastreams
         t.dimensions
         t.contents_note(path: 'contentsNote')
         t.isbn13(proxy: [:isbn_13, :Identifier, :label])
-        t.system_number(proxy: [:sysno, :Identifier, :identifierValue])
+        t.system_number(proxy: [:sysno, :Identifier, :identifierValue], index_as: :stored_searchable)
         t.copyright_date(proxy: [:publication, :Provider, :copyrightDate])
         t.published_date(proxy: [:publication, :Provider, :providerDate])
         t.publisher_name(proxy: [:publication, :Provider, :providerName, :Organization, :label])

@@ -11,6 +11,29 @@ class ContentFile < ActiveFedora::Base
 
   belongs_to :instance, property: :content_for
 
+
+
+  def add_external_file(path)
+    file_name = Pathname.new(path).basename.to_s
+    logger.debug("filename #{file_name}")
+    mime_type = mime_type_from_ext(file_name)
+    logger.debug("mime_type #{mime_type}")
+
+    attrs = {:dsLocation => "file://#{path}", :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
+
+    file_object = File.new(path)
+    set_file_timestamps(file_object)
+    self.checksum = generate_checksum(file_object)
+    self.original_filename = file_name
+    self.mime_type = mime_type
+    self.size = file_object.size.to_s
+    self.file_uuid = UUID.new.generate
+
+    datastreams['content'] = ds
+  end
+
+
   # Adds a content datastream to the object and generate techMetadata for the basic_files
   # basic_files may either be File or UploadedFile objects.
   #

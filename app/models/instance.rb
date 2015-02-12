@@ -60,12 +60,21 @@ class Instance < ActiveFedora::Base
     #remove old file
     content_files.delete_all
     files.each do |f|
-      cf = ContentFile.new
-      cf.add_file(f)
-      set_rights_metadata_on_file(cf)
-      cf.save
-      content_files << cf
+      self.add_file(f)
     end
+  end
+
+  def add_file(file)
+    cf = ContentFile.new
+    if (file.is_a? File) || (file.is_a? ActionDispatch::Http::UploadedFile)
+      cf.add__file(file)
+    else if (file.is_a? String)
+           cf.add_external_file(file)
+         end
+    end
+    set_rights_metadata_on_file(cf)
+    cf.save
+    content_files << cf
   end
 
   # method to set the rights metadata stream based on activity
@@ -123,5 +132,19 @@ class Instance < ActiveFedora::Base
       end
     end
     res
+  end
+
+  def to_solr(solr_doc = {} )
+    super
+    activity_name = Administration::Activity.find(activity).activity
+    Solrizer.insert_field(solr_doc, 'activity_name', activity_name, :stored_searchable, :facetable)
+  end
+
+  # given an activity name, return a set of Instances
+  # belonging to that activity
+  # note the mapping to AF objects will take a bit of time
+  def self.find_by_activity(activity)
+    docs = ActiveFedora::SolrService.query("activity_name_sim:#{activity}")
+    docs.map { |d| Instance.find(d['id']) }
   end
 end
