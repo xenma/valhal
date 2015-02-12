@@ -3,6 +3,7 @@ module Administration
     attribute :name
     attribute :type
     attribute :url
+    attribute :branch
     attribute :activity
     attribute :sync_method
     attribute :sync_status
