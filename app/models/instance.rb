@@ -132,4 +132,18 @@ class Instance < ActiveFedora::Base
     end
     res
   end
+
+  def to_solr(solr_doc = {} )
+    super
+    activity_name = Administration::Activity.find(activity).activity
+    Solrizer.insert_field(solr_doc, 'activity_name', activity_name, :stored_searchable, :facetable)
+  end
+
+  # given an activity name, return a set of Instances
+  # belonging to that activity
+  # note the mapping to AF objects will take a bit of time
+  def self.find_by_activity(activity)
+    docs = ActiveFedora::SolrService.query("activity_name_sim:#{activity}")
+    docs.map { |d| Instance.find(d['id']) }
+  end
 end
