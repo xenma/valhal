@@ -34,6 +34,23 @@ describe 'content' do
     expect(isOK).to be false
   end
 
+  it 'should capture invalid files using XSD as well' do
+    c = ContentFile.new
+    v = Validator::Xml.new
+    schema = Rails.root.join('spec', 'fixtures', 'mods-3-5.xsd')
+    v.set_schema(schema)
+    doc = 'mods_with_subject_person_and_invalid_subtitle.xml'
+    p   = Pathname.new(Rails.root).join('spec', 'fixtures', doc)
+    f = File.new(p)
+    c.add_file(f)
+    c.save
+    puts "******\n" + doc
+    isOK = v.validate c
+    msg = c.errors[:base].join(" ")
+    puts msg
+    expect(isOK).to be false
+  end
+
   it 'should also capture files that are not wellformed' do
     c = ContentFile.new
     v = Validator::Xml.new

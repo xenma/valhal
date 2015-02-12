@@ -36,7 +36,7 @@ module Validator
         begin
           xdoc = Nokogiri::XML.parse(record.datastreams['content'].content) { |config| config.strict }
 
-          if !@schema_file.blank?
+          unless @schema_file.blank?
             xval = schema_selector(@schema_file)
             xval.validate(xdoc).each do |error|
               msg = msg + "\n" + error.message
