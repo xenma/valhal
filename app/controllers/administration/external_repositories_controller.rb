@@ -12,7 +12,7 @@ module Administration
 
     def syncronise
       @external_repository = ExternalRepository[params[:id]]
-      @external_repository.sync_status = 'REQUESTED'
+      @external_repository.sync_status = 'REQUESTED' unless @external_repository.sync_status == 'NEW'
       @external_repository.sync_date = DateTime.now.to_s
       @external_repository.save
       Resque.enqueue("SyncExtRepo#{@external_repository.sync_method}".constantize,@external_repository.id)
