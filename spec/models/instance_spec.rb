@@ -153,4 +153,12 @@ describe Instance do
       expect(vals).to include 'King James Edition'
     end
   end
+
+  describe 'find by activity' do
+    it 'should find all instances with a given activity name' do
+      i = Instance.create(instance_params)
+      set = Instance.find_by_activity('test')
+      expect(set.first.id).to eql i.id
+    end
+  end
 end
