@@ -11,8 +11,9 @@ class ContentFile < ActiveFedora::Base
 
   belongs_to :instance, property: :content_for
 
-
-
+  # Adds a content datastream to the object as an external managed file in fedore
+  #
+  # @param path external url to the firl
   def add_external_file(path)
     file_name = Pathname.new(path).basename.to_s
     logger.debug("filename #{file_name}")
@@ -31,6 +32,26 @@ class ContentFile < ActiveFedora::Base
     self.file_uuid = UUID.new.generate
 
     datastreams['content'] = ds
+  end
+
+
+  def update_tech_metadata_for_external_file
+    if self.datastreams['content'].controlGroup == 'E'
+      path = self.datastreams['content'].dsLocation
+      if path.start_with? 'file://'
+        path.slice! 'file://'
+        file_object = File.new(path)
+        new_checksum = generate_checksum(file_object)
+        logger.debug("#{path} checksums #{self.checksum} #{new_checksum}")
+        if (new_checksum != self.checksum)
+          set_file_timestamps(file_object)
+          self.checksum = new_checksum
+          self.size = file_object.size.to_s
+          return true
+        end
+      end
+    end
+    false
   end
 
 
@@ -103,6 +124,15 @@ class ContentFile < ActiveFedora::Base
 
   def can_perform_cascading?
     false
+  end
+
+  def self.find_by_original_filename(fname)
+    result = ActiveFedora::SolrService.query('original_filename_tesim:"'+fname+'"')
+    if result.size > 0
+      ContentFile.find(result[0]['id'])
+    else
+      nil
+    end
   end
 
   private
