@@ -22,6 +22,7 @@ module Datastreams
       t.last_accessed
       t.file_uuid
       t.editable
+      t.validator
     end
 
     def self.xml_template
