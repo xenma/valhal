@@ -3,7 +3,8 @@ module Validator
   class Xml < ActiveModel::Validator
     @schema_file = ""
 
-    def validate(record) 
+    def validate(record)
+      puts "validate record"
       return is_valid record
     end
 
@@ -35,16 +36,15 @@ module Validator
         msg = ""
         begin
           xdoc = Nokogiri::XML.parse(record.datastreams['content'].content) { |config| config.strict }
-
           unless @schema_file.blank?
             xval = schema_selector(@schema_file)
             xval.validate(xdoc).each do |error|
               msg = msg + "\n" + error.message
             end
-            record.errors[:base] = msg
             if msg.blank?
               return true
             else
+              record.errors[:base] = msg
               return false
             end
           end
