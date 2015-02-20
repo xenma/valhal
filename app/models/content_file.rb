@@ -11,7 +11,28 @@ class ContentFile < ActiveFedora::Base
 
   belongs_to :instance, property: :content_for
 
+  validate :custom_validations
 
+  def custom_validations
+    valid = true
+    self.validator.each do |vname|
+      classname = "Validator::#{vname}"
+      puts "validate #{classname}"
+      begin
+        klass = Module.const_get(classname)
+        if (klass <= ActiveModel::Validator)
+          v = klass.new
+          isOK= v.validate self
+          valid = valid && isOK
+        else
+          logger.warn("Validator #{vname} for ContentFile is not a Validator")
+        end
+      rescue NameError => e
+        logger.warn("Validator #{vname} for ContentFile not defined")
+      end
+    end
+    valid
+  end
 
   def add_external_file(path)
     file_name = Pathname.new(path).basename.to_s
