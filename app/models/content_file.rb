@@ -11,8 +11,13 @@ class ContentFile < ActiveFedora::Base
 
   belongs_to :instance, property: :content_for
 
-  validate :custom_validations
 
+  ### custom validations
+  ## run through the list of validators in self.validators
+  ## check if it is a valid validator and validates the content file with it
+  ## example: is it at valid relaxed Tei file
+  ## this enables us to dynamically add validation to individual content files
+  validate :custom_validations
   def custom_validations
     valid = true
     self.validators.each do |vname|
