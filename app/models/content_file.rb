@@ -15,7 +15,7 @@ class ContentFile < ActiveFedora::Base
 
   def custom_validations
     valid = true
-    self.validator.each do |vname|
+    self.validators.each do |vname|
       classname = "Validator::#{vname}"
       begin
         klass = Module.const_get(classname)
