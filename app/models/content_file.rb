@@ -17,12 +17,11 @@ class ContentFile < ActiveFedora::Base
     valid = true
     self.validator.each do |vname|
       classname = "Validator::#{vname}"
-      puts "validate #{classname}"
       begin
         klass = Module.const_get(classname)
         if (klass <= ActiveModel::Validator)
           v = klass.new
-          isOK= v.validate self
+          isOK = v.validate self
           valid = valid && isOK
         else
           logger.warn("Validator #{vname} for ContentFile is not a Validator")
