@@ -4,7 +4,6 @@ module Validator
     @schema_file = ""
 
     def validate(record)
-      puts "validate record"
       return is_valid record
     end
 
