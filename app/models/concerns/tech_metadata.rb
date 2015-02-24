@@ -12,6 +12,7 @@ module Concerns
       # TODO have more than one checksum (both MD5 and SHA), and specify their checksum algorithm.
       has_attributes :checksum, datastream: 'techMetadata', :at => [:file_checksum], :multiple => false
       has_attributes :size, datastream: 'techMetadata', :at => [:file_size], :multiple => false
+      has_attributes :validators, datastream: 'techMetadata', :at => [:validators], :multiple => true
     end
   end
 end

@@ -12,6 +12,31 @@ class ContentFile < ActiveFedora::Base
   belongs_to :instance, property: :content_for
 
 
+  ### custom validations
+  ## run through the list of validators in self.validators
+  ## check if it is a valid validator and validates the content file with it
+  ## example: is it at valid relaxed Tei file
+  ## this enables us to dynamically add validation to individual content files
+  validate :custom_validations
+  def custom_validations
+    valid = true
+    self.validators.each do |vname|
+      classname = "Validator::#{vname}"
+      begin
+        klass = Module.const_get(classname)
+        if (klass <= ActiveModel::Validator)
+          v = klass.new
+          isOK = v.validate self
+          valid = valid && isOK
+        else
+          logger.warn("Validator #{vname} for ContentFile is not a Validator")
+        end
+      rescue NameError => e
+        logger.warn("Validator #{vname} for ContentFile not defined")
+      end
+    end
+    valid
+  end
 
   def add_external_file(path)
     file_name = Pathname.new(path).basename.to_s
