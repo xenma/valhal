@@ -80,7 +80,6 @@ class Work < ActiveFedora::Base
   def creators=(val)
     remove_creators
     val.each_value do |v|
-      logger.debug("adding creator #{v}")
       if (v['type'] == 'aut')
         add_author(ActiveFedora::Base.find(v['id'])) unless v['id'].blank?
       end
@@ -93,6 +92,22 @@ class Work < ActiveFedora::Base
     end
     authors=[]
   end
+
+  def add_subject(rel)
+    subjects << rel
+  end
+
+  def subjects=(val)
+    remove_subjects
+    val.each_value do |v|
+      add_subject(ActiveFedora::Base.find(v['id'])) unless v['id'].blank?
+    end
+  end
+
+  def remove_subjects
+    subjects=[]
+  end
+
 
   def to_solr(solr_doc = {})
     super
