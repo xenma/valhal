@@ -33,6 +33,9 @@ class ContentFile < ActiveFedora::Base
     valid
   end
 
+  # Adds a content datastream to the object as an external managed file in fedore
+  #
+  # @param path external url to the firl
   def add_external_file(path)
     file_name = Pathname.new(path).basename.to_s
     logger.debug("filename #{file_name}")
