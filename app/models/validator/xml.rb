@@ -55,6 +55,8 @@ module Validator
           end
         end
       rescue Exception => wellformedness
+        puts wellformedness.message
+        pp wellformedness
         msg = "XML not wellformed #{wellformedness.message}"
       end
       msg

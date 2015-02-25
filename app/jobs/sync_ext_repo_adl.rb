@@ -68,7 +68,7 @@ class SyncExtRepoADL
             else
               repo.add_sync_message("Found existing Instance for '#{i.work.first.display_value}'")
             end
-            add_contentfile_to_instance(fname,i) unless i.nil?
+            cf = add_contentfile_to_instance(fname,i) unless i.nil?
             added_files=added_files+1
             repo.add_sync_message("Added #{fname}")
           rescue Exception => e
@@ -182,8 +182,8 @@ class SyncExtRepoADL
   end
 
   def self.add_contentfile_to_instance(fname,i)
-    errors = i.add_file(fname,["RelaxedTei"])
-    raise "unable to add file: #{errors.messages}" unless errors.blank?
+    cf = i.add_file(fname,["RelaxedTei"])
+    raise "unable to add file: #{cf.errors.messages}" unless cf.errors.blank?
     raise "unable to add file: #{i.errors.messages}" unless i.save
   end
 end

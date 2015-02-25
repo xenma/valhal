@@ -78,14 +78,16 @@ class Instance < ActiveFedora::Base
       end
       validator = get_validator_from_classname(vname)
       msg = validator.is_valid_xml_content(file_content)
-      cf.errors[:base] << msg
-      isOK = false
+      unless msg.blank?
+        cf.errors[:base] << msg
+        isOK = false
+      end
     end
 
-    return false unless isOK
+    return cf unless isOK
 
     if (file.is_a? File) || (file.is_a? ActionDispatch::Http::UploadedFile)
-      cf.add__file(file)
+      cf.add_file(file)
     else if (file.is_a? String)
            cf.add_external_file(file)
          end
@@ -93,6 +95,8 @@ class Instance < ActiveFedora::Base
     set_rights_metadata_on_file(cf)
     cf.validators = validators
     cf.save(validate: false)
+    content_files << cf
+    cf
   end
 
   def validate_with_xml_validator(validator,xml)
