@@ -12,6 +12,7 @@ class Instance < ActiveFedora::Base
   include Concerns::Preservation
   include Concerns::Renderers
   include Datastreams::TransWalker
+  include Concerns::CustomValidations
 
   has_and_belongs_to_many :work, class_name: 'Work', property: :instance_of, inverse_of: :has_instance
   has_many :content_files, property: :content_for
@@ -64,8 +65,25 @@ class Instance < ActiveFedora::Base
     end
   end
 
-  def add_file(file)
+  def add_file(file, validators=[])
     cf = ContentFile.new
+
+    isOK = true
+    validators.each do |vname|
+      file_content = ""
+      if file.is_a? String
+        file_content = File.open(file).read
+      else
+        file_content = file.read
+      end
+      validator = get_validator_from_classname(vname)
+      msg = validator.is_valid_xml_content(file_content)
+      cf.errors[:base] << msg
+      isOK = false
+    end
+
+    return false unless isOK
+
     if (file.is_a? File) || (file.is_a? ActionDispatch::Http::UploadedFile)
       cf.add__file(file)
     else if (file.is_a? String)
@@ -73,8 +91,19 @@ class Instance < ActiveFedora::Base
          end
     end
     set_rights_metadata_on_file(cf)
-    cf.save
-    content_files << cf
+    cf.validators = validators
+    cf.save(validate: false)
+  end
+
+  def validate_with_xml_validator(validator,xml)
+    errors = ActiveRecord::Errors.new
+    if validator.class <= Validator::Xml
+      begin
+        xdoc = Nokogiri::XML.parse(record.datastreams['content'].content) { |config| config.strict }
+
+      end
+    end
+    errors
   end
 
   # method to set the rights metadata stream based on activity

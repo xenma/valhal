@@ -8,6 +8,7 @@ class ContentFile < ActiveFedora::Base
   include Concerns::TechMetadata
   include Concerns::Preservation
   include Concerns::UUIDGenerator
+  include Concerns::CustomValidations
 
   belongs_to :instance, property: :content_for
 
@@ -21,22 +22,13 @@ class ContentFile < ActiveFedora::Base
   ## example: is it at valid relaxed Tei file
   ## this enables us to dynamically add validation to individual content files
   validate :custom_validations
+
   def custom_validations
     valid = true
     self.validators.each do |vname|
-      classname = "Validator::#{vname}"
-      begin
-        klass = Module.const_get(classname)
-        if (klass <= ActiveModel::Validator)
-          v = klass.new
-          isOK = v.validate self
-          valid = valid && isOK
-        else
-          logger.warn("Validator #{vname} for ContentFile is not a Validator")
-        end
-      rescue NameError => e
-        logger.warn("Validator #{vname} for ContentFile not defined")
-      end
+      v = get_validator_from_classname(vname)
+      isOK = v.validate self
+      valid = valid && isOK
     end
     valid
   end
