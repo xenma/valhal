@@ -17,10 +17,10 @@ class SyncExtRepoADL
     new_instances = 0
 
     if repo.sync_status == 'NEW'
-      repo.add_sync_message("Cloning new github repository")
+      repo.add_sync_message("Cloning new git repository")
       success = SyncExtRepoADL.clone(repo)
     else
-      repo.add_sync_message("Updating repository")
+      repo.add_sync_message("Updating git repository")
       success = SyncExtRepoADL.update(repo)
     end
 
@@ -36,9 +36,12 @@ class SyncExtRepoADL
         unless cf.nil?
           Resque.logger.debug("Updating existing file #{fname}")
           if cf.update_tech_metadata_for_external_file
-            cf.save
-            updated_files=updated_files+1
-            repo.add_sync_message("Updated file #{fname}")
+            if cf.save
+              updated_files=updated_files+1
+              repo.add_sync_message("Updated file #{fname}")
+            else
+              repo.add_sync_message("Failed to update file #{fname}: #{cf.errors.messages}")
+            end
           end
         else
           begin
@@ -70,7 +73,8 @@ class SyncExtRepoADL
             repo.add_sync_message("Added #{fname}")
           rescue Exception => e
             Resque.logger.warn "Skipping file"
-            Resque.logger.warn e.backtrace
+            Resque.logger.warn e.message
+            Resque.logger.warn e.backtrace.join("\n")
             repo.add_sync_message("Skipping file #{fname} : #{e.message}")
           end
         end
@@ -93,7 +97,6 @@ class SyncExtRepoADL
 
 
   private
-
   def self.clone(repo)
     cmd = "git clone #{repo.url} #{@git_dir}; cd #{@git_dir}; git fetch; git checkout #{repo.branch}"
     success = false
@@ -109,7 +112,7 @@ class SyncExtRepoADL
   end
 
   def self.update(repo)
-    cmd = "cd #{@git_dir};git checkout #{repo.branch};git pull"
+    cmd = "cd #{@git_dir};git checkout -f #{repo.branch};git pull"
     success = false
     Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
       while line = stdout.gets
@@ -154,7 +157,7 @@ class SyncExtRepoADL
       end
     end
     unless w.save
-      raise "Error saving work #{w.errors}"
+      raise "Error saving work #{w.errors.messages}"
     end
 
     Resque.logger.debug "Creating new instance"
@@ -173,15 +176,14 @@ class SyncExtRepoADL
 
     unless i.save
       w.delete
-      raise "unable to create instance #{i.errors}"
+      raise "unable to create instance #{i.errors.messages}"
     end
     i
   end
 
   def self.add_contentfile_to_instance(fname,i)
-    i.add_file(fname)
-    unless i.save
-      raise "unable to add file #{pp i.errors}"
-    end
+    errors = i.add_file(fname,["RelaxedTei"])
+    raise "unable to add file: #{errors.messages}" unless errors.blank?
+    raise "unable to add file: #{i.errors.messages}" unless i.save
   end
 end
