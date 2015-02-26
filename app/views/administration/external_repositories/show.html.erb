@@ -30,9 +30,11 @@
   </table>
 
   <h2>Log messages</h2>
+  <pre>
   <% @external_repository.sync_message.each do |msg| %>
-    <%= msg.msg %><br>
+    <%= msg.msg %>
   <% end %>
+  </pre>
 
   <%= link_to t(:syncronise), syncronise_administration_external_repository_path(@external_repository) %> |
   <%= link_to t(:back), administration_controlled_lists_path %>
