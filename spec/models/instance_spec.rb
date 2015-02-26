@@ -24,12 +24,12 @@ describe Instance do
       expect(@instance.content_files.size).to eql 0
     end
 
-    it 'can have an other physical format' do
+    it 'can have an equivalent instance' do
       i = Instance.new(instance_params)
-      @instance.other_physical_formats << i
+      @instance.has_equivalent << i
       @instance.save
-      expect(@instance.other_physical_formats).to include i
-      expect(i.other_physical_formats).to include @instance
+      expect(@instance.has_equivalent).to include i
+      expect(i.has_equivalent).to include @instance
     end
 
     describe 'to work' do
