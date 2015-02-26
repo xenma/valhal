@@ -23,6 +23,7 @@ module Datastreams
       t.file_uuid
       t.editable
       t.validators
+      t.tei_ref(:type=> :string, :index_as => :stored_searchable)
     end
 
     def self.xml_template
