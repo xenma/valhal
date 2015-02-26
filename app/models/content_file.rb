@@ -42,16 +42,25 @@ class ContentFile < ActiveFedora::Base
     mime_type = mime_type_from_ext(file_name)
     logger.debug("mime_type #{mime_type}")
 
-    attrs = {:dsLocation => "file://#{path}", :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    dsLocation = path.start_with?('http://') ? path : "file://#{path}"
+
+    attrs = {:dsLocation => dsLocation, :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
     ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
 
-    file_object = File.new(path)
-    set_file_timestamps(file_object)
+    file_object = nil
+    if  path.start_with?('http://')
+        file_object = fetch_file_from_url(path)
+    else
+      file_object = File.new(path)
+      set_file_timestamps(file_object)
+    end
     self.checksum = generate_checksum(file_object)
     self.original_filename = file_name
     self.mime_type = mime_type
     self.size = file_object.size.to_s
     self.file_uuid = UUID.new.generate
+    file_object.close
+    file_object.unlink if file_object.is_a? Tempfile
 
     datastreams['content'] = ds
   end
@@ -172,4 +181,35 @@ class ContentFile < ActiveFedora::Base
     self.last_modified = file.mtime.to_s
   end
 
+  def fetch_file_from_url(url)
+    logger.debug "Starting GET of file from #{url}"
+    start_time = Time.now
+    uri = URI.parse(url)
+    if (uri.kind_of?(URI::HTTP))
+      resp = Net::HTTP.get_response(uri)
+      case resp
+        when Net::HTTPSuccess then
+          filename = File.basename(uri.path)
+          tmpfile = Tempfile.new(filename,Dir.tmpdir)
+          File.open(tmpfile.path,'wb+') do |f|
+            f.write resp.body
+          end
+          tmpfile.flush
+          logger.debug "GET took #{Time.now - start_time} seconds"
+          return tmpfile
+        else
+          logger.error "Could not get file from location #{url} response is #{resp.code}:#{resp.message}"
+          return nil
+      end
+    else
+      return nil
+    end
+  rescue URI::InvalidURIError
+    logger.error "Invalid URI #{url}"
+    nil
+  rescue => e
+    logger.error "error in fetch_file_from_url #{url}"
+    logger.error e.backtrace.join("\n")
+    nil
+  end
 end
