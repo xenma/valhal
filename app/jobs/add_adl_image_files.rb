@@ -2,6 +2,8 @@ require 'resque'
 
 class AddAdlImageFiles
 
+  @queue = 'add_adl_image_files'
+
   def self.perform(content_file_id)
 
 
@@ -17,11 +19,10 @@ class AddAdlImageFiles
       tiff_inst.copyright = tei_inst.copyright
       tiff_inst.collection = tei_inst.collection
       tiff_inst.preservation_profile = tei_inst.preservation_profile
-     # tiff_inst.type = 'tiff'
+      tiff_inst.type = 'TIFF'
       unless tiff_inst.save
         raise "error creating tiff instance #{tiff_inst.errors.messages}"
       end
-      puts ("work is #{tei_inst.work.first.id}")
       tiff_inst.set_work=tei_inst.work.first
       tei_inst.has_equivalent << tiff_inst
       tei_inst.save
@@ -33,18 +34,14 @@ class AddAdlImageFiles
 
     xdoc.xpath("//xmlns:pb").each do |n|
       begin
+        Resque.logger.debug("Processing #{n.to_s}")
         xml_id = n.attr('xml:id')
         raise "No xml:id" if xml_id.blank?
 
         facs = n.attr('facs')
         raise "No facs" if facs.blank?
 
-        puts "ref  '#{xml_id}::#{facs}'"
-
         uri = file_map[facs]
-        raise "No uri for facs #{facs}" if uri.blank?
-
-        puts "uri #{uri}"
 
         Resque.logger.debug("Adding file #{uri}")
 
@@ -53,12 +50,13 @@ class AddAdlImageFiles
           raise "Unable to add file save errors #{tiff_file.errors.messages}"
         end
 
-        tiff_file.tei_ref = "#{xml_id}::#{facs}"
-        tiff_file.save
+        tiff_file.pb_xml_id = xml_id
+        tiff_file.pb_facs_id = facs
+        unless tiff_file.save
+          raise "Unable to save tiff file #{tiff_file.errors.messages}"
+        end
       rescue Exception => e
         Resque.logger.error("Unable to add file for pb #{n.to_s}: #{e.message}" )
-        puts "Unable to add file for pb #{n.to_s}: #{e.message}"
-        pp e
       end
     end
   end

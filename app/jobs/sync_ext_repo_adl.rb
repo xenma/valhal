@@ -71,6 +71,7 @@ class SyncExtRepoADL
             cf = add_contentfile_to_instance(fname,i) unless i.nil?
             added_files=added_files+1
             repo.add_sync_message("Added #{fname}")
+            Resque.enqueue(AddAdlImageFiles,cf.pid)
           rescue Exception => e
             Resque.logger.warn "Skipping file"
             Resque.logger.warn e.message
@@ -170,6 +171,7 @@ class SyncExtRepoADL
     i.copyright = adl_activity.copyright
     i.collection = adl_activity.collection
     i.preservation_profile = adl_activity.preservation_profile
+    i.type = 'TEI'
 
     result = doc.xpath("//xmlns:teiHeader/xmlns:fileDesc/xmlns:publicationStmt/xmlns:publisher")
     i.publisher_name = result[0].text unless result.size == 0
@@ -185,5 +187,6 @@ class SyncExtRepoADL
     cf = i.add_file(fname,["RelaxedTei"])
     raise "unable to add file: #{cf.errors.messages}" unless cf.errors.blank?
     raise "unable to add file: #{i.errors.messages}" unless i.save
+    cf
   end
 end

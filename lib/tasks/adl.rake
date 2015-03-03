@@ -1,7 +1,20 @@
 namespace :adl do
 
-  desc 'Import ADL files to Valhal'
+  desc 'Init ADL activity and ext. repo'
+  task init: :environment do
+    adl_activity = Administration::Activity.create(activity: "ADL", embargo: "0", access_condition: "",
+      copyright: "Attribution-NonCommercial-ShareAlike CC BY-NC-SA", collection: "dasam3", preservation_profile: "storage")
+    adl_activity.permissions = {"file"=>{"group"=>{"discover"=>["Chronos-Alle"], "read"=>["Chronos-Alle"], "edit"=>["Chronos-NSA"]}},
+                                "instance"=>{"group"=>{"discover"=>["Chronos-Alle"], "read"=>["Chronos-Alle"], "edit"=>["Chronos-NSA"]}}}
+    adl_activity.save
 
+    repo = Administration::ExternalRepository.create(:name => 'ADL', :url => 'git@disdev-01:/opt/git/adl_data.git',
+                                                     :branch => 'mini', :sync_status =>'NEW', :sync_method => 'ADL',
+                                                     :activity => adl_activity.pid)
+
+  end
+
+  desc 'Import ADL files to Valhal'
   task :import, [:path] => :environment do |task, args|
     if (!Dir.exist?("#{args.path}"))
       raise "Directory #{args.path} does not exists"

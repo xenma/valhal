@@ -35,36 +35,52 @@ class ContentFile < ActiveFedora::Base
 
   # Adds a content datastream to the object as an external managed file in fedore
   #
-  # @param path external url to the firl
+  # @param path external url to the file
   def add_external_file(path)
+    if path.start_with?('http://')
+      add_external_file_http(path)
+    else
+      add_external_file_local(path)
+    end
+  end
+
+
+
+  def add_external_file_local(path)
     file_name = Pathname.new(path).basename.to_s
-    logger.debug("filename #{file_name}")
     mime_type = mime_type_from_ext(file_name)
-    logger.debug("mime_type #{mime_type}")
 
-    dsLocation = path.start_with?('http://') ? path : "file://#{path}"
-
-    attrs = {:dsLocation => dsLocation, :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    attrs = {:dsLocation => "file://#{path}", :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
     ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
 
-    file_object = nil
-    if  path.start_with?('http://')
-        file_object = fetch_file_from_url(path)
-    else
-      file_object = File.new(path)
-      set_file_timestamps(file_object)
-    end
+    file_object = File.new(path)
+    set_file_timestamps(file_object)
     self.checksum = generate_checksum(file_object)
     self.original_filename = file_name
     self.mime_type = mime_type
     self.size = file_object.size.to_s
     self.file_uuid = UUID.new.generate
     file_object.close
-    file_object.unlink if file_object.is_a? Tempfile
-
     datastreams['content'] = ds
   end
 
+
+  def add_external_file_http(url)
+
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    resp = http.head(uri.request_uri)
+
+    mime_type = resp['content-type']
+
+    attrs = {:dsLocation => url, :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
+
+    self.size = resp['Content-Length']
+    self.original_filename = File.basename(uri.path)
+    self.file_uuid = UUID.new.generate
+    datastreams['content'] = ds
+  end
 
   # This function checks if the content of an external mannaged file
   # has changed, and updates the tech metadata 
@@ -212,4 +228,5 @@ class ContentFile < ActiveFedora::Base
     logger.error e.backtrace.join("\n")
     nil
   end
+
 end

@@ -13,7 +13,7 @@ module Datastreams
     set_terminology do |t|
       t.root(:path=>'fields')
       t.type(:type => :string, :index_as=>[:stored_searchable, :displayable, :sortable],
-                 :path=>'admin_activity', :label=>'Instance Type')
+                 :path=>'admin_type', :label=>'Instance Type')
       t.collection(:type => :string, :index_as=>[:stored_searchable, :displayable, :sortable],
                 :path=>'admin_collection', :label=>'Administrative Collection')
       t.activity(:type => :string, :index_as=>[:stored_searchable, :displayable, :sortable],
