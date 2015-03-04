@@ -1,5 +1,7 @@
 namespace :adl do
 
+
+
   desc 'Init ADL activity and ext. repo'
   task init: :environment do
     adl_activity = Administration::Activity.create(activity: "ADL", embargo: "0", access_condition: "",
@@ -12,6 +14,15 @@ namespace :adl do
                                                      :branch => 'mini', :sync_status =>'NEW', :sync_method => 'ADL',
                                                      :activity => adl_activity.pid)
 
+  end
+
+
+  desc 'Clean data'
+  task clean: :environment do
+    ContentFile.delete_all
+    ActiveFedora::Base.delete_all
+    Administration::SyncMessage.delete_all
+    Administration::ExternalRepository.delete_all
   end
 
   desc 'Import ADL files to Valhal'
