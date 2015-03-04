@@ -89,15 +89,15 @@ class ContentFile < ActiveFedora::Base
       path = self.datastreams['content'].dsLocation
       if path.start_with? 'file://'
         path.slice! 'file://'
-        file_object = File.new(path)
-        new_checksum = generate_checksum(file_object)
-        logger.debug("#{path} checksums #{self.checksum} #{new_checksum}")
-        if (new_checksum != self.checksum)
-          set_file_timestamps(file_object)
-          self.checksum = new_checksum
-          self.size = file_object.size.to_s
-          return true
-        end
+      end
+      file_object = File.new(path)
+      new_checksum = generate_checksum(file_object)
+      logger.debug("#{path} checksums #{self.checksum} #{new_checksum}")
+      if (new_checksum != self.checksum)
+        set_file_timestamps(file_object)
+        self.checksum = new_checksum
+        self.size = file_object.size.to_s
+        return true
       end
     end
     false

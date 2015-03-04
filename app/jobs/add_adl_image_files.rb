@@ -1,10 +1,18 @@
 require 'resque'
 
+
+# Resque job: Given a TEI file add tiff-file to at equivalent TIFF instance for each pb
+# param content_file_id: PID of the TEI ContentFile object
+# param base_dir: where the tiff files are located on the filesystem
+# base_dir should contain a file 'file_list.text' with a list of all the TEI files
+# for now we use the filename as 'facs' ID
+# TODO: include facs ids in file_list
+
 class AddAdlImageFiles
 
   @queue = 'add_adl_image_files'
 
-  def self.perform(content_file_id)
+  def self.perform(content_file_id,base_path)
 
 
     cf = ContentFile.find(content_file_id)
@@ -28,7 +36,7 @@ class AddAdlImageFiles
       tei_inst.save
     end
 
-    file_map = load_file_map('/tmp/adl_image_files.text')
+    file_map = load_file_map("#{base_path}/file_list.txt")
 
     xdoc = Nokogiri::XML.parse(cf.datastreams['content'].content) { |config| config.strict }
 
@@ -41,11 +49,14 @@ class AddAdlImageFiles
         facs = n.attr('facs')
         raise "No facs" if facs.blank?
 
-        uri = file_map[facs]
+        file = file_map[facs]
 
-        Resque.logger.debug("Adding file #{uri}")
+        unless ContentFile.find_by_original_filename(File.basename(file)).blank?
+          raise "File #{File.basename(file)} already added .. skipping it"
+        end
 
-        tiff_file = tiff_inst.add_file(uri)
+        Resque.logger.debug("Adding file #{file}")
+        tiff_file = tiff_inst.add_file("#{base_path}/#{file}")
         unless tiff_file.errors.blank?
           raise "Unable to add file save errors #{tiff_file.errors.messages}"
         end
@@ -62,12 +73,14 @@ class AddAdlImageFiles
   end
 
   def self.load_file_map(path)
+    Resque.logger.debug("opening file list #{path}")
     f = File.open(path)
     result = {}
     f.each_line do |line|
       facs_id = File.basename(line,File.extname(line))
       result[facs_id] = line.chomp
     end
+    Resque.logger.debug("got #{result.size} files")
     result
   end
 end

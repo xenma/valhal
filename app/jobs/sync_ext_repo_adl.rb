@@ -71,7 +71,7 @@ class SyncExtRepoADL
             cf = add_contentfile_to_instance(fname,i) unless i.nil?
             added_files=added_files+1
             repo.add_sync_message("Added #{fname}")
-            Resque.enqueue(AddAdlImageFiles,cf.pid)
+            Resque.enqueue(AddAdlImageFiles,cf.pid,"/kb/adl-facsimiles")
           rescue Exception => e
             Resque.logger.warn "Skipping file"
             Resque.logger.warn e.message
@@ -187,6 +187,7 @@ class SyncExtRepoADL
     cf = i.add_file(fname,["RelaxedTei"])
     raise "unable to add file: #{cf.errors.messages}" unless cf.errors.blank?
     raise "unable to add file: #{i.errors.messages}" unless i.save
+    Resque.logger.debug("custom validators #{cf.validators}")
     cf
   end
 end
