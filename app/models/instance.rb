@@ -65,26 +65,8 @@ class Instance < ActiveFedora::Base
     end
   end
 
-  def add_file(file, validators=[])
+  def add_file(file, validators=[],run_custom_validators = true)
     cf = ContentFile.new
-
-    isOK = true
-    validators.each do |vname|
-      file_content = ""
-      if file.is_a? String
-        file_content = File.open(file).read
-      else
-        file_content = file.read
-      end
-      validator = get_validator_from_classname(vname)
-      msg = validator.is_valid_xml_content(file_content)
-      unless msg.blank?
-        cf.errors[:base] << msg
-        isOK = false
-      end
-    end
-
-    return cf unless isOK
 
     if (file.is_a? File) || (file.is_a? ActionDispatch::Http::UploadedFile)
       cf.add_file(file)
@@ -95,20 +77,9 @@ class Instance < ActiveFedora::Base
     end
     set_rights_metadata_on_file(cf)
     cf.validators = validators
-    cf.save(validate: false)
+    cf.save(validate: run_custom_validators)
     content_files << cf
     cf
-  end
-
-  def validate_with_xml_validator(validator,xml)
-    errors = ActiveRecord::Errors.new
-    if validator.class <= Validator::Xml
-      begin
-        xdoc = Nokogiri::XML.parse(record.datastreams['content'].content) { |config| config.strict }
-
-      end
-    end
-    errors
   end
 
   # method to set the rights metadata stream based on activity
@@ -173,6 +144,7 @@ class Instance < ActiveFedora::Base
     activity_name = Administration::Activity.find(activity).activity
     Solrizer.insert_field(solr_doc, 'activity_name', activity_name, :stored_searchable, :facetable)
   end
+
 
   # given an activity name, return a set of Instances
   # belonging to that activity

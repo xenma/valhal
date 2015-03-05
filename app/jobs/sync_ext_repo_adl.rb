@@ -46,6 +46,11 @@ class SyncExtRepoADL
         else
           begin
             doc = Nokogiri::XML(File.open(fname))
+            validator = Validator::RelaxedTei.new
+            Resque.logger.debug("Validating TEI")
+            msg = validator.is_valid_xml_doc(doc)
+            raise "#{fname} is not valid TEI: #{msg}" unless msg.blank?
+            Resque.logger.debug("is valid")
 
             raise "file has no TEI header" unless (doc.xpath("//xmlns:teiHeader/xmlns:fileDesc").size > 0)
 
@@ -184,7 +189,7 @@ class SyncExtRepoADL
   end
 
   def self.add_contentfile_to_instance(fname,i)
-    cf = i.add_file(fname,["RelaxedTei"])
+    cf = i.add_file(fname,["RelaxedTei"],false)
     raise "unable to add file: #{cf.errors.messages}" unless cf.errors.blank?
     raise "unable to add file: #{i.errors.messages}" unless i.save
     Resque.logger.debug("custom validators #{cf.validators}")
