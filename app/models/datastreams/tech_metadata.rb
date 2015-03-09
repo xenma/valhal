@@ -23,6 +23,8 @@ module Datastreams
       t.file_uuid
       t.editable
       t.validators
+      t.pb_xml_id(:type=> :string, :index_as => :stored_searchable)
+      t.pb_facs_id(:type=> :string, :index_as => :stored_searchable)
     end
 
     def self.xml_template

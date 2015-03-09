@@ -29,7 +29,6 @@ module Validator
     end
     
     def is_valid(record)
-      puts("validating xml file")
       if record.mime_type != "text/xml"
         record.errors[:base] << "This object is not XML"
       else
@@ -49,15 +48,21 @@ module Validator
           msg = msg + "Content is nil"
         else
           xdoc = Nokogiri::XML.parse(content) { |config| config.strict }
-          xval = schema_selector(@schema_file)
-          xval.validate(xdoc).each do |error|
-            msg = msg + "\n" + error.message
-          end
+          is_valid_xml_doc(xdoc)
         end
       rescue Exception => wellformedness
         puts wellformedness.message
         pp wellformedness
         msg = "XML not wellformed #{wellformedness.message}"
+      end
+      msg
+    end
+
+    def is_valid_xml_doc(xdoc)
+      msg = ""
+      xval = schema_selector(@schema_file)
+      xval.validate(xdoc).each do |error|
+        msg = msg + "\n" + error.message
       end
       msg
     end

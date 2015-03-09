@@ -35,12 +35,20 @@ class ContentFile < ActiveFedora::Base
 
   # Adds a content datastream to the object as an external managed file in fedore
   #
-  # @param path external url to the firl
+  # @param path external url to the file
   def add_external_file(path)
+    if path.start_with?('http://')
+      add_external_file_http(path)
+    else
+      add_external_file_local(path)
+    end
+  end
+
+
+
+  def add_external_file_local(path)
     file_name = Pathname.new(path).basename.to_s
-    logger.debug("filename #{file_name}")
     mime_type = mime_type_from_ext(file_name)
-    logger.debug("mime_type #{mime_type}")
 
     attrs = {:dsLocation => "file://#{path}", :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
     ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
@@ -52,10 +60,27 @@ class ContentFile < ActiveFedora::Base
     self.mime_type = mime_type
     self.size = file_object.size.to_s
     self.file_uuid = UUID.new.generate
-
+    file_object.close
     datastreams['content'] = ds
   end
 
+
+  def add_external_file_http(url)
+
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    resp = http.head(uri.request_uri)
+
+    mime_type = resp['content-type']
+
+    attrs = {:dsLocation => url, :controlGroup => 'E', :mimeType => mime_type, :prefix=>''}
+    ds = ActiveFedora::Datastream.new(inner_object,'content',attrs)
+
+    self.size = resp['Content-Length']
+    self.original_filename = File.basename(uri.path)
+    self.file_uuid = UUID.new.generate
+    datastreams['content'] = ds
+  end
 
   # This function checks if the content of an external mannaged file
   # has changed, and updates the tech metadata 
@@ -64,15 +89,15 @@ class ContentFile < ActiveFedora::Base
       path = self.datastreams['content'].dsLocation
       if path.start_with? 'file://'
         path.slice! 'file://'
-        file_object = File.new(path)
-        new_checksum = generate_checksum(file_object)
-        logger.debug("#{path} checksums #{self.checksum} #{new_checksum}")
-        if (new_checksum != self.checksum)
-          set_file_timestamps(file_object)
-          self.checksum = new_checksum
-          self.size = file_object.size.to_s
-          return true
-        end
+      end
+      file_object = File.new(path)
+      new_checksum = generate_checksum(file_object)
+      logger.debug("#{path} checksums #{self.checksum} #{new_checksum}")
+      if (new_checksum != self.checksum)
+        set_file_timestamps(file_object)
+        self.checksum = new_checksum
+        self.size = file_object.size.to_s
+        return true
       end
     end
     false
@@ -170,6 +195,38 @@ class ContentFile < ActiveFedora::Base
     self.created = file.ctime.to_s
     self.last_accessed = file.atime.to_s
     self.last_modified = file.mtime.to_s
+  end
+
+  def fetch_file_from_url(url)
+    logger.debug "Starting GET of file from #{url}"
+    start_time = Time.now
+    uri = URI.parse(url)
+    if (uri.kind_of?(URI::HTTP))
+      resp = Net::HTTP.get_response(uri)
+      case resp
+        when Net::HTTPSuccess then
+          filename = File.basename(uri.path)
+          tmpfile = Tempfile.new(filename,Dir.tmpdir)
+          File.open(tmpfile.path,'wb+') do |f|
+            f.write resp.body
+          end
+          tmpfile.flush
+          logger.debug "GET took #{Time.now - start_time} seconds"
+          return tmpfile
+        else
+          logger.error "Could not get file from location #{url} response is #{resp.code}:#{resp.message}"
+          return nil
+      end
+    else
+      return nil
+    end
+  rescue URI::InvalidURIError
+    logger.error "Invalid URI #{url}"
+    nil
+  rescue => e
+    logger.error "error in fetch_file_from_url #{url}"
+    logger.error e.backtrace.join("\n")
+    nil
   end
 
 end
